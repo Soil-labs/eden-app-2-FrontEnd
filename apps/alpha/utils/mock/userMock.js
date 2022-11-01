@@ -544,7 +544,7 @@ const Result = {
   },
   6: {
     description: "I'm vitalik. ",
-    percentage: "1000%",
+    percentage: "100%",
     picture:
       "https://cdn.discordapp.com/avatars/677988313319211037/ff9cda5e0e8fbe62caea07fb7eb3de23.webp",
     name: "notVitalik",
@@ -577,69 +577,415 @@ const Result = {
     ],
     availability: "10",
   },
+  7: {
+    description:
+      "I am a relationship-focused, organized, and detail-oriented product manager. I am enthusiastic about the work that I do, and I am passionate about technology. Working with teams to design and build products that meet customer needs is what I do best. My communication skills allow me to collaborate well with both technical and non-technical individuals. ",
+    percentage: "89%",
+    picture:
+      "https://cdn.discordapp.com/avatars/857323639854465046/d2553a2d1960750914906aea6999279c.webp",
+    name: "daodaoism",
+    nameDescription: "Product Manager",
+    Descrimator: "9605",
+    Skills: ["Digital Product Management", "Agile Project Management"],
+    socials: [
+      {
+        name: "Discord",
+        link: "https://discord.gg/2cF6hup",
+        icon: "https://i.imgur.com/1Q9Z1Zm.png",
+      },
+      {
+        name: "Twitter",
+        link: "https://twitter.com/BluePandaDAO",
+        icon: "https://i.imgur.com/1Q9Z1Zm.png",
+      },
+    ],
+    availability: "20",
+  },
+  8: {
+    description:
+      "I am a passionate software developer with over 10 years of experience working with robots. Over the past year I've been working to transfer my passion of programming into a becoming full stack software developer. I have experience developing full stack web sites with JavaScript, React, Express, Flask, PostgreSQL and HTML/CSS through projects done at App Academy. I enjoy the entire process of building apps from designing and building a road map of were I want to go to being able to hit those goals and have a product I'm proud of. When I'm not programming I'm either watching a fantasy show with my wife or winning games as a top 500 Overwatch support. ",
+    percentage: "92%",
+    picture:
+      "https://cdn.discordapp.com/avatars/451587147808636929/a_872037e1cc253eff29f26b918c1d595d.webp",
+    name: "Flolight",
+    nameDescription: "Fullstack Engineer",
+    Descrimator: "9605",
+    Skills: [
+      "Python (Programming Language",
+      "JavaScript (Programming Language)",
+      "Angular (Web Framework)",
+      "Cloud Security Applications",
+      "Applications Architecture",
+      "AWS SDK",
+    ],
+    socials: [
+      {
+        name: "Discord",
+        link: "https://discord.gg/2cF6hup",
+        icon: "https://i.imgur.com/1Q9Z1Zm.png",
+      },
+      {
+        name: "Twitter",
+        link: "https://twitter.com/BluePandaDAO",
+        icon: "https://i.imgur.com/1Q9Z1Zm.png",
+      },
+    ],
+    availability: "25",
+  },
+  9: {
+    description: "Backend engineer passionate about crypto/web3/blockchain ",
+    percentage: "97%",
+    picture:
+      "https://cdn.discordapp.com/avatars/453089755924791317/a_febc3c7ca14702c46aec9ccaff7deb36.webp",
+    name: "TheDarkFury",
+    nameDescription: "Backend Engineer",
+    Descrimator: "2068",
+    Skills: ["Solidity", "Rust", "JavaScript (Programming Language)"],
+    socials: [
+      {
+        name: "Discord",
+        link: "https://discord.gg/2cF6hup",
+        icon: "https://i.imgur.com/1Q9Z1Zm.png",
+      },
+      {
+        name: "Twitter",
+        link: "https://twitter.com/BluePandaDAO",
+        icon: "https://i.imgur.com/1Q9Z1Zm.png",
+      },
+    ],
+    availability: "12",
+  },
+  10: {
+    description:
+      "Passionate analytical thinker who thrives in high-energy web3 enviroments. ",
+    percentage: "79%",
+    picture:
+      "https://cdn.discordapp.com/avatars/486268049259757580/c9c4370157fffb42ae9446203719a403.webp",
+    name: "Sunk8.eth",
+    nameDescription: "Community Manager",
+    Descrimator: "5319",
+    Skills: ["Community Planning", "Content Marketing"],
+    socials: [
+      {
+        name: "Discord",
+        link: "https://discord.gg/2cF6hup",
+        icon: "https://i.imgur.com/1Q9Z1Zm.png",
+      },
+      {
+        name: "Twitter",
+        link: "https://twitter.com/BluePandaDAO",
+        icon: "https://i.imgur.com/1Q9Z1Zm.png",
+      },
+    ],
+    availability: "32",
+  },
+  11: {
+    description: "Blockchain, Smart Contracts, Mathematics, Ethereum. ",
+    percentage: "78%",
+    picture:
+      "https://cdn.discordapp.com/avatars/493465532423602176/a56c1e883d732ce7420ecf3439374021.webp",
+    name: "danomite",
+    nameDescription: "Blockchain Developer",
+    Descrimator: "9894",
+    Skills: [
+      "Solidity",
+      "Product Strategy",
+      "JavaScript (Programming Language)",
+      "React.js",
+    ],
+    socials: [
+      {
+        name: "Discord",
+        link: "https://discord.gg/2cF6hup",
+        icon: "https://i.imgur.com/1Q9Z1Zm.png",
+      },
+      {
+        name: "Twitter",
+        link: "https://twitter.com/BluePandaDAO",
+        icon: "https://i.imgur.com/1Q9Z1Zm.png",
+      },
+    ],
+    availability: "22",
+  },
+
+  12: {
+    description:
+      "Extensive experience in product management, strategy, and marketing functions Deep knowledge of Systems, Solutions, Semiconductors for the Edge Cross-Functional leadership and track record of successful product planning and execution ",
+    percentage: "88%",
+    picture:
+      "https://cdn.discordapp.com/avatars/403298435689611264/78fa1d482c932b5c26c505e1cd8c5ab4.webp",
+    name: "Samoshi",
+    nameDescription: "Product Strategist",
+    Descrimator: "1288",
+    Skills: [
+      "Product Roadmaps",
+      "Product Lifecycle",
+      "Product Management",
+      "Commercial Development",
+      "Commercialization",
+    ],
+    socials: [
+      {
+        name: "Discord",
+        link: "https://discord.gg/2cF6hup",
+        icon: "https://i.imgur.com/1Q9Z1Zm.png",
+      },
+      {
+        name: "Twitter",
+        link: "https://twitter.com/BluePandaDAO",
+        icon: "https://i.imgur.com/1Q9Z1Zm.png",
+      },
+    ],
+    availability: "25",
+  },
+  13: {
+    description:
+      "I lead through standardization and a bias for action. Using vulnerable trust I create teams that feel comfortable to weigh-in while pursuing the highest standards. I am a senior engineer with experience developing cloud architecture, but I am also a leader of people and ideas. I value constructive conflict, and I value the resolve and commitment that follows. I want to be around others who are equally as passionate about the pursuit of a great product.",
+    percentage: "81%",
+    picture:
+      "https://cdn.discordapp.com/avatars/369700858742571008/5d2cf4cdbbb5e741a889c4982e7e13d2.webp",
+    name: "distorted",
+    nameDescription: "Backend Developer",
+    Descrimator: "7777",
+    Skills: [
+      "Python (Programming Language)",
+      "Solidity",
+      "Cloud Computing Security",
+      "AWS Lambda",
+    ],
+    socials: [
+      {
+        name: "Discord",
+        link: "https://discord.gg/2cF6hup",
+        icon: "https://i.imgur.com/1Q9Z1Zm.png",
+      },
+      {
+        name: "Twitter",
+        link: "https://twitter.com/BluePandaDAO",
+        icon: "https://i.imgur.com/1Q9Z1Zm.png",
+      },
+    ],
+    availability: "35",
+  },
+  14: {
+    description:
+      "I'm a software developer with a passion for building from the ground up. I aspire to keep up with developing computer technologies and new coding languages. I'm a graduate of the Software Engineering program at Thinkful. I'm a strong media and communication professional with a Bachelor's Degree focused in Design Studies from Arizona State University. ",
+    percentage: "86%",
+    picture:
+      "https://cdn.discordapp.com/avatars/879166443512545311/feb30747504d86519aee3a54fac0b932.webp",
+    name: "Sriram Kasyap | sriramkasyap.eth",
+    nameDescription: "FrontEnd Developer",
+    Descrimator: "8136",
+    Skills: [
+      "Responsive Web Design",
+      "Node.js",
+      "React.js",
+      "Cascading Style Sheets (CSS)",
+      "Solidity",
+    ],
+    socials: [
+      {
+        name: "Discord",
+        link: "https://discord.gg/2cF6hup",
+        icon: "https://i.imgur.com/1Q9Z1Zm.png",
+      },
+      {
+        name: "Twitter",
+        link: "https://twitter.com/BluePandaDAO",
+        icon: "https://i.imgur.com/1Q9Z1Zm.png",
+      },
+    ],
+    availability: "15",
+  },
+  15: {
+    description:
+      " love interdisciplinary learning. Taking the best concepts from different fields and applying it to the software I write.",
+    percentage: "68%",
+    picture:
+      "https://cdn.discordapp.com/avatars/385833013692334080/3fcaa397c193dc2f9c6316e79ce75b8d.webp",
+    name: "Flolight",
+    nameDescription: "Cloud Developer",
+    Descrimator: "5146",
+    Skills: [
+      "AWS CloudFormation",
+      "Cloud Security Applications",
+      "Machine Learning",
+      "Cascading Style Sheets (CSS)",
+      "Aplications Architecture",
+    ],
+    socials: [
+      {
+        name: "Discord",
+        link: "https://discord.gg/2cF6hup",
+        icon: "https://i.imgur.com/1Q9Z1Zm.png",
+      },
+      {
+        name: "Twitter",
+        link: "https://twitter.com/BluePandaDAO",
+        icon: "https://i.imgur.com/1Q9Z1Zm.png",
+      },
+    ],
+    availability: "50",
+  },
 };
 
 const resultsOnChoice = {
   Design: [
     {
       result: "4",
-      percentage: "80",
+      percentage: "80%",
     },
     {
       result: "5",
-      percentage: "60",
+      percentage: "60%",
     },
     {
       result: "1",
-      percentage: "50",
+      percentage: "50%",
+    },
+    {
+      result: "12",
+      percentage: "71%",
+    },
+    {
+      result: "",
+      percentage: "%",
+    },
+    {
+      result: "",
+      percentage: "%",
     },
   ],
   "Frontend Developer": [
     {
       result: "1",
-      percentage: "80",
+      percentage: "80%",
     },
     {
       result: "4",
-      percentage: "60",
+      percentage: "60%",
     },
     {
       result: "3",
-      percentage: "50",
+      percentage: "50%",
+    },
+    {
+      result: "8",
+      percentage: "69%",
+    },
+    {
+      result: "14",
+      percentage: "95%",
+    },
+    {
+      result: "11",
+      percentage: "81%",
+    },
+    {
+      result: "9",
+      percentage: "45%",
+    },
+    {
+      result: "14",
+      percentage: "85%",
+    },
+    {
+      result: "15",
+      percentage: "32%",
     },
   ],
   "Backend Developer": [
     {
       result: "2",
-      percentage: "80",
+      percentage: "80%",
     },
     {
       result: "1",
-      percentage: "60",
+      percentage: "60%",
     },
     {
       result: "3",
-      percentage: "50",
+      percentage: "50%",
+    },
+    {
+      result: "8",
+      percentage: "87%",
+    },
+    {
+      result: "9",
+      percentage: "97%",
+    },
+    {
+      result: "11",
+      percentage: "83%",
+    },
+    {
+      result: "13",
+      percentage: "88%",
+    },
+    {
+      result: "14",
+      percentage: "77%",
+    },
+    {
+      result: "15",
+      percentage: "62%",
     },
   ],
   "Blockchain Developer": [
     {
       result: "6",
-      percentage: "1000",
+      percentage: "100%",
+    },
+    {
+      result: "9",
+      percentage: "72%",
+    },
+    {
+      result: "1",
+      percentage: "76%",
+    },
+    {
+      result: "14",
+      percentage: "71%",
+    },
+    {
+      result: "11",
+      percentage: "79%",
+    },
+    {
+      result: "13",
+      percentage: "77%",
     },
   ],
   Product: [
     {
       result: "3",
-      percentage: "80",
+      percentage: "80%",
     },
     {
       result: "5",
-      percentage: "60",
+      percentage: "60%",
     },
     {
       result: "4",
-      percentage: "50",
+      percentage: "50%",
+    },
+    {
+      result: "7",
+      percentage: "98%",
+    },
+    {
+      result: "10",
+      percentage: "72%",
+    },
+    {
+      result: "12",
+      percentage: "88%",
+    },
+    {
+      result: "15",
+      percentage: "22%",
     },
   ],
 };
