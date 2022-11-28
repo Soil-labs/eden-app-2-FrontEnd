@@ -1,11 +1,7 @@
 import { useMutation } from "@apollo/client";
 import { useQuery } from "@apollo/client";
 import { UserContext } from "@eden/package-context";
-import {
-  UPDATE_MEMBER,
-  FIND_PROJECT,
-  UPDATE_PROJECT,
-} from "@eden/package-graphql";
+import { UPDATE_PROJECT } from "@eden/package-graphql";
 import {
   Maybe,
   Mutation,
@@ -39,9 +35,9 @@ export interface ICreateProjectTempContainerProps {
   projectUIdata?: any;
   dataProject?: any;
   selectedRole?: any;
-  setProjectUIdata?: (val: any) => void;
-  onFetchProject?: () => void;
-  setSelectedRole?: (val: any) => void;
+  setProjectUIdata: (val: any) => void;
+  onFetchProject: () => void;
+  setSelectedRole: (val: any) => void;
 }
 
 export const CreateProjectTempContainer = ({
@@ -58,6 +54,8 @@ export const CreateProjectTempContainer = ({
   const [submitting, setSubmitting] = useState(false);
 
   const [projectID, setProjectID] = useState<string>("");
+
+  const [newRoleTitle, setNewRoleTitle] = useState<string>("");
 
   const [updateProject] = useMutation(UPDATE_PROJECT, {
     onCompleted({ updateProject }: Mutation) {
@@ -203,53 +201,7 @@ export const CreateProjectTempContainer = ({
               >
                 Find Project
               </Button>
-
-              {/* <SkillVisualisationComp
-                skills={
-                  currentUser?.skills?.map((skill) => {
-                    return {
-                      skillData: {
-                        _id: skill?.skillInfo?._id,
-                        name: skill?.skillInfo?.name,
-                      },
-                      level: skill?.level,
-                    };
-                  }) as SkillRoleType[]
-                }
-              /> */}
             </div>
-            {/* <div>
-              <TextBody>Social Links</TextBody>
-              <TextLabel>Please make sure all links are up to date</TextLabel>
-              <SocialMediaInput
-                platform="twitter"
-                placeholder={`Twitter Handle`}
-                value={twitterHandle}
-                onChange={(e) => setTwitterHandle(e.target.value)}
-                shape="rounded"
-              />
-              <SocialMediaInput
-                platform="github"
-                placeholder={`Github Handle`}
-                value={githubHandle}
-                onChange={(e) => setGithubHandle(e.target.value)}
-                shape="rounded"
-              />
-              <SocialMediaInput
-                platform="telegram"
-                placeholder={`Telegram Handle`}
-                value={telegramHandle}
-                onChange={(e) => setTelegramHandle(e.target.value)}
-                shape="rounded"
-              />
-              <SocialMediaInput
-                platform="lens"
-                placeholder={`Lens Handle`}
-                value={lensHandle}
-                onChange={(e) => setLensHandle(e.target.value)}
-                shape="rounded"
-              />
-            </div> */}
           </div>
         </section>
 
@@ -257,36 +209,69 @@ export const CreateProjectTempContainer = ({
           <div
             className={`grid grow grid-cols-1 gap-8 sm:grid-cols-2 xl:grid-cols-3`}
           >
-            {dataProject?.findProject?.role?.map((role, index) => {
-              // role.skills = [{ comment: "done" }];
+            {dataProject?.findProject?.role?.length > 0 ? (
+              <>
+                {dataProject?.findProject?.role?.map(
+                  (role: any, index: any) => {
+                    let roleSkills: any = {};
 
-              let roleSkills: any = {};
+                    roleSkills.title = role.title;
 
-              roleSkills.title = role.title;
+                    if (selectedRole == index) {
+                      roleSkills.skills = [
+                        {
+                          skillData: {
+                            _id: "637ad5a6f0f9c427e03a03a8",
+                            name: "Selected",
+                          },
+                        },
+                      ];
+                    }
+                    // console.log("roleSkills = ", roleSkills);
+                    return (
+                      <OpenPositionCard
+                        key={index}
+                        role={roleSkills}
+                        percentage={23}
+                        onApply={(val) => {
+                          console.log("apply = ");
+                          setSelectedRole(index);
+                        }}
+                      />
+                    );
+                  }
+                )}
 
-              if (selectedRole == index) {
-                roleSkills.skills = [
-                  {
-                    skillData: {
-                      _id: "637ad5a6f0f9c427e03a03a8",
-                      name: "Selected",
-                    },
-                  },
-                ];
-              }
-              // console.log("roleSkills = ", roleSkills);
-              return (
-                <OpenPositionCard
-                  key={index}
-                  role={roleSkills}
-                  percentage={23}
-                  onApply={(val) => {
-                    console.log("apply = ");
-                    setSelectedRole(index);
-                  }}
-                />
-              );
-            })}
+                <Card shadow border>
+                  <TextBody>New Role Title:</TextBody>
+                  <div className={`flex justify-center space-x-4`}>
+                    <TextField
+                      name="textfield"
+                      type="text"
+                      value={newRoleTitle}
+                      onChange={(e) => setNewRoleTitle(e.target.value)}
+                    />
+                  </div>
+                  <br />
+
+                  <Button
+                    variant="tertiary"
+                    className={``}
+                    disabled={submitting}
+                    onClick={() => {
+                      console.log("change = -------0-000");
+                      onFetchProject();
+                      console.log("projectID = ", projectID);
+                      console.log("dataProject = ", dataProject);
+                    }}
+                  >
+                    Find Project
+                  </Button>
+                </Card>
+              </>
+            ) : (
+              true
+            )}
           </div>
         </div>
       </Card>
