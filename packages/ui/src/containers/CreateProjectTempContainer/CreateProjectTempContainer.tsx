@@ -1,33 +1,19 @@
 import { useMutation } from "@apollo/client";
-import { useQuery } from "@apollo/client";
 import { UserContext } from "@eden/package-context";
 import { UPDATE_PROJECT } from "@eden/package-graphql";
-import {
-  Maybe,
-  Mutation,
-  RoleTemplate,
-  SkillRoleType,
-} from "@eden/package-graphql/generated";
+import { Maybe, Mutation, RoleTemplate } from "@eden/package-graphql/generated";
 import {
   Button,
   Card,
-  Dropdown,
   Loading,
-  RoleSelector,
   EmojiSelector,
-  SearchSkill,
-  SkillVisualisationComp,
-  SocialMediaInput,
   TextArea,
   OpenPositionCard,
   TextBody,
   TextField,
   TextHeading3,
-  TextLabel,
 } from "@eden/package-ui";
-import { useContext, useEffect, useState } from "react";
-
-import { timezones } from "../../../constants";
+import { useContext, useState } from "react";
 
 export interface ICreateProjectTempContainerProps {
   roles?: Maybe<Array<Maybe<RoleTemplate>>>;
