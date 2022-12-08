@@ -55,7 +55,11 @@ export const Badge = ({
           <>
             <span className="mb-px">{textShort}</span>
             {closeButton && (
-              <button className={`ml-1 -mt-1 -mr-1`} onClick={onClose}>
+              <button
+                aria-label="remove"
+                className={`ml-1 -mt-1 -mr-1`}
+                onClick={onClose}
+              >
                 <XIcon
                   className="inline-block h-4 w-4 cursor-pointer text-gray-900 hover:text-slate-400"
                   aria-hidden="true"
@@ -65,7 +69,12 @@ export const Badge = ({
           </>
         </div>
       </div>
-      <ReactTooltip id={`badgeTip-${text}`} place="top" effect="solid">
+      <ReactTooltip
+        role="tooltip"
+        id={`badgeTip-${text}`}
+        place="top"
+        effect="solid"
+      >
         {isHover}
       </ReactTooltip>
     </>
