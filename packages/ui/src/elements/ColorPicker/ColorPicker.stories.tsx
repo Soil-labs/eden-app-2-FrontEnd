@@ -1,4 +1,5 @@
-import { ComponentMeta, ComponentStory } from "@storybook/react";
+import { ComponentMeta } from "@storybook/react";
+import { useState } from "react";
 
 import { ColorPicker } from "./ColorPicker";
 
@@ -8,11 +9,8 @@ export default {
   argTypes: {},
 } as ComponentMeta<typeof ColorPicker>;
 
-const Template: ComponentStory<typeof ColorPicker> = (args) => (
-  <ColorPicker {...args} />
-);
+export const Default = () => {
+  const [value, setValue] = useState("rgb(255,0,0)");
 
-export const Default = Template.bind({});
-Default.args = {
-  onChange: (color) => console.info({ color }),
+  return <ColorPicker onChange={(color) => setValue(color)} value={value} />;
 };
