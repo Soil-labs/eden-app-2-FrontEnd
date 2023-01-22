@@ -1,5 +1,11 @@
 {
   "extends": "@eden/package-tsconfig/nextjs.json",
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    "**/*.js",
+    "pages/test/graphVisual/index.js"
+  ],
   "exclude": ["node_modules"]
 }
