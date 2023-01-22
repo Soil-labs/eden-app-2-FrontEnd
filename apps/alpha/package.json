@@ -11,6 +11,7 @@
     "clean-windows": "rd /s /q node_modules && rd /s /q .next"
   },
   "dependencies": {
+    "@antv/g6": "^4.8.3",
     "@apollo/client": "^3.6.9",
     "@eden/package-context": "*",
     "@eden/package-graphql": "*",

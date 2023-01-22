@@ -1,11 +1,12 @@
 // G6component.js
-import G6 from "@antv/g6";
+// import G6 from "@antv/g6";
 import React, { useEffect } from "react";
 // import ReactDOM from "react-dom";
 
 // const globalFontSize = 10;
 
 const G6component = ({ data2 }) => {
+  return {};
   const ref = React.useRef(null);
 
   let graph = null;

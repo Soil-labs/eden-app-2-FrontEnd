@@ -2,11 +2,10 @@
 // import G6 from "@antv/g6";
 
 import { AppUserLayout } from "@eden/package-ui";
-import dynamic from "next/dynamic";
-const G6component = dynamic(() => import("./G6component"), {
-  ssr: false,
-});
-
+// import dynamic from "next/dynamic";
+// const G6component = dynamic(() => import("./G6component"), {
+//   ssr: false,
+// });
 import React from "react";
 
 import { NextPageWithLayout } from "../../_app";
@@ -53,8 +52,8 @@ const data2 = {
 const TestPage: NextPageWithLayout = () => {
   return (
     <>
-      {/* <p>asdf</p> */}
-      <G6component data2={data2} />
+      <p>asdf</p>
+      {/* <G6component data2={data2} /> */}
     </>
   );
 };
