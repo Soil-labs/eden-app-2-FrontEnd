@@ -1,5 +1,5 @@
 // G6component.js
-import G6 from "@antv/g6";
+// import G6 from "@antv/g6";
 // import dynamic from "next/dynamic";
 // const G6 = dynamic(() => import("@antv/g6"), {
 //   ssr: false,
@@ -49,6 +49,7 @@ const data2 = {
 };
 
 const G6component = () => {
+  return <p>asdf</p>;
   const ref = React.useRef(null);
 
   let graph = null;

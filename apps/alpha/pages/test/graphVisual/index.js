@@ -3,9 +3,12 @@
 
 import { AppUserLayout } from "@eden/package-ui";
 import dynamic from "next/dynamic";
-const G6component = dynamic(() => import("./G6component"), {
-  ssr: false,
-});
+const G6component = dynamic(
+  () => import("../../../src/components/G6component"),
+  {
+    ssr: false,
+  }
+);
 
 import React from "react";
 
