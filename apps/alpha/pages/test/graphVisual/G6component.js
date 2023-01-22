@@ -1,9 +1,9 @@
 // G6component.js
 import G6 from "@antv/g6";
-import React, { useEffect, useState } from "react";
-import ReactDOM from "react-dom";
+import React, { useEffect } from "react";
+// import ReactDOM from "react-dom";
 
-const globalFontSize = 10;
+// const globalFontSize = 10;
 
 const G6component = ({ data2 }) => {
   const ref = React.useRef(null);
@@ -12,42 +12,42 @@ const G6component = ({ data2 }) => {
 
   console.log("data2 = ", data2);
 
-  const [dataState, setDataState] = useState({
-    nodes: [],
-    edges: [],
-  });
+  // const [dataState, setDataState] = useState({
+  //   nodes: [],
+  //   edges: [],
+  // });
 
-  const fittingString = (nodeID, str, maxWidth, fontSize) => {
-    const ellipsis = "...";
-    const ellipsisLength = G6.Util.getTextSize(ellipsis, fontSize)[0];
+  // const fittingString = (nodeID, str, maxWidth, fontSize) => {
+  //   const ellipsis = "...";
+  //   const ellipsisLength = G6.Util.getTextSize(ellipsis, fontSize)[0];
 
-    let currentWidth = 0;
+  //   let currentWidth = 0;
 
-    let res = str;
-    const pattern = new RegExp("[\u4E00-\u9FA5]+"); // distinguish the Chinese charactors and letters
+  //   let res = str;
+  //   const pattern = new RegExp("[\u4E00-\u9FA5]+"); // distinguish the Chinese charactors and letters
 
-    str.split("").forEach((letter, i) => {
-      if (currentWidth > maxWidth - ellipsisLength) return;
-      if (pattern.test(letter)) {
-        // Chinese charactors
-        currentWidth += fontSize;
-      } else {
-        // get the width of single letter according to the fontSize
-        currentWidth += G6.Util.getLetterWidth(letter, fontSize);
-      }
-      if (currentWidth > maxWidth - ellipsisLength) {
-        res = `${str.substr(0, i)}${ellipsis}`;
-      }
-    });
+  //   str.split("").forEach((letter, i) => {
+  //     if (currentWidth > maxWidth - ellipsisLength) return;
+  //     if (pattern.test(letter)) {
+  //       // Chinese charactors
+  //       currentWidth += fontSize;
+  //     } else {
+  //       // get the width of single letter according to the fontSize
+  //       currentWidth += G6.Util.getLetterWidth(letter, fontSize);
+  //     }
+  //     if (currentWidth > maxWidth - ellipsisLength) {
+  //       res = `${str.substr(0, i)}${ellipsis}`;
+  //     }
+  //   });
 
-    if (res.substr(-3) === "...") {
-      graph.updateItem(nodeID, {
-        label: res,
-      });
-    }
+  //   if (res.substr(-3) === "...") {
+  //     graph.updateItem(nodeID, {
+  //       label: res,
+  //     });
+  //   }
 
-    return res;
-  };
+  //   return res;
+  // };
 
   useEffect(() => {
     if (!graph) {

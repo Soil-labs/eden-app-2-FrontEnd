@@ -7,25 +7,9 @@ const G6component = dynamic(() => import("./G6component"), {
   ssr: false,
 });
 
-import React, { useEffect, useState } from "react";
+import React from "react";
 
 import { NextPageWithLayout } from "../../_app";
-
-interface Node {
-  id: string;
-  size: number;
-  label?: string;
-  style?: {
-    fill: string;
-    stroke: string;
-    lineWidth: number;
-  };
-}
-
-interface DataState {
-  nodes: Node[];
-  edges: { source: string; target: string }[];
-}
 
 const data2 = {
   nodes: [
