@@ -1,20 +1,20 @@
 // import { getMember } from "@eden/package-mock";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 
-import { GraphVisualisation } from "./GraphVisualisation";
+import { GraphVisualisCell } from "./GraphVisualisCell";
 // import dynamic from "next/dynamic";
-// const GraphVisualisation = dynamic(() => import("./GraphVisualisation"), {
+// const GraphVisualisCell = dynamic(() => import("./GraphVisualisCell"), {
 //   ssr: false,
 // });
 
 export default {
-  title: "Components/GraphVisualisation",
-  component: GraphVisualisation,
+  title: "Components/GraphVisualisCell",
+  component: GraphVisualisCell,
   argTypes: {},
-} as ComponentMeta<typeof GraphVisualisation>;
+} as ComponentMeta<typeof GraphVisualisCell>;
 
-const Template: ComponentStory<typeof GraphVisualisation> = (args) => {
-  return <GraphVisualisation {...args} />;
+const Template: ComponentStory<typeof GraphVisualisCell> = (args) => {
+  return <GraphVisualisCell {...args} />;
 };
 
 export const Default = Template.bind({});

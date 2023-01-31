@@ -5,6 +5,7 @@ export * from "./DescriptionGPT";
 export * from "./DiscoverTalent";
 export * from "./DragDrop";
 export * from "./FillSocialLinks";
+// export * from "./GraphVisualisation";
 export * from "./LifetimeTRST";
 export * from "./LoginButton";
 export * from "./NodesExpandable";

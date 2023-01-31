@@ -20,27 +20,27 @@ const nodeTypeStyle = {
     displayName: "Sub Project Type",
     sizeRatio: 0.05,
   },
-  // eslint-disable-next-line camelcase
-  sub_expertise: {
-    fill: "#f0fdff",
-    stroke: "#9AECFE",
-    size: 25,
-    displayName: "Skill",
-    sizeRatio: 0.1,
-  },
-  expertise: {
-    fill: "#f0fdaf",
-    stroke: "#9AECaE",
-    size: 40,
-    displayName: "Expertise",
-    sizeRatio: 0.2,
-  },
   typeProject: {
     fill: "#f0fdaf",
     stroke: "#9AECaE",
     size: 40,
     displayName: "Project Type",
-    sizeRatio: 0.2,
+    sizeRatio: 0.15,
+  },
+  // eslint-disable-next-line camelcase
+  sub_expertise: {
+    fill: "#EBFCFF",
+    stroke: "#9AECaE",
+    size: 25,
+    displayName: "Skill",
+    sizeRatio: 0.15,
+  },
+  expertise: {
+    fill: "#C2F7FF",
+    stroke: "#9AECFE",
+    size: 40,
+    displayName: "Expertise",
+    sizeRatio: 0.25,
   },
   Project: {
     fill: "#FDFFDC",
@@ -251,7 +251,7 @@ const G6component = ({ width, height, data2 }) => {
             // Change dinamicaloly the distance based on the number of connections
             let numConnections = 0;
 
-            console.log("d = ", d);
+            // console.log("d = ", d);
 
             if (d.source.numberConnections > d.target.numberConnections) {
               numConnections = d.source.numberConnections;
@@ -270,8 +270,50 @@ const G6component = ({ width, height, data2 }) => {
             } else {
               randomDistance = 50;
             }
-            // return 200;
-            return initDistance + Math.floor(Math.random() * randomDistance);
+            // console.log("d = ", d);
+            if (d.distanceRation) {
+              let extraDistanceRation = 0;
+
+              if (d.source.extraDistanceRation) {
+                extraDistanceRation =
+                  extraDistanceRation + d.source.extraDistanceRation;
+                // console.log("d.source.label = ", d.source.label);
+              } else if (d.target.extraDistanceRation) {
+                extraDistanceRation =
+                  extraDistanceRation + d.target.extraDistanceRation;
+                // console.log("d.target.label = ", d.target.label);
+              }
+              // console.log(
+              //   "d.distanceRation + extraDistanceRation = ",
+              //   d.distanceRation + extraDistanceRation
+              // );
+              return remapValue(
+                d.distanceRation + extraDistanceRation,
+                0,
+                1,
+                25,
+                230
+              );
+            } else {
+              // console.log("change =---------- ");
+              // return 200;
+              return initDistance + Math.floor(Math.random() * randomDistance);
+            }
+          },
+          edgeStrength: (d) => {
+            if (d.distanceRation) {
+              let extraDistanceRation = 0;
+
+              if (d.source.extraDistanceRation) {
+                extraDistanceRation =
+                  extraDistanceRation + d.source.extraDistanceRation;
+              } else if (d.target.extraDistanceRation) {
+                extraDistanceRation =
+                  extraDistanceRation + d.target.extraDistanceRation;
+              }
+              return d.distanceRation + extraDistanceRation;
+            }
+            return 1;
           },
         },
         plugins: [tooltip],
@@ -307,6 +349,7 @@ const G6component = ({ width, height, data2 }) => {
     if (graph && (data2.nodes.length != 1 || data2.nodes[0].id != "node1")) {
       if (data2.nodes.length != 1) {
         updateNodes(data2);
+        console.log("data2.nodes = ", data2.nodes);
       }
 
       // updateNodes(data2);

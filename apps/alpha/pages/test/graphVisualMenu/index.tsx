@@ -20,10 +20,13 @@ const FIND_MEMBER_GRAPH = gql`
         name
         type
         avatar
+        originalNode
+        extraDistanceRation
       }
       edges {
         source
         target
+        distanceRation
       }
     }
   }
@@ -37,10 +40,13 @@ const FIND_MEMBER_PROJECT_GRAPH = gql`
         name
         type
         avatar
+        originalNode
+        extraDistanceRation
       }
       edges {
         source
         target
+        distanceRation
       }
     }
   }
@@ -54,10 +60,13 @@ const FIND_PROJECT_GRAPH = gql`
         name
         type
         avatar
+        originalNode
+        extraDistanceRation
       }
       edges {
         source
         target
+        distanceRation
       }
     }
   }
@@ -71,10 +80,13 @@ const FIND_MULTIPLE_MEMBERS_PROJECTS_GRAPH = gql`
         name
         type
         avatar
+        # originalNode
+        # extraDistanceRation
       }
       edges {
         source
         target
+        # distanceRation
       }
     }
   }
@@ -165,6 +177,8 @@ const TestPage = () => {
     updateGraph: false,
     memberID1: "961730944170090516",
     projectID1: "637ad5a6f0f9c427e03a03a8",
+    // memberID1: "908392557258604544",
+    // projectID1: "637ad5a6f0f9c427e03a03a8",
   });
   const updateSettings = (settingsNew: any) => {
     setSettingsGraphs({
@@ -304,7 +318,7 @@ const TestPage = () => {
     if (dataGraphAPI != undefined && selectedOption != "Option 1") {
       const nodeDataObj: any = {};
       const edgesDataGraph = dataGraphAPI.edges.map(
-        (edge: { source: any; target: any }) => {
+        (edge: { source: any; target: any; distanceRation: any }) => {
           if (!nodeDataObj[edge.source]) {
             nodeDataObj[edge.source] = {
               numberConnections: 1,
@@ -322,6 +336,7 @@ const TestPage = () => {
           return {
             source: edge.source,
             target: edge.target,
+            distanceRation: edge.distanceRation,
           };
         }
       );
@@ -329,7 +344,13 @@ const TestPage = () => {
       // console.log("edgesDataGraph = ", edgesDataGraph);
 
       let nodesDataGraph = dataGraphAPI.nodes.map(
-        (node: { _id: any; name: any; type: string; avatar: string }) => {
+        (node: {
+          _id: any;
+          name: any;
+          type: string;
+          avatar: string;
+          extraDistanceRation: Number;
+        }) => {
           let extraStyle = {};
 
           // if (node._id == "637a914ab8953f12f501e1ca") {
@@ -360,13 +381,13 @@ const TestPage = () => {
               },
               // ----------- Shwow Avatar User ---------
             };
-            if (node._id == "961730944170090516") {
-              extraStyle = {
-                ...extraStyle,
-                x: 100,
-                y: 100,
-              };
-            }
+            // if (node._id == "961730944170090516") {
+            //   extraStyle = {
+            //     ...extraStyle,
+            //     x: 100,
+            //     y: 100,
+            //   };
+            // }
           }
           if (settingsGraphNow.useAvatar == false && node.avatar != undefined) {
             extraStyle = {
@@ -380,14 +401,15 @@ const TestPage = () => {
           }
 
           // console.log("node = ", node);
-          if (node._id == "961730944170090516") {
-            console.log("change = ----------", extraStyle);
-          }
+          // if (node._id == "961730944170090516") {
+          //   console.log("change = ----------", extraStyle);
+          // }
 
           return {
             id: node._id,
             label: node.name,
             nodeType: node.type,
+            extraDistanceRation: node.extraDistanceRation,
             size: 50,
             numberConnections: nodeDataObj[node._id]
               ? nodeDataObj[node._id].numberConnections
@@ -413,7 +435,8 @@ const TestPage = () => {
 
   useEffect(() => {
     updateGraph(settingsGraphs);
-  }, [dataGraphAPImember, dataGraphAPImemberProject, selectedOption]);
+  }, [selectedOption]);
+  // }, [dataGraphAPImember, dataGraphAPImemberProject, selectedOption]);
 
   // const [data, setData] = React.useState<DataState>(data2);
   const [data, setData] = React.useState<DataState>({
