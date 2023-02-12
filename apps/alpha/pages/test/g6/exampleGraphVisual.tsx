@@ -245,7 +245,7 @@ const GraphVisualPage: NextPageWithLayout = () => {
 
   const [width, setWidth] = useState<number>(0);
 
-  const [selectedOption, setSelectedOption] = useState<string>("Option 1");
+  const [selectedOption, setSelectedOption] = useState<string>("Option 2");
   const [settingsGraphs, setSettingsGraphs] = useState<any>({
     useAvatar: true,
     updateGraph: false,
@@ -261,9 +261,9 @@ const GraphVisualPage: NextPageWithLayout = () => {
     });
     // console.log("settingsNew = ", settingsNew);
 
-    if (settingsNew.updateGraph == true) {
-      updateGraph(settingsNew);
-    }
+    // if (settingsNew.updateGraph == true) {
+    //   updateGraph(settingsNew);
+    // }
 
     // refetchDataGraphAPImember();
   };
@@ -318,6 +318,7 @@ const GraphVisualPage: NextPageWithLayout = () => {
         ],
       },
     },
+    skip: selectedOption !== "Option 3",
     context: { serviceName: "soilservice" },
   });
 
@@ -380,6 +381,7 @@ const GraphVisualPage: NextPageWithLayout = () => {
           ],
         },
       },
+      skip: selectedOption !== "Option 2",
       context: { serviceName: "soilservice" },
     }
   );
@@ -463,6 +465,7 @@ const GraphVisualPage: NextPageWithLayout = () => {
         ],
       },
     },
+    skip: selectedOption !== "Option 4",
     context: { serviceName: "soilservice" },
   });
 
@@ -484,6 +487,7 @@ const GraphVisualPage: NextPageWithLayout = () => {
           showAvatar: true,
         },
       },
+      skip: selectedOption !== "Option 5",
       context: { serviceName: "soilservice" },
     }
   );
@@ -679,8 +683,21 @@ const GraphVisualPage: NextPageWithLayout = () => {
   };
 
   useEffect(() => {
-    updateGraph(settingsGraphs);
-  }, [selectedOption]);
+    if (
+      dataGraphAPImemberProject?.findMemberToProjectGraph ||
+      dataGraphAPImember?.findMemberGraph ||
+      dataGraphAPIProject?.findProjectGraph ||
+      dataGraphAPIMultipleMembersProjects?.findMultipleMembersProjectsGraph
+    ) {
+      updateGraph(settingsGraphs);
+    }
+  }, [
+    selectedOption,
+    dataGraphAPImemberProject?.findMemberToProjectGraph,
+    dataGraphAPImember?.findMemberGraph,
+    dataGraphAPIProject?.findProjectGraph,
+    dataGraphAPIMultipleMembersProjects?.findMultipleMembersProjectsGraph,
+  ]);
   // }, [dataGraphAPImember, dataGraphAPImemberProject, selectedOption]);
 
   // const [data, setData] = React.useState<Graph>(data2);

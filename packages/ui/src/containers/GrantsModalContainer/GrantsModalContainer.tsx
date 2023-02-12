@@ -5,7 +5,7 @@ import {
   WarningModal,
   WelcomeModal,
 } from "@eden/package-ui";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 
 const rangeNumbers: number[] = [];
 
@@ -16,7 +16,7 @@ for (let i = 0; i < 500; i++) {
 export interface IGrantsModalContainerProps {
   image?: any;
   // eslint-disable-next-line no-unused-vars
-  setArrayOfNodes?: (val: string[]) => void;
+  setArrayOfNodes?: (val: string[], type: string) => void;
   percentage?: number;
 }
 
@@ -25,17 +25,9 @@ export const GrantsModalContainer = ({
   setArrayOfNodes,
   percentage = 0,
 }: IGrantsModalContainerProps) => {
-  // const { currentUser } = useContext(UserContext);
   const { openModal, setOpenModal } = useContext(GrantsContext);
 
   const [nextStep, setNextStep] = useState<any>(null);
-  const [nodeIdArray, setNodeIdArray] = useState<string[]>([]);
-
-  useEffect(() => {
-    if (nodeIdArray) {
-      setArrayOfNodes?.(nodeIdArray);
-    }
-  }, [nodeIdArray]);
 
   const matchType = `Grants`;
 
@@ -69,12 +61,9 @@ export const GrantsModalContainer = ({
             setOpenModal(GrantsModal.SKIP_ALERT);
             setNextStep(GrantsModal.NODES_PROJECTS);
           }}
-          // eslint-disable-next-line no-unused-vars
           onSubmit={(val: string[]) => {
             // console.log("val", val);
-            if (val) {
-              if (setNodeIdArray) setNodeIdArray([...nodeIdArray, ...val]);
-            }
+            if (val) if (setArrayOfNodes) setArrayOfNodes(val, "sub_expertise");
             setOpenModal(GrantsModal.NODES_PROJECTS);
           }}
           title={`First select your role`}
@@ -92,17 +81,10 @@ export const GrantsModalContainer = ({
             setOpenModal(GrantsModal.SKIP_ALERT);
             setNextStep(GrantsModal.WARNING);
           }}
-          // eslint-disable-next-line no-unused-vars
           onSubmit={(val: string[] | null) => {
             // console.log("val", val);
-            if (val) {
-              if (setNodeIdArray) setNodeIdArray([...nodeIdArray, ...val]);
-            }
-            // if (percentage < 50) {
+            if (val) if (setArrayOfNodes) setArrayOfNodes(val, "sub_expertise");
             setOpenModal(GrantsModal.WARNING);
-            // } else {
-            //   setOpenModal(null);
-            // }
           }}
           title={`Let's get you sorted! What type of projects are you looking for?`}
           subTitle={`You can choose any area of interest!`}

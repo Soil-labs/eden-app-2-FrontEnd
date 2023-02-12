@@ -1,4 +1,11 @@
-import { useMutation, useQuery, useSubscription } from "@apollo/client";
+import {
+  ApolloClient,
+  HttpLink,
+  InMemoryCache,
+  useMutation,
+  useQuery,
+  useSubscription,
+} from "@apollo/client";
 import { UserContext } from "@eden/package-context";
 import {
   ENTER_ROOM,
@@ -8,7 +15,7 @@ import {
   MEMBER_UPDATED_IN_ROOM_SUB,
   ROOM_UPDATED,
 } from "@eden/package-graphql";
-import { Members } from "@eden/package-graphql/generated";
+import { Maybe, Members, Rooms } from "@eden/package-graphql/generated";
 import {
   AppPublicLayout,
   EditProfileOnboardPartyNodesCard,
@@ -21,29 +28,26 @@ import {
   UsersToMeetCard,
 } from "@eden/package-ui";
 import { useRouter } from "next/router";
-import { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 
 import type { NextPageWithLayout } from "../../_app";
 
-const OnboardPartyPage: NextPageWithLayout = () => {
+const OnboardPartyPage: NextPageWithLayout = ({
+  room,
+  error,
+}: {
+  room: Rooms;
+  error: string;
+}) => {
   const router = useRouter();
   const { partyId } = router.query;
   const { currentUser } = useContext(UserContext);
 
   const [members, setMembers] = useState<Members[]>([]);
   const [nodesID, setNodesID] = useState<string[] | null>(null);
+  const [memberEnterRoom, setMemberEnterRoom] = useState<boolean>(false);
 
-  const { data: dataRoom } = useQuery(FIND_ROOM, {
-    variables: {
-      fields: {
-        _id: partyId,
-      },
-    },
-    skip: !partyId,
-    context: { serviceName: "soilservice" },
-  });
-
-  // if (dataRoom?.findRoom) console.log("dataRoom", dataRoom?.findRoom);
+  // console.log("room", room);
 
   const { data: dataMembers, refetch: refetchMatchMembers } = useQuery(
     MATCH_NODES_MEMBERS_LITE,
@@ -51,10 +55,10 @@ const OnboardPartyPage: NextPageWithLayout = () => {
       variables: {
         fields: {
           nodesID: nodesID,
-          serverID: dataRoom?.findRoom?.serverID,
+          serverID: room?.serverID,
         },
       },
-      skip: !nodesID || !dataRoom?.findRoom?.serverID,
+      skip: !nodesID || !room?.serverID || error?.length > 0,
       context: { serviceName: "soilservice" },
     }
   );
@@ -81,7 +85,8 @@ const OnboardPartyPage: NextPageWithLayout = () => {
     ? dataRoomSubscription.roomUpdated.members.map(
         (member: Members) => member._id
       )
-    : dataRoom?.findRoom?.members.map((member: Members) => member._id);
+    : room?.members &&
+      room?.members.map((member: Maybe<Members>) => member?._id);
 
   useSubscription(MEMBER_UPDATED_IN_ROOM_SUB, {
     variables: {
@@ -102,14 +107,14 @@ const OnboardPartyPage: NextPageWithLayout = () => {
   });
 
   const [enterRoom] = useMutation(ENTER_ROOM, {
-    onError: (error) => {
-      console.log("error", error);
+    onError: () => {
+      console.log("error");
     },
   });
 
   useEffect(() => {
     // if user logged in and not in party, add currentUser to party
-    if (!currentUser || !partyId) return;
+    if (!currentUser || !partyId || memberEnterRoom) return;
     if (
       partyId &&
       !!membersIds?.length &&
@@ -118,17 +123,20 @@ const OnboardPartyPage: NextPageWithLayout = () => {
     ) {
       return;
     }
-    if (!dataRoom || !dataRoom.findRoom) return;
-    enterRoom({
-      variables: {
-        fields: {
-          roomID: partyId,
-          memberID: currentUser?._id,
+
+    if (!memberEnterRoom) {
+      enterRoom({
+        variables: {
+          fields: {
+            roomID: partyId,
+            memberID: currentUser?._id,
+          },
         },
-      },
-      context: { serviceName: "soilservice" },
-    });
-  }, [currentUser, membersIds, partyId, dataRoom]);
+        context: { serviceName: "soilservice" },
+      });
+      setMemberEnterRoom(true);
+    }
+  }, [currentUser, membersIds, partyId]);
 
   const {} = useQuery(FIND_MEMBERS, {
     variables: {
@@ -147,11 +155,15 @@ const OnboardPartyPage: NextPageWithLayout = () => {
 
   return (
     <>
-      <SEO />
+      <SEO
+        image={room?.avatar as string}
+        title={room?.name as string}
+        description={room?.description as string}
+      />
       <GridLayout>
         <GridItemThree>
           <div className={`lg:h-85 mb-8 flex flex-col gap-4 lg:mb-0`}>
-            <OnboardRoomCard room={dataRoom?.findRoom} />
+            <OnboardRoomCard room={room} />
             {!currentUser ? (
               <p>
                 You must be logged in to edit your profile.
@@ -160,7 +172,7 @@ const OnboardPartyPage: NextPageWithLayout = () => {
               </p>
             ) : (
               <EditProfileOnboardPartyNodesCard
-                serverID={dataRoom?.findRoom?.serverID || ""}
+                serverID={room?.serverID || ""}
                 RoomID={partyId as string}
               />
             )}
@@ -187,3 +199,53 @@ OnboardPartyPage.getLayout = (page) => (
 );
 
 export default OnboardPartyPage;
+
+import type { GetServerSideProps } from "next";
+
+const client = new ApolloClient({
+  ssrMode: typeof window === "undefined",
+  link: new HttpLink({
+    uri: process.env.NEXT_PUBLIC_GRAPHQL_URL as string,
+    credentials: "same-origin",
+  }),
+  cache: new InMemoryCache(),
+});
+
+type Props = {
+  room: Rooms | null;
+  error: string | null;
+};
+
+export const getServerSideProps: GetServerSideProps<Props> = async (
+  context
+) => {
+  const { partyId } = context.query;
+
+  try {
+    const { data } = await client.query({
+      query: FIND_ROOM,
+      variables: {
+        fields: {
+          _id: partyId,
+        },
+        ssr: true,
+      },
+    });
+
+    // console.log("data", data);
+
+    return {
+      props: {
+        room: data.findRoom,
+        error: data.findRoom ? null : "Room not found",
+      },
+    };
+  } catch (error) {
+    return {
+      props: {
+        room: null,
+        error: "Room not found",
+      },
+    };
+  }
+};

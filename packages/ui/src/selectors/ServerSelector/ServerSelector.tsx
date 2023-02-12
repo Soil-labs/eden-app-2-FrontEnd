@@ -15,6 +15,7 @@ export interface IServerSelectorProps {
   compareServerID?: Maybe<string>[];
   onChangeString?: React.Dispatch<React.SetStateAction<string>>;
   onChangeServer?: React.Dispatch<React.SetStateAction<ServerTemplate>>;
+  inputRef?: any; // TODO: fix this, need to use forwardRef
 }
 
 export const ServerSelector = ({
@@ -24,6 +25,7 @@ export const ServerSelector = ({
   onChangeString,
   onChangeServer,
   btnBGcolor = "bg-gray-50",
+  inputRef,
 }: IServerSelectorProps) => {
   const { memberServers } = useContext(UserContext);
   const [availableServers, setAvailableServers] = useState<ServerTemplate[]>(
@@ -77,7 +79,7 @@ export const ServerSelector = ({
       onChange={setSelected}
     >
       <div className="relative mt-1">
-        <Listbox.Button className={btnClasses}>
+        <Listbox.Button className={btnClasses} ref={inputRef}>
           {isEmpty(selected) ? (
             <span className="mr-2 block truncate py-1 font-medium">
               Select Server

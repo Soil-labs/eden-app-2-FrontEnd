@@ -78,7 +78,6 @@ export const DiscoverModalContainer = ({
             setNextStep(DiscoverModal.SKILLS_CATEGORY);
           }}
           onSubmit={(val) => {
-            console.log(val);
             if (val) {
               if (setPreferences) setPreferences(val);
             }
@@ -98,7 +97,7 @@ export const DiscoverModalContainer = ({
           onSubmit={(val: string[]) => {
             console.log("val", val);
             if (val) {
-              if (setNodeIdArray) setNodeIdArray([...nodeIdArray, ...val]);
+              if (setNodeIdArray) setNodeIdArray(val);
             }
             setOpenModal(DiscoverModal.SKILLS_SUBCATEGORY);
           }}
@@ -120,7 +119,7 @@ export const DiscoverModalContainer = ({
           onSubmit={(val: string[] | null) => {
             console.log("val2", val);
             if (val) {
-              if (setNodeIdArray) setNodeIdArray([...nodeIdArray, ...val]);
+              if (setNodeIdArray) setNodeIdArray(val);
             }
 
             // if (setArrayOfNodes) setArrayOfNodes(val);

@@ -1,4 +1,4 @@
-schema: "https://oasis-development.up.railway.app/graphql"
+schema: "https://soil-api-backend-developai2.up.railway.app/graphql"
 hooks:
   afterAllFileWrite:
     - prettier --write

@@ -15,7 +15,7 @@ import { ToastContainer } from "react-toastify";
 
 export { reportWebVitals } from "next-axiom";
 
-export type NextPageWithLayout<P = {}, IP = P> = NextPage<P, IP> & {
+export type NextPageWithLayout<P = any, IP = P> = NextPage<P, IP> & {
   // eslint-disable-next-line no-unused-vars
   getLayout?: (page: ReactElement) => ReactNode;
 };

@@ -107,6 +107,7 @@ export const SendMessageUserToUser = ({
       channelId: selectedServer.channel?.forumID!,
       threadName: `User Introduction`,
       ThreadAutoArchiveDuration: ThreadAutoArchiveDuration.OneDay,
+      enableButton: true,
     });
 
     // handleDMCheck({ threadID: threadId });

@@ -215,12 +215,9 @@ export type Mutation = {
   addNodesToProjectRole?: Maybe<Project>;
   addPreferencesToMember?: Maybe<Members>;
   addProjectRole?: Maybe<Project>;
-  addSkillToMember?: Maybe<Members>;
   applyGrant?: Maybe<GrantTemplate>;
-  approveOrRejectSkill?: Maybe<Skills>;
   approveTweet?: Maybe<Project>;
   changeTeamMember_Phase_Project?: Maybe<Project>;
-  createApprovedSkill?: Maybe<Skills>;
   createError?: Maybe<ErrorLog>;
   createNewEpic?: Maybe<Epic>;
   createNewRole?: Maybe<Role>;
@@ -229,8 +226,6 @@ export type Mutation = {
   createProject?: Maybe<Project>;
   createProjectUpdate?: Maybe<ProjectUpdate>;
   createRoom?: Maybe<Rooms>;
-  createSkill?: Maybe<Skills>;
-  createSkills?: Maybe<Array<Maybe<Skills>>>;
   deleteError?: Maybe<ErrorLog>;
   deleteMember?: Maybe<Members>;
   deleteNodesFromMember?: Maybe<Members>;
@@ -253,14 +248,13 @@ export type Mutation = {
   updateMember?: Maybe<Members>;
   updateMemberInRoom?: Maybe<Members>;
   updateMessage?: Maybe<Ai>;
+  updateNodesToGrant?: Maybe<GrantTemplate>;
   updateNodesToMember?: Maybe<Members>;
   updateNodesToMemberInRoom?: Maybe<Members>;
   updateNodesToProjectRole?: Maybe<Project>;
   updateProject?: Maybe<Project>;
   updateRoleTemplate?: Maybe<RoleTemplate>;
   updateServer?: Maybe<ServerTemplate>;
-  updateSkillCategory?: Maybe<SkillCategory>;
-  updateSkillSubCategory?: Maybe<SkillSubCategory>;
   useAI_OnMessage?: Maybe<UseAi_OnMessageOutput>;
 };
 
@@ -312,16 +306,8 @@ export type MutationAddProjectRoleArgs = {
   fields: AddProjectRoleInput;
 };
 
-export type MutationAddSkillToMemberArgs = {
-  fields: AddSkillToMember_Input;
-};
-
 export type MutationApplyGrantArgs = {
   fields?: InputMaybe<ApplyGrantInput>;
-};
-
-export type MutationApproveOrRejectSkillArgs = {
-  fields?: InputMaybe<ApproveOrRejectSkillInput>;
 };
 
 export type MutationApproveTweetArgs = {
@@ -330,10 +316,6 @@ export type MutationApproveTweetArgs = {
 
 export type MutationChangeTeamMember_Phase_ProjectArgs = {
   fields: ChangeTeamMember_Phase_ProjectInput;
-};
-
-export type MutationCreateApprovedSkillArgs = {
-  fields?: InputMaybe<CreateApprovedSkillInput>;
 };
 
 export type MutationCreateErrorArgs = {
@@ -366,14 +348,6 @@ export type MutationCreateProjectUpdateArgs = {
 
 export type MutationCreateRoomArgs = {
   fields: CreateRoomInput;
-};
-
-export type MutationCreateSkillArgs = {
-  fields?: InputMaybe<CreateSkillInput>;
-};
-
-export type MutationCreateSkillsArgs = {
-  fields?: InputMaybe<CreateSkillsInput>;
 };
 
 export type MutationDeleteErrorArgs = {
@@ -464,6 +438,10 @@ export type MutationUpdateMessageArgs = {
   fields?: InputMaybe<UpdateMessageInput>;
 };
 
+export type MutationUpdateNodesToGrantArgs = {
+  fields?: InputMaybe<UpdateNodesToGrantInput>;
+};
+
 export type MutationUpdateNodesToMemberArgs = {
   fields: UpdateNodesToMemberInput;
 };
@@ -486,14 +464,6 @@ export type MutationUpdateRoleTemplateArgs = {
 
 export type MutationUpdateServerArgs = {
   fields?: InputMaybe<UpdateServerInput>;
-};
-
-export type MutationUpdateSkillCategoryArgs = {
-  fields?: InputMaybe<UpdateSkillCategoryInput>;
-};
-
-export type MutationUpdateSkillSubCategoryArgs = {
-  fields?: InputMaybe<UpdateSkillSubCategoryInput>;
 };
 
 export type MutationUseAi_OnMessageArgs = {
@@ -1748,7 +1718,7 @@ export type InputToGptOutput = {
   __typename?: "inputToGPTOutput";
   benefitsRole?: Maybe<Array<Maybe<Scalars["String"]>>>;
   descriptionRole?: Maybe<Scalars["String"]>;
-  expenctationsRole?: Maybe<Scalars["String"]>;
+  expectationsRole?: Maybe<Array<Maybe<Scalars["String"]>>>;
 };
 
 export enum LevelEnum {
@@ -2391,6 +2361,13 @@ export type UpdateMemberInput = {
 export type UpdateMessageInput = {
   edenAI?: InputMaybe<EdenAiInput>;
   messageID?: InputMaybe<Scalars["ID"]>;
+};
+
+export type UpdateNodesToGrantInput = {
+  grantID?: InputMaybe<Scalars["ID"]>;
+  nodeType?: InputMaybe<Scalars["String"]>;
+  nodesID?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>;
+  nodesID_level?: InputMaybe<Array<InputMaybe<NodesId_LevelInput>>>;
 };
 
 export type UpdateNodesToMemberInRoomInput = {

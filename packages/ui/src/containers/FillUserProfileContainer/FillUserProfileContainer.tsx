@@ -77,7 +77,10 @@ export const FillUserProfileContainer = ({
   const [updateNodes, {}] = useMutation(UPDATE_NODES_MEMBER, {
     onCompleted({ updateNodesToMember }: Mutation) {
       if (!updateNodesToMember) console.log("updateNodesToMember is null");
-      // console.log("updateNodesToMember", updateNodesToMember);
+      console.log("updateNodesToMember", updateNodesToMember);
+    },
+    onError: () => {
+      setSubmitting(false);
     },
   });
 
@@ -85,7 +88,10 @@ export const FillUserProfileContainer = ({
     onCompleted({ addPreferencesToMember }: Mutation) {
       if (!addPreferencesToMember)
         console.log("addPreferencesToMember is null");
-      // console.log("addPreferencesToMember", addPreferencesToMember);
+      console.log("addPreferencesToMember", addPreferencesToMember);
+    },
+    onError: () => {
+      setSubmitting(false);
     },
   });
 
@@ -331,7 +337,7 @@ export const FillUserProfileContainer = ({
                   onChange={(e) => {
                     handleSetBio(e.target.value);
                   }}
-                  value={state?.bio as string}
+                  value={(state?.bio as string) || ""}
                 />
               </>
             )}
@@ -424,8 +430,8 @@ export const FillUserProfileContainer = ({
                     handleSubmitPreferences();
                   }
                   if (step === STEPS.BIO && setStep) {
-                    if (!state?.bio || state?.bio?.length < 50) {
-                      toast.error("Bio should be at least 50 characters");
+                    if (!state?.bio || state?.bio?.length < 30) {
+                      toast.error("Bio should be at least 30 characters");
                       return;
                     }
                     if (state?.nodes?.length === 0) {

@@ -1,4 +1,5 @@
 /* eslint-disable no-unused-vars */
+// todo we should combine this file to /Users/myz1237/Desktop/eden/eden-app-2-FrontEnd/apps/alpha/types/type.ts
 import {
   APIGuild,
   APIGuildMember,
@@ -35,6 +36,7 @@ export interface CreateThreadApiRequestBody {
   tagName?: string;
   threadName: string;
   ThreadAutoArchiveDuration: ThreadAutoArchiveDuration;
+  enableButton?: boolean;
 }
 
 export interface CreateMessageApiRequestBody {

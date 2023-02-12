@@ -6,7 +6,7 @@ import {
   WarningModal,
   WelcomeModal,
 } from "@eden/package-ui";
-import React, { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 
 const rangeNumbers: number[] = [];
 
@@ -16,7 +16,8 @@ for (let i = 0; i < 500; i++) {
 
 export interface IProjectsModalContainerProps {
   image?: any;
-  setArrayOfNodes?: React.Dispatch<React.SetStateAction<string[]>>;
+  // eslint-disable-next-line no-unused-vars
+  setArrayOfNodes?: (val: string[], type: string) => void;
   percentage?: number;
 }
 
@@ -28,13 +29,6 @@ export const ProjectsModalContainer = ({
   const { openModal, setOpenModal } = useContext(ProjectsContext);
 
   const [nextStep, setNextStep] = useState<any>(null);
-  const [nodeIdArray, setNodeIdArray] = useState<string[]>([]);
-
-  useEffect(() => {
-    if (nodeIdArray) {
-      setArrayOfNodes?.(nodeIdArray);
-    }
-  }, [nodeIdArray]);
 
   const matchType = ``;
 
@@ -69,7 +63,7 @@ export const ProjectsModalContainer = ({
           onSubmit={(val: string[]) => {
             // console.log("val", val);
             if (val) {
-              if (setNodeIdArray) setNodeIdArray([...nodeIdArray, ...val]);
+              if (setArrayOfNodes) setArrayOfNodes(val, "sub_expertise");
             }
             setOpenModal(ProjectsModal.NODES_PROJECTS);
           }}
@@ -91,7 +85,7 @@ export const ProjectsModalContainer = ({
           onSubmit={(val: string[] | null) => {
             // console.log("val", val);
             if (val) {
-              if (setNodeIdArray) setNodeIdArray([...nodeIdArray, ...val]);
+              if (setArrayOfNodes) setArrayOfNodes(val, "sub_typeProject");
             }
             setOpenModal(ProjectsModal.REQUIREMENTS);
           }}

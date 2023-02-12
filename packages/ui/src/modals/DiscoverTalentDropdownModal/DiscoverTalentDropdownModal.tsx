@@ -1,3 +1,4 @@
+import { UserContext } from "@eden/package-context";
 import { Maybe, Node } from "@eden/package-graphql/generated";
 import {
   // BatteryStepper,
@@ -7,7 +8,7 @@ import {
   TextBody,
   TextHeading3,
 } from "@eden/package-ui";
-import { useMemo, useState } from "react";
+import { useContext, useMemo, useState } from "react";
 import { toast } from "react-toastify";
 
 type Data = {
@@ -44,6 +45,7 @@ export const DiscoverTalentDropdownModal = ({
   previousValues,
 }: // batteryPercentage,
 IDiscoverTalentDropdownModalProps) => {
+  const { currentUser } = useContext(UserContext);
   // console.log("hackathon talent dropdown modal", dataNodes);
   const section: Data = useMemo(
     () => ({
@@ -58,7 +60,11 @@ IDiscoverTalentDropdownModalProps) => {
     [title, subTitle]
   );
 
-  const [selectedNodes, setSelectedNodes] = useState<Node[]>([]);
+  const [selectedNodes, setSelectedNodes] = useState<Node[]>(
+    (currentUser
+      ?.nodes!.filter((_node) => _node?.nodeData?.node === "sub_" + nodeType)
+      .map((_node) => _node?.nodeData) || []) as Node[]
+  );
 
   const handleNext = () => {
     if (selectedNodes.length === 0) {

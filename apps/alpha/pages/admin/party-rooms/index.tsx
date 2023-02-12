@@ -58,7 +58,7 @@ const DiscoverPage: NextPageWithLayout = () => {
     context: { serviceName: "soilservice" },
   });
 
-  // console.log("dataRoom", dataRoom);
+  if (dataRoom) console.log("dataRoom", dataRoom);
 
   const { roomsData, pageInfo } = dataRoom?.findRooms || {};
 

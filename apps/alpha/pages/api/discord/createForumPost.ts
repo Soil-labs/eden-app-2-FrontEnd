@@ -4,13 +4,15 @@ import axios, { AxiosResponse } from "axios";
 import {
   APIGuildForumChannel,
   APIThreadChannel,
+  ButtonStyle,
   ChannelType,
+  ComponentType,
   RESTPostAPIGuildForumThreadsJSONBody,
 } from "discord-api-types/v10";
 import type { NextApiRequest, NextApiResponse } from "next";
 import { getToken } from "next-auth/jwt";
 
-import { DISCORD_API_URL } from "../../../constants";
+import { ButtonCustomId, DISCORD_API_URL } from "../../../constants";
 import {
   CreateThreadApiRequestBody,
   CreateThreadResponse,
@@ -40,6 +42,7 @@ export default async (
       channelId,
       threadName,
       ThreadAutoArchiveDuration,
+      enableButton,
     } = body as CreateThreadApiRequestBody;
 
     const myAxios = axios.create({
@@ -50,10 +53,6 @@ export default async (
 
     if (!message && !embedMessage && !channelId) {
       res.status(400).end();
-    }
-
-    if (message) {
-      res.status(400);
     }
 
     // Fetch forum Obj is to fetch tag ID
@@ -94,6 +93,33 @@ export default async (
             description: embedMessage,
           },
         ],
+        components: enableButton
+          ? [
+              {
+                type: ComponentType.ActionRow,
+                components: [
+                  {
+                    custom_id: ButtonCustomId.AgreeToConnect,
+                    label: "Let's connect",
+                    style: ButtonStyle.Success,
+                    type: ComponentType.Button,
+                  },
+                  {
+                    custom_id: ButtonCustomId.NoInterest,
+                    label: "No Interest",
+                    style: ButtonStyle.Primary,
+                    type: ComponentType.Button,
+                  },
+                  {
+                    custom_id: ButtonCustomId.RefuseConnect,
+                    label: "Don't notify me",
+                    style: ButtonStyle.Danger,
+                    type: ComponentType.Button,
+                  },
+                ],
+              },
+            ]
+          : [],
       },
     });
 

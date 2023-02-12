@@ -131,6 +131,7 @@ export const SendMessageToUser = ({
       channelId: selectedServer.channel?.forumID!,
       threadName: `Project Interest -- ${project?.title}`,
       ThreadAutoArchiveDuration: ThreadAutoArchiveDuration.OneDay,
+      enableButton: true,
     });
 
     try {
