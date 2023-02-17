@@ -417,7 +417,7 @@ export function updateNodesBackendSettings(
     // -------- Change stype based on Type of Node -------
     if (nodeType) {
       // SOS 🆘 you cant chanege the style of the member node because the visualisation breaks
-      if (nodeType != "Member") {
+      if (nodeType != "Member" && nodeType != "dynamicSearch") {
         graph.updateItem(node.id, {
           size: node.style.size,
           style: {

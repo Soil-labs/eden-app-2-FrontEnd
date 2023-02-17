@@ -1269,7 +1269,7 @@ const GraphVisualPage: NextPageWithLayout = () => {
         refetchDynamicSearchToMember();
         updateGraph(settingsGraphs);
       } else if (selectedOption == "Option 8") {
-        refetchDynamicSearchToMember();
+        refetchDynamicSearch();
         updateGraph(settingsGraphs);
       } else {
         updateGraph(settingsGraphs);
