@@ -83,6 +83,26 @@ const MenuOption = (props: any) => {
           />
           Dynamic Search to Project Graph
         </label>
+        <label style={{ margin: "10px" }}>
+          <input
+            type="radio"
+            name="menuOption"
+            value="Option 7"
+            checked={props.selectedOption === "Option 7"}
+            onChange={(e) => props.setSelectedOption(e.target.value)}
+          />
+          Dynamic Search to Member Graph
+        </label>
+        <label style={{ margin: "10px" }}>
+          <input
+            type="radio"
+            name="menuOption"
+            value="Option 8"
+            checked={props.selectedOption === "Option 8"}
+            onChange={(e) => props.setSelectedOption(e.target.value)}
+          />
+          Dynamic Search Graph
+        </label>
         {props.selectedOption === "Option 1" && (
           <div>
             <label htmlFor="checkbox" style={{ paddingRight: "10px" }}>
@@ -338,6 +358,90 @@ const MenuOption = (props: any) => {
                 })
               }
             />
+            <button
+              className="rounded bg-blue-500 py-2 px-4 font-bold text-white shadow hover:bg-blue-700"
+              onClick={() => {
+                const nodesIDnew = props.settingsGraphs.nodesID;
+
+                console.log(
+                  "nodesIDnew = ",
+                  nodesIDnew,
+                  props.settingsGraphs.nodePresetPos,
+                  presetNodesID[props.settingsGraphs.nodePresetPos]
+                );
+                if (presetNodesID.length > props.settingsGraphs.nodePresetPos) {
+                  nodesIDnew.push(
+                    presetNodesID[props.settingsGraphs.nodePresetPos]
+                  );
+
+                  console.log("nodesIDnew = ", nodesIDnew);
+                }
+                props.updateSettings({
+                  ...props.settingsGraphs,
+                  nodesID: nodesIDnew,
+                  nodePresetPos: props.settingsGraphs.nodePresetPos + 1,
+                });
+              }}
+            >
+              Add Nodes
+            </button>
+          </div>
+        )}
+        {props.selectedOption === "Option 7" && (
+          <div>
+            <label htmlFor="input1" style={{ paddingRight: "10px" }}>
+              Member ID:
+            </label>
+            <input
+              id="input1"
+              style={{
+                padding: "10px",
+                borderRadius: "5px",
+                border: "1px solid gray",
+                fontSize: "0.8em",
+                width: "200px",
+              }}
+              type="text"
+              value={props.settingsGraphs.memberID1}
+              onChange={(e) =>
+                props.updateSettings({
+                  ...props.settingsGraphs,
+                  memberID1: e.target.value,
+                  updateGraph: false,
+                })
+              }
+            />
+            <button
+              className="rounded bg-blue-500 py-2 px-4 font-bold text-white shadow hover:bg-blue-700"
+              onClick={() => {
+                const nodesIDnew = props.settingsGraphs.nodesID;
+
+                console.log(
+                  "nodesIDnew = ",
+                  nodesIDnew,
+                  props.settingsGraphs.nodePresetPos,
+                  presetNodesID[props.settingsGraphs.nodePresetPos]
+                );
+                if (presetNodesID.length > props.settingsGraphs.nodePresetPos) {
+                  nodesIDnew.push(
+                    presetNodesID[props.settingsGraphs.nodePresetPos]
+                  );
+
+                  console.log("nodesIDnew = ", nodesIDnew);
+                }
+                props.updateSettings({
+                  ...props.settingsGraphs,
+                  nodesID: nodesIDnew,
+                  nodePresetPos: props.settingsGraphs.nodePresetPos + 1,
+                });
+              }}
+            >
+              Add Nodes
+            </button>
+          </div>
+        )}
+        {props.selectedOption === "Option 8" && (
+          <div>
             <button
               className="rounded bg-blue-500 py-2 px-4 font-bold text-white shadow hover:bg-blue-700"
               onClick={() => {

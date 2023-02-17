@@ -169,6 +169,70 @@ const DYNAMIC_SEARCH_TO_PROJECT_GRAPH = gql`
   }
 `;
 
+const DYNAMIC_SEARCH_GRAPH = gql`
+  query ($fields: dynamicSearchGraphInput!) {
+    dynamicSearchGraph(fields: $fields) {
+      nodesVisual {
+        _id
+        name
+        type
+        avatar
+        fakeID
+        originalNode
+        extraDistanceRation
+        style {
+          fill
+          stroke
+          size
+        }
+      }
+      edges {
+        source
+        target
+        distanceRation
+        style {
+          fill
+          stroke
+          distance
+          strength
+        }
+      }
+    }
+  }
+`;
+
+const DYNAMIC_SEARCH_TO_MEMBER_GRAPH = gql`
+  query ($fields: dynamicSearchToMemberGraphInput!) {
+    dynamicSearchToMemberGraph(fields: $fields) {
+      nodesVisual {
+        _id
+        name
+        type
+        avatar
+        fakeID
+        originalNode
+        extraDistanceRation
+        style {
+          fill
+          stroke
+          size
+        }
+      }
+      edges {
+        source
+        target
+        distanceRation
+        style {
+          fill
+          stroke
+          distance
+          strength
+        }
+      }
+    }
+  }
+`;
+
 interface clipCfg {
   show?: boolean;
   type?: string;
@@ -458,7 +522,8 @@ const GraphVisualPage: NextPageWithLayout = () => {
     // memberID1: "908392557258604544",
     // projectID1: "637ad5a6f0f9c427e03a03a8",
     simpleDetail: "simple",
-    nodesID: ["637a9135b8953f12f501e118", "637a9134b8953f12f501e0f7"],
+    nodesID: ["637a9137b8953f12f501e156", "637a9134b8953f12f501e0f7"],
+    // nodesID: ["637a9137b8953f12f501e156", "637a913ab8953f12f501e190"],
     // nodesID: [
     //   "637a9135b8953f12f501e118",
     //   "637a9134b8953f12f501e0f7",
@@ -528,12 +593,12 @@ const GraphVisualPage: NextPageWithLayout = () => {
         //   edgeSettingsPreset["typeProject|Member"]["edge"],
         //   // ------ split sub_typeProject|Member -------
 
-        //   // ------ split skill|Member -------
-        //   edgeSettingsPreset["skill|Member"]["doubleSplitEdge"],
-        //   // edgeSettingsPreset["skill|Member"]["edge"],
-        //   edgeSettingsPreset["skill|sub_expertise"]["edge"],
-        //   // edgeSettingsPreset["sub_expertise|Member"]["edge"],
-        //   // ------ split skill|Member -------
+        // // ------ split skill|Member -------
+        // edgeSettingsPreset["skill|Member"]["doubleSplitEdge"],
+        // // edgeSettingsPreset["skill|Member"]["edge"],
+        // edgeSettingsPreset["skill|sub_expertise"]["edge"],
+        // // edgeSettingsPreset["sub_expertise|Member"]["edge"],
+        // // ------ split skill|Member -------
 
         //   // ------ split sub_expertise|Member -------
         //   edgeSettingsPreset["sub_expertise|Member"]["expertise"],
@@ -707,6 +772,166 @@ const GraphVisualPage: NextPageWithLayout = () => {
     context: { serviceName: "soilservice" },
   });
 
+  const { data: dataDynamicSearch, refetch: refetchDynamicSearch } = useQuery(
+    DYNAMIC_SEARCH_GRAPH,
+    {
+      variables: {
+        fields: {
+          nodesID: settingsGraphs.nodesID,
+          showAvatar: true,
+
+          nodeSettings: [
+            // nodeSettingsPreset["Member"]["main"],
+            nodeSettingsPreset["dynamicSearch"]["main"],
+            nodeSettingsPreset["sub_typeProject"]["main"],
+            nodeSettingsPreset["typeProject"]["main"],
+            nodeSettingsPreset["sub_expertise"]["main"],
+            nodeSettingsPreset["expertise"]["main"],
+            // nodeSettingsPreset["Project"]["main"],
+            // nodeSettingsPreset["Role"]["main"],
+            // nodeSettingsPreset["skill"]["main"],
+          ],
+          edgeSettings: [
+            // // ------ split sub_typeProject|dynamicSearch -------
+            edgeSettingsPreset["sub_typeProject|dynamicSearch"]["typeProject"],
+            edgeSettingsPreset["sub_typeProject|typeProject"]["edge"],
+            edgeSettingsPreset["typeProject|dynamicSearch"]["edge"],
+            // // ------ split sub_typeProject|dynamicSearch -------
+
+            // ------ split sub_expertise|dynamicSearch -------
+            // edgeSettingsPreset["sub_expertise|dynamicSearch"]["edge"],
+            edgeSettingsPreset["sub_expertise|dynamicSearch"]["expertise"],
+            edgeSettingsPreset["sub_expertise|expertise"]["edge"],
+            edgeSettingsPreset["expertise|dynamicSearch"]["edge"],
+            // ------ split sub_expertise|dynamicSearch -------
+
+            // // ------ Project Edges -------
+            // edgeSettingsPreset["Project|Role"]["edge"],
+            // edgeSettingsPreset["sub_expertise|Role"]["edge"],
+            // edgeSettingsPreset["sub_typeProject|Role"]["edge"],
+            // // edgeSettingsPreset["skill|Role"]["edge"],
+            // // ------ Project Edges -------
+
+            // // // ------ skill Edges -------
+            // // edgeSettingsPreset["skill|dynamicSearch"]["edge"],
+            // edgeSettingsPreset["skill|dynamicSearch"]["doubleSplitEdge"],
+            // edgeSettingsPreset["skill|sub_expertise"]["edge"],
+            // // edgeSettingsPreset["sub_expertise|dynamicSearch"]["edge"],
+            // // // ------ skill Edges -------
+
+            // // ------ split sub_expertise|Role -------
+            // edgeSettingsPreset["sub_expertise|Role"]["expertise"],
+            // edgeSettingsPreset["sub_expertise|expertise"]["edge"],
+            // edgeSettingsPreset["expertise|Role"]["edge"],
+            // // ------ split sub_expertise|Role -------
+
+            // //  ------ Create Far Distance between member and project ------
+            // edgeSettingsPreset["Project|dynamicSearch"]["hiddenEdge"],
+            // edgeSettingsPreset["typeProject|expertise"]["hiddenEdge"],
+            // edgeSettingsPreset["Role|expertise"]["hiddenEdge"],
+            // edgeSettingsPreset["Role|typeProject"]["hiddenEdge"],
+            // //  ------ Create Far Distance between member and project ------
+          ],
+        },
+      },
+      skip: selectedOption !== "Option 8",
+      context: { serviceName: "soilservice" },
+    }
+  );
+
+  const {
+    data: dataDynamicSearchToMember,
+    refetch: refetchDynamicSearchToMember,
+  } = useQuery(DYNAMIC_SEARCH_TO_MEMBER_GRAPH, {
+    variables: {
+      fields: {
+        // memberID: settingsGraphs.memberID1,
+        // nodesID: [
+        //   // "637a9133b8953f12f501e0d6",
+        //   "637a9135b8953f12f501e118",
+        //   "637a9134b8953f12f501e0f7",
+        //   "637a914ab8953f12f501e1ca",
+        //   "637a9151b8953f12f501e2aa",
+        //   "637a913fb8953f12f501e1af",
+        //   "63d1ad93a90f12cef67a7c7b",
+        // ],
+        nodesID: settingsGraphs.nodesID,
+        memberID: settingsGraphs.memberID1,
+        showAvatar: true,
+
+        nodeSettings: [
+          nodeSettingsPreset["Member"]["main"],
+          nodeSettingsPreset["dynamicSearch"]["main"],
+          nodeSettingsPreset["sub_typeProject"]["main"],
+          nodeSettingsPreset["typeProject"]["main"],
+          nodeSettingsPreset["sub_expertise"]["main"],
+          nodeSettingsPreset["expertise"]["main"],
+          // nodeSettingsPreset["Project"]["main"],
+          // nodeSettingsPreset["Role"]["main"],
+          // nodeSettingsPreset["skill"]["main"],
+        ],
+        edgeSettings: [
+          // ------ split sub_typeProject|dynamicSearch -------
+          edgeSettingsPreset["sub_typeProject|dynamicSearch"]["edge"],
+          // edgeSettingsPreset["sub_typeProject|dynamicSearch"]["typeProject"],
+          // edgeSettingsPreset["sub_typeProject|typeProject"]["edge"],
+          // edgeSettingsPreset["typeProject|dynamicSearch"]["edge"],
+          // ------ split sub_typeProject|dynamicSearch -------
+
+          // ------ split skill|Member -------
+          // edgeSettingsPreset["sub_expertise|Member"]["edge"],
+          edgeSettingsPreset["sub_expertise|Member"]["expertise"],
+          edgeSettingsPreset["sub_expertise|expertise"]["edge"],
+          //  edgeSettingsPreset["skill|sub_expertise"]["edge"],
+          edgeSettingsPreset["expertise|Member"]["edge"],
+          // ------ split skill|Member -------
+
+          // ------ split sub_typeProject|Member -------
+          edgeSettingsPreset["sub_typeProject|Member"]["typeProject"],
+          edgeSettingsPreset["sub_typeProject|typeProject"]["edge"],
+          edgeSettingsPreset["typeProject|Member"]["edge"],
+          // ------ split sub_typeProject|Member -------
+
+          // ------ split sub_expertise|dynamicSearch -------
+          edgeSettingsPreset["sub_expertise|dynamicSearch"]["edge"],
+          // edgeSettingsPreset["sub_expertise|dynamicSearch"]["expertise"],
+          // edgeSettingsPreset["sub_expertise|expertise"]["edge"],
+          // edgeSettingsPreset["expertise|dynamicSearch"]["edge"],
+          // ------ split sub_expertise|dynamicSearch -------
+
+          // // ------ Project Edges -------
+          // edgeSettingsPreset["Project|Role"]["edge"],
+          // edgeSettingsPreset["sub_expertise|Role"]["edge"],
+          // edgeSettingsPreset["sub_typeProject|Role"]["edge"],
+          // // edgeSettingsPreset["skill|Role"]["edge"],
+          // // ------ Project Edges -------
+
+          // // // ------ skill Edges -------
+          // // edgeSettingsPreset["skill|dynamicSearch"]["edge"],
+          // edgeSettingsPreset["skill|dynamicSearch"]["doubleSplitEdge"],
+          // edgeSettingsPreset["skill|sub_expertise"]["edge"],
+          // // edgeSettingsPreset["sub_expertise|dynamicSearch"]["edge"],
+          // // // ------ skill Edges -------
+
+          // // ------ split sub_expertise|Role -------
+          // edgeSettingsPreset["sub_expertise|Role"]["expertise"],
+          // edgeSettingsPreset["sub_expertise|expertise"]["edge"],
+          // edgeSettingsPreset["expertise|Role"]["edge"],
+          // // ------ split sub_expertise|Role -------
+
+          //  ------ Create Far Distance between member and project ------
+          edgeSettingsPreset["Project|dynamicSearch"]["hiddenEdge"],
+          edgeSettingsPreset["typeProject|expertise"]["hiddenEdge"],
+          edgeSettingsPreset["Role|expertise"]["hiddenEdge"],
+          edgeSettingsPreset["Role|typeProject"]["hiddenEdge"],
+          //  ------ Create Far Distance between member and project ------
+        ],
+      },
+    },
+    skip: selectedOption !== "Option 7",
+    context: { serviceName: "soilservice" },
+  });
+
   const { data: dataGraphAPIProject } = useQuery(FIND_PROJECT_GRAPH, {
     variables: {
       fields: {
@@ -816,6 +1041,8 @@ const GraphVisualPage: NextPageWithLayout = () => {
   const updateGraph = (settingsGraphNow: any) => {
     let dataGraphAPI;
 
+    console.log("dataDynamicSearchToMember = ", dataDynamicSearchToMember);
+
     if (selectedOption == "Option 1") {
       if (settingsGraphNow.useAvatar == true && data2.nodesVisual.length > 0) {
         // data2?.nodesVisual?[0] = {
@@ -879,7 +1106,22 @@ const GraphVisualPage: NextPageWithLayout = () => {
       dataDynamicSearchToProject &&
       dataDynamicSearchToProject.dynamicSearchToProjectGraph
     ) {
+      console.log("change = 6");
       dataGraphAPI = dataDynamicSearchToProject.dynamicSearchToProjectGraph;
+    } else if (
+      selectedOption == "Option 7" &&
+      dataDynamicSearchToMember &&
+      dataDynamicSearchToMember.dynamicSearchToMemberGraph
+    ) {
+      console.log("change = 7");
+      dataGraphAPI = dataDynamicSearchToMember.dynamicSearchToMemberGraph;
+    } else if (
+      selectedOption == "Option 8" &&
+      dataDynamicSearch &&
+      dataDynamicSearch.dynamicSearchGraph
+    ) {
+      console.log("change = 8");
+      dataGraphAPI = dataDynamicSearch.dynamicSearchGraph;
     }
 
     if (dataGraphAPI != undefined && selectedOption != "Option 1") {
@@ -1015,13 +1257,20 @@ const GraphVisualPage: NextPageWithLayout = () => {
       dataGraphAPImember?.findMemberGraph ||
       dataGraphAPIProject?.findProjectGraph ||
       dataGraphAPIMultipleMembersProjects?.findMultipleMembersProjectsGraph ||
-      dataDynamicSearchToProject?.dynamicSearchToProjectGraph
+      dataDynamicSearchToProject?.dynamicSearchToProjectGraph ||
+      dataDynamicSearchToMember?.dynamicSearchToMemberGraph ||
+      dataDynamicSearch?.dynamicSearchGraph
     ) {
+      console.log("dataDynamicSearchToMember = ", dataDynamicSearchToMember);
       if (selectedOption == "Option 6") {
         refetchDynamicSearchToProject();
-        // setTimeout(function () {
         updateGraph(settingsGraphs);
-        // }, 7000);
+      } else if (selectedOption == "Option 7") {
+        refetchDynamicSearchToMember();
+        updateGraph(settingsGraphs);
+      } else if (selectedOption == "Option 8") {
+        refetchDynamicSearchToMember();
+        updateGraph(settingsGraphs);
       } else {
         updateGraph(settingsGraphs);
       }
@@ -1035,6 +1284,8 @@ const GraphVisualPage: NextPageWithLayout = () => {
     dataGraphAPIProject?.findProjectGraph,
     dataGraphAPIMultipleMembersProjects?.findMultipleMembersProjectsGraph,
     dataDynamicSearchToProject?.dynamicSearchToProjectGraph,
+    dataDynamicSearchToMember?.dynamicSearchToMemberGraph,
+    dataDynamicSearch?.dynamicSearchGraph,
   ]);
   // }, [dataGraphAPImember, dataGraphAPImemberProject, selectedOption]);
 
