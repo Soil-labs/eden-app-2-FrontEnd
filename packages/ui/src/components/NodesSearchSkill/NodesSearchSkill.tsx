@@ -120,7 +120,7 @@ export const NodesSearchSkill = ({
         }
       }}
     >
-      <div className="relative mt-1 mb-4">
+      <div className="relative mt-1 mb-4 w-full">
         <div className="relative z-30">
           <SearchIcon
             className="pointer-events-none absolute top-2.5 left-3 h-5 w-5 text-gray-400"

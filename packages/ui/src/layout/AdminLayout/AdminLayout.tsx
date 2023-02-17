@@ -6,12 +6,19 @@ import { FaMoneyBillWaveAlt } from "react-icons/fa";
 import {
   MdClose,
   MdOutlineError,
+  MdOutlineGraphicEq,
   MdOutlineHome,
   MdOutlineSensorDoor,
 } from "react-icons/md";
 
 const navigation = [
   { name: "Dashboard", href: "/admin", icon: MdOutlineHome, current: true },
+  {
+    name: "My reports",
+    href: "/admin/reports",
+    icon: MdOutlineGraphicEq,
+    current: false,
+  },
   {
     name: "Party Rooms",
     href: "/admin/party-rooms",

@@ -12,7 +12,7 @@ export const FIND_MEMBERS = gql`
         name
         url
       }
-      previusProjects {
+      previousProjects {
         title
         description
         startDate

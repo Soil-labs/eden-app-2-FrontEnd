@@ -41,7 +41,7 @@ export const FIND_MEMBER = gql`
           node
         }
       }
-      previusProjects {
+      previousProjects {
         title
         description
         startDate

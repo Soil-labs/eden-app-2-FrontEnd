@@ -83,7 +83,7 @@ export const FIND_PROJECT = gql`
         openPositions
         expectations
         benefits
-        keyRosponsibilities
+        keyResponsibilities
         nodes {
           nodeData {
             aboveNodes {

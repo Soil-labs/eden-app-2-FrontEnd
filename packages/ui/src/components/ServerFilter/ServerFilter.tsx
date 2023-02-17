@@ -66,6 +66,11 @@ export const ServerFilter = ({}: IServerFilterProps) => {
           </p>
         </div>
       </div>
+      {selectedServerID.length < 1 && !expand && (
+        <div className="text-xs	font-semibold text-red-700">
+          Please select a server
+        </div>
+      )}
       {expand && (
         <fieldset className="space-y-4">
           <legend className="sr-only">Servers</legend>

@@ -140,7 +140,7 @@ export const FillUserProfileContainer = ({
   const handleSetBackground = (value: any[]) => {
     setState({
       ...state,
-      previusProjects: value,
+      previousProjects: value,
     });
   };
 
@@ -169,7 +169,7 @@ export const FillUserProfileContainer = ({
         name: item?.name,
       })),
       memberRole: state?.memberRole?._id || undefined,
-      previusProjects: state?.previusProjects?.map((item: any) => ({
+      previousProjects: state?.previousProjects?.map((item: any) => ({
         description: item.description,
         endDate: item.endDate,
         startDate: item.startDate,
@@ -370,7 +370,7 @@ export const FillUserProfileContainer = ({
             )}
             {step === STEPS.EXP && (
               <UserExperienceCard
-                background={state?.previusProjects}
+                background={state?.previousProjects}
                 handleChange={(val) => handleSetBackground(val)}
                 handleChangeOpenExperience={(val) => {
                   if (setExperienceOpen) setExperienceOpen(val);
@@ -383,7 +383,7 @@ export const FillUserProfileContainer = ({
           <section className="relative flex pb-4">
             {step === STEPS.EXP &&
               percentage < 50 &&
-              !state?.previusProjects?.some((bg: any) => !!bg.title) && (
+              !state?.previousProjects?.some((bg: any) => !!bg.title) && (
                 <section className="absolute right-0 -top-6">
                   <span className="text-red-400">{`fill minimum 50% and 1 background`}</span>
                 </section>
@@ -455,7 +455,7 @@ export const FillUserProfileContainer = ({
                 className={`ml-auto disabled:border-slate-300 disabled:bg-slate-300 disabled:text-slate-200`}
                 disabled={
                   percentage < 50 &&
-                  !state?.previusProjects?.some((bg: any) => !!bg.title)
+                  !state?.previousProjects?.some((bg: any) => !!bg.title)
                 }
                 onClick={() => {
                   handleSubmitForm();

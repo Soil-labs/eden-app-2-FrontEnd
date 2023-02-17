@@ -113,9 +113,9 @@ export const ViewUserProfileContainer = ({
             step !== STEPS.EXP && step !== STEPS.EXP_DETAIL ? "blur-sm" : ""
           }`}
         >
-          {user?.previusProjects && (
+          {user?.previousProjects && (
             <UserBackground
-              background={user.previusProjects}
+              background={user.previousProjects}
               initialEndorsements={[
                 {
                   endorser: {

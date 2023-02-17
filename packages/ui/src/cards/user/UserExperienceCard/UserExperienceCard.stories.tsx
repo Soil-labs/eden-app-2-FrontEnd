@@ -1,4 +1,4 @@
-import { getPreviusProjectsTypeMockArray } from "@eden/package-mock";
+import { getPreviousProjectsTypeMockArray } from "@eden/package-mock";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 
 import { UserExperienceCard } from "./UserExperienceCard";
@@ -15,5 +15,5 @@ const Template: ComponentStory<typeof UserExperienceCard> = (args) => (
 
 export const Default = Template.bind({});
 Default.args = {
-  background: getPreviusProjectsTypeMockArray(3),
+  background: getPreviousProjectsTypeMockArray(3),
 };

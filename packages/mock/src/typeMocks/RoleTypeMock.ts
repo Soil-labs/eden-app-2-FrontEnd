@@ -16,7 +16,7 @@ export const getRoleTypeMock = (): RoleType => ({
   dateRangeStart: "1662161995158",
   description: faker.lorem.sentences(5),
   shortDescription: faker.lorem.sentences(1),
-  keyRosponsibilities: faker.lorem.sentences(4),
+  keyResponsibilities: faker.lorem.sentences(4),
   openPositions: faker.datatype.number({ min: 1, max: 6, precision: 1 }),
   skills: getSkillRoleTypeMockArray(
     faker.datatype.number({ min: 1, max: 10, precision: 1 })

@@ -101,7 +101,6 @@ const GrantsPage: NextPageWithLayout = () => {
         fields: {
           nodeType: type,
           nodesID: val,
-          memberID: currentUser?._id,
         },
       },
       context: { serviceName: "soilservice" },

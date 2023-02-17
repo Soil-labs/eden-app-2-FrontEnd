@@ -98,7 +98,7 @@ export const RoleCard = ({ role, percentage = 0, onApply }: RoleCardProps) => {
                       </ReactTooltip>
                     </>
                   )}
-                  {role?.keyRosponsibilities && (
+                  {role?.keyResponsibilities && (
                     <>
                       <div className={`mt-1.5 font-medium`}>
                         Key Responsibilities :
@@ -109,14 +109,14 @@ export const RoleCard = ({ role, percentage = 0, onApply }: RoleCardProps) => {
                         className={`mr-2 mb-1 inline-block cursor-default rounded-full`}
                         onMouseEnter={() => {
                           setIsHoverResponsibilities(
-                            `${role?.keyRosponsibilities}`
+                            `${role?.keyResponsibilities}`
                           );
                         }}
                         onMouseLeave={() => {
                           setIsHoverResponsibilities("");
                         }}
                       >
-                        {shortenText(role?.keyRosponsibilities as string)}
+                        {shortenText(role?.keyResponsibilities as string)}
                       </div>
                       <ReactTooltip
                         id={`badgeTip-${role?._id}-keyResponsibilities`}

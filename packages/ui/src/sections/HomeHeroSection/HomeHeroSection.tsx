@@ -12,40 +12,26 @@ interface INavItems {
 
 export interface IHomeHeroSectionProps {
   opportunityPage?: boolean;
-  discoverPage?: boolean;
   launchPage?: boolean;
   grantsPage?: boolean;
   projectsPage?: boolean;
   usersPage?: boolean;
+  profilePage?: boolean;
 }
 
 export const HomeHeroSection = ({
   opportunityPage,
-  discoverPage,
   launchPage,
   grantsPage,
   projectsPage,
   usersPage,
+  profilePage,
 }: IHomeHeroSectionProps) => {
   const router = useRouter();
   const [displayNav, setDisplayNav] = useState<INavItems[]>([]);
 
   useEffect(() => {
     const navItems = [
-      {
-        title: "Discover Grants",
-        href: "/grants",
-        bgColor: "rgba(255, 242, 104, 0.3",
-        description: "Find a grant and apply for it!",
-        display: grantsPage,
-      },
-      {
-        title: "Find Projects",
-        href: "/projects",
-        bgColor: "rgba(155, 103, 255, 0.3)",
-        description: "Find a project, and apply for it!",
-        display: projectsPage,
-      },
       {
         title: "Find Users",
         href: "/discover",
@@ -55,28 +41,34 @@ export const HomeHeroSection = ({
         display: usersPage,
       },
       {
-        title: "Discover Opportunities",
-        href: "/signup",
-        bgColor: "rgba(255, 242, 104, 0.3",
-        description:
-          "Find a project, team, gig or an opportunity to learn, earn &  grow!",
-        display: opportunityPage,
+        title: "Find Projects",
+        href: "/projects",
+        bgColor: "rgba(155, 103, 255, 0.3)",
+        description: "Find a project, and apply for it!",
+        display: projectsPage,
       },
       {
-        title: "Discover Talent",
-        href: "/discover",
-        bgColor: "rgba(155, 103, 255, 0.3)",
+        title: "Create Profile",
+        href: "/profile",
+        bgColor: "rgba(255, 242, 104, 0.3)",
         description:
-          "Find people in your community to make friends, collaborate or ask for an advise!",
-        display: discoverPage,
+          "Finish your profile to get discovered by people in your community!",
+        display: profilePage,
       },
       {
         title: "Launch new Project",
         href: "/create-project",
-        bgColor: "rgba(255, 242, 104, 0.3)",
+        bgColor: "rgba(116, 250, 109, 0.3)",
         description:
           "Become a Champion of your own adventure! + gather a team of your dreams :)",
         display: launchPage,
+      },
+      {
+        title: "Discover Grants",
+        href: "/grants",
+        bgColor: "rgba(155, 103, 255, 0.3)",
+        description: "Find a grant and apply for it!",
+        display: grantsPage,
       },
     ];
     const showNavItems = navItems.filter((item) => item.display);
@@ -84,11 +76,11 @@ export const HomeHeroSection = ({
     setDisplayNav(showNavItems);
   }, [
     opportunityPage,
-    discoverPage,
     launchPage,
     grantsPage,
     projectsPage,
     usersPage,
+    profilePage,
   ]);
 
   return (

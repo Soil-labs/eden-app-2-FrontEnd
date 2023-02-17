@@ -24,7 +24,7 @@ export const FIND_CURRENTUSER_SUB = gql`
           node
         }
       }
-      previusProjects {
+      previousProjects {
         title
         description
         startDate

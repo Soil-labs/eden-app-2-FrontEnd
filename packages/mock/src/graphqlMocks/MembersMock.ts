@@ -6,7 +6,7 @@ import {
   getEndorsementsTypeMockArray,
   getLinkTypeMock,
   getNodesTypeMockArray,
-  getPreviusProjectsTypeMockArray,
+  getPreviousProjectsTypeMockArray,
   getProjectMemberTypeMockArray,
   getRoleTemplateTypeMock,
   getSkillTypeMemberMockArray,
@@ -38,7 +38,7 @@ export const getMember = (): Members => ({
   interest: faker.lorem.paragraph(),
   links: getLinkTypeMock,
   memberRole: getRoleTemplateTypeMock(),
-  previusProjects: getPreviusProjectsTypeMockArray(3),
+  previousProjects: getPreviousProjectsTypeMockArray(3),
   projects: getProjectMemberTypeMockArray(14),
   serverID: Array.from(
     { length: faker.datatype.number({ min: 2, max: 8, precision: 1 }) },
@@ -69,7 +69,7 @@ export const getMemberLite = (): Members => ({
   interest: faker.lorem.paragraph(),
   links: getLinkTypeMock,
   memberRole: getRoleTemplateTypeMock(),
-  previusProjects: getPreviusProjectsTypeMockArray(3),
+  previousProjects: getPreviousProjectsTypeMockArray(3),
   projects: getProjectMemberTypeMockArray(
     faker.datatype.number({ min: 2, max: 5, precision: 1 })
   ),

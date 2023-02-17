@@ -4,7 +4,7 @@ export * from "./LinkTypeMock";
 export * from "./MatchProjectRolesTypeMock";
 export * from "./MatchSkillsToProjectsOutputMock";
 export * from "./NodesTypeMock";
-export * from "./PreviusProjectsTypeMock";
+export * from "./PreviousProjectsTypeMock";
 export * from "./ProjectMemberTypeMock";
 export * from "./RoleTemplateTypeMock";
 export * from "./RoleTypeMock";

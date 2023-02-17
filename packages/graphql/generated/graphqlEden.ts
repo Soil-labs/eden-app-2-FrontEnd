@@ -3,12 +3,10 @@ export type InputMaybe<T> = Maybe<T>;
 export type Exact<T extends { [key: string]: unknown }> = {
   [K in keyof T]: T[K];
 };
-export type MakeOptional<T, K extends keyof T> = Omit<T, K> & {
-  [SubKey in K]?: Maybe<T[SubKey]>;
-};
-export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & {
-  [SubKey in K]: Maybe<T[SubKey]>;
-};
+export type MakeOptional<T, K extends keyof T> = Omit<T, K> &
+  { [SubKey in K]?: Maybe<T[SubKey]> };
+export type MakeMaybe<T, K extends keyof T> = Omit<T, K> &
+  { [SubKey in K]: Maybe<T[SubKey]> };
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
   ID: string;
@@ -146,6 +144,12 @@ export type KeywordInput = {
   keywords?: InputMaybe<Scalars["String"]>;
 };
 
+export type LurkersAndContributors = {
+  __typename?: "LurkersAndContributors";
+  contributors?: Maybe<Scalars["Int"]>;
+  lurkers?: Maybe<Scalars["Int"]>;
+};
+
 export type MatchPercentage = {
   __typename?: "MatchPercentage";
   budgetPercentage?: Maybe<Scalars["Float"]>;
@@ -185,7 +189,7 @@ export type Members = {
   nodes?: Maybe<Array<Maybe<NodesType>>>;
   onbording?: Maybe<OnboardingType>;
   preferences?: Maybe<PreferencesType>;
-  previusProjects?: Maybe<Array<Maybe<PreviusProjectsType>>>;
+  previousProjects?: Maybe<Array<Maybe<PreviousProjectsType>>>;
   projects?: Maybe<Array<Maybe<ProjectMemberType>>>;
   registeredAt?: Maybe<Scalars["String"]>;
   serverID?: Maybe<Array<Maybe<Scalars["String"]>>>;
@@ -254,6 +258,8 @@ export type Mutation = {
   newTweetProject?: Maybe<TweetsProject>;
   relatedNode?: Maybe<Node>;
   relatedNode_name?: Maybe<Node>;
+  saveCoreProductFeatureInteration?: Maybe<Scalars["Boolean"]>;
+  saveDailyLogin?: Maybe<Scalars["Boolean"]>;
   updateChatReply?: Maybe<Chats>;
   updateChatResult?: Maybe<Chats>;
   updateGrant?: Maybe<GrantTemplate>;
@@ -420,6 +426,14 @@ export type MutationRelatedNodeArgs = {
 
 export type MutationRelatedNode_NameArgs = {
   fields?: InputMaybe<RelatedNode_NameInput>;
+};
+
+export type MutationSaveCoreProductFeatureInterationArgs = {
+  fields?: InputMaybe<SaveCoreProductFeatureInterationInput>;
+};
+
+export type MutationSaveDailyLoginArgs = {
+  fields?: InputMaybe<SaveDailyLoginInput>;
 };
 
 export type MutationUpdateChatReplyArgs = {
@@ -594,7 +608,9 @@ export type Query = {
   activeMembersStatsGroupByMonth?: Maybe<
     Array<Maybe<MetricsGroupByMonthResult>>
   >;
+  activeUsersLoginQuery?: Maybe<Scalars["Int"]>;
   adminFindAllSkillsEveryState?: Maybe<Array<Maybe<Skills>>>;
+  dynamicSearchToProjectGraph?: Maybe<Graph>;
   errors?: Maybe<PaginatedErrorLogs>;
   findAllProjectsTeamsAnouncments?: Maybe<
     Array<Maybe<FindAllProjectsTeamsAnouncmentsOutput>>
@@ -632,6 +648,7 @@ export type Query = {
   findSkillSubCategory?: Maybe<SkillSubCategory>;
   findSkills?: Maybe<Array<Maybe<Skills>>>;
   findTeams?: Maybe<Array<Maybe<Team>>>;
+  lurkersContributorsQuery?: Maybe<LurkersAndContributors>;
   matchMembersToProject?: Maybe<Array<Maybe<MatchMembersToProjectOutput>>>;
   matchMembersToProjectRole?: Maybe<
     Array<Maybe<MatchMembersToProjectRoleOutput>>
@@ -667,8 +684,16 @@ export type QueryActiveMembersStatsArgs = {
   fields?: InputMaybe<ActiveMembersStatsInput>;
 };
 
+export type QueryActiveUsersLoginQueryArgs = {
+  fields?: InputMaybe<ActiveUsersLoginQueryInput>;
+};
+
 export type QueryAdminFindAllSkillsEveryStateArgs = {
   fields?: InputMaybe<FindSkillsInput>;
+};
+
+export type QueryDynamicSearchToProjectGraphArgs = {
+  fields?: InputMaybe<DynamicSearchToProjectGraphInput>;
 };
 
 export type QueryErrorsArgs = {
@@ -1102,6 +1127,11 @@ export type ActiveMembersStatsInput = {
   startPeriod?: InputMaybe<Scalars["String"]>;
 };
 
+export type ActiveUsersLoginQueryInput = {
+  endDate?: InputMaybe<Scalars["String"]>;
+  startDate?: InputMaybe<Scalars["String"]>;
+};
+
 export type AddEndorsementInput = {
   endorseeID?: InputMaybe<Scalars["ID"]>;
   endorsementMessage?: InputMaybe<Scalars["String"]>;
@@ -1141,7 +1171,7 @@ export type AddNewMemberInput = {
   discriminator?: InputMaybe<Scalars["String"]>;
   hoursPerWeek?: InputMaybe<Scalars["Float"]>;
   invitedBy?: InputMaybe<Scalars["String"]>;
-  previusProjects?: InputMaybe<Array<InputMaybe<PreviusProjectsInput>>>;
+  previousProjects?: InputMaybe<Array<InputMaybe<PreviousProjectsInput>>>;
   serverID?: InputMaybe<Scalars["String"]>;
 };
 
@@ -1465,6 +1495,14 @@ export type DeleteProjectInput = {
   projectID?: InputMaybe<Scalars["ID"]>;
 };
 
+export type DynamicSearchToProjectGraphInput = {
+  edgeSettings?: InputMaybe<Array<InputMaybe<EdgeSetting>>>;
+  nodeSettings?: InputMaybe<Array<InputMaybe<NodeSetting>>>;
+  nodesID?: InputMaybe<Array<InputMaybe<Scalars["ID"]>>>;
+  projectID?: InputMaybe<Scalars["ID"]>;
+  showAvatar?: InputMaybe<Scalars["Boolean"]>;
+};
+
 export type EdgeSetting = {
   hiddenEdge?: InputMaybe<Scalars["Boolean"]>;
   mainEdge?: InputMaybe<EdgeSettingIn>;
@@ -1516,6 +1554,13 @@ export type ErrorsInput = {
   _id?: InputMaybe<Scalars["ID"]>;
   errorType?: InputMaybe<ErrorTypeEnum>;
 };
+
+export enum ExploreFeatureEnum {
+  ExploreProjectsButton = "exploreProjectsButton",
+  FindFriendButton = "findFriendButton",
+  GrantButton = "grantButton",
+  SkillButton = "skillButton",
+}
 
 export type FindAllProjectsTeamsAnouncmentsInput = {
   _id?: InputMaybe<Scalars["ID"]>;
@@ -2086,7 +2131,7 @@ export type PreferencesTypeFind = {
   percentage?: Maybe<Scalars["Int"]>;
 };
 
-export type PreviusProjectsInput = {
+export type PreviousProjectsInput = {
   description?: InputMaybe<Scalars["String"]>;
   endDate?: InputMaybe<Scalars["String"]>;
   link?: InputMaybe<Scalars["String"]>;
@@ -2096,8 +2141,8 @@ export type PreviusProjectsInput = {
   title?: InputMaybe<Scalars["String"]>;
 };
 
-export type PreviusProjectsType = {
-  __typename?: "previusProjectsType";
+export type PreviousProjectsType = {
+  __typename?: "previousProjectsType";
   description?: Maybe<Scalars["String"]>;
   endDate?: Maybe<Scalars["String"]>;
   link?: Maybe<Scalars["String"]>;
@@ -2196,7 +2241,7 @@ export type RoleInput = {
   description?: InputMaybe<Scalars["String"]>;
   expectations?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>;
   hoursPerWeek?: InputMaybe<Scalars["Int"]>;
-  keyRosponsibilities?: InputMaybe<Scalars["String"]>;
+  keyResponsibilities?: InputMaybe<Scalars["String"]>;
   openPositions?: InputMaybe<Scalars["Int"]>;
   ratePerHour?: InputMaybe<Scalars["Int"]>;
   shortDescription?: InputMaybe<Scalars["String"]>;
@@ -2215,13 +2260,21 @@ export type RoleType = {
   description?: Maybe<Scalars["String"]>;
   expectations?: Maybe<Array<Maybe<Scalars["String"]>>>;
   hoursPerWeek?: Maybe<Scalars["Int"]>;
-  keyRosponsibilities?: Maybe<Scalars["String"]>;
+  keyResponsibilities?: Maybe<Scalars["String"]>;
   nodes?: Maybe<Array<Maybe<NodesType>>>;
   openPositions?: Maybe<Scalars["Int"]>;
   ratePerHour?: Maybe<Scalars["Int"]>;
   shortDescription?: Maybe<Scalars["String"]>;
   skills?: Maybe<Array<Maybe<SkillRoleType>>>;
   title?: Maybe<Scalars["String"]>;
+};
+
+export type SaveCoreProductFeatureInterationInput = {
+  buttonClicked: ExploreFeatureEnum;
+};
+
+export type SaveDailyLoginInput = {
+  loginDate?: InputMaybe<Scalars["String"]>;
 };
 
 export enum ServerTypeEnum {
@@ -2391,7 +2444,7 @@ export type UpdateMemberInRoomInput = {
   memberID?: InputMaybe<Scalars["ID"]>;
   memberRole?: InputMaybe<FindRoleTemplateInput>;
   onbording?: InputMaybe<OnboardingInput>;
-  previusProjects?: InputMaybe<Array<InputMaybe<PreviusProjectsInput>>>;
+  previousProjects?: InputMaybe<Array<InputMaybe<PreviousProjectsInput>>>;
   roomID?: InputMaybe<Scalars["ID"]>;
   serverID?: InputMaybe<Scalars["String"]>;
   skills?: InputMaybe<Array<InputMaybe<SkillInput_Member>>>;
@@ -2410,7 +2463,7 @@ export type UpdateMemberInput = {
   links?: InputMaybe<Array<InputMaybe<LinkInput>>>;
   memberRole?: InputMaybe<Scalars["ID"]>;
   onbording?: InputMaybe<OnboardingInput>;
-  previusProjects?: InputMaybe<Array<InputMaybe<PreviusProjectsInput>>>;
+  previousProjects?: InputMaybe<Array<InputMaybe<PreviousProjectsInput>>>;
   serverID?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>;
   skills?: InputMaybe<Array<InputMaybe<SkillInput_Member>>>;
   timeZone?: InputMaybe<Scalars["String"]>;

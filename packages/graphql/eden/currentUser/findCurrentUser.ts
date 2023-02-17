@@ -29,7 +29,7 @@ export const FIND_CURRENTUSER = gql`
           node
         }
       }
-      previusProjects {
+      previousProjects {
         title
         description
         startDate

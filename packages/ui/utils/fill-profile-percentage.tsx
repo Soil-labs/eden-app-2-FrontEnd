@@ -10,10 +10,13 @@ export const getFillProfilePercentage = (user: Members) => {
       return !!link?.url && acc < 10 ? acc + 5 : acc;
     }, 0);
   if (!!user?.bio) progress += 10;
-  if (!!user?.previusProjects)
-    progress += user?.previusProjects.reduce((acc: number, experience: any) => {
-      return !!experience.title && acc < 30 ? acc + 10 : acc;
-    }, 0);
+  if (!!user?.previousProjects)
+    progress += user?.previousProjects.reduce(
+      (acc: number, experience: any) => {
+        return !!experience.title && acc < 30 ? acc + 10 : acc;
+      },
+      0
+    );
 
   if (progress > 100) progress = 100;
 

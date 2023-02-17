@@ -1,7 +1,7 @@
 import {
   Endorsements,
   Maybe,
-  PreviusProjectsType,
+  PreviousProjectsType,
 } from "@eden/package-graphql/generated";
 import {
   Card,
@@ -12,7 +12,7 @@ import {
 import React from "react";
 
 export interface IUserBackgroundProps {
-  background: Array<Maybe<PreviusProjectsType>>;
+  background: Array<Maybe<PreviousProjectsType>>;
   initialEndorsements: Array<Maybe<Endorsements>>;
   experienceOpen: number | null;
   setExperienceOpen: React.Dispatch<React.SetStateAction<number | null>>;

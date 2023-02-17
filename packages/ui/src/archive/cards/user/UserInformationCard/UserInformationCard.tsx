@@ -1,4 +1,4 @@
-import { Maybe, PreviusProjectsType } from "@eden/package-graphql/generated";
+import { Maybe, PreviousProjectsType } from "@eden/package-graphql/generated";
 import {
   Button,
   Calendar,
@@ -13,7 +13,7 @@ import { FiEdit3 } from "react-icons/fi";
 import { IoIosExpand } from "react-icons/io";
 
 export interface UserInformationCardProps {
-  previousProjects?: Maybe<PreviusProjectsType>;
+  previousProjects?: Maybe<PreviousProjectsType>;
   isEditable?: boolean;
 }
 

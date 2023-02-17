@@ -61,7 +61,7 @@ export const ApplicationModal = ({
             </h1>
             <div className="flex items-start justify-between">
               <ul>
-                <li>{project?.role?.keyRosponsibilities}</li>
+                <li>{project?.role?.keyResponsibilities}</li>
               </ul>
               <div className="text-soilGray font-medium">
                 <AvailabilityComp

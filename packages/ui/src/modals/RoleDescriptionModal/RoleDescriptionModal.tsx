@@ -43,7 +43,7 @@ export const RoleDescriptionModal = ({
       if (role._id !== selectedRole._id) return role;
       return {
         ...role,
-        keyRosponsibilities: val,
+        keyResponsibilities: val,
       };
     });
 
@@ -244,7 +244,7 @@ export const RoleDescriptionModal = ({
                   value={
                     modifiedRoles.find(
                       (role: RoleType) => role._id === selectedRole?._id
-                    )?.keyRosponsibilities
+                    )?.keyResponsibilities
                   }
                   onChange={(e) => handleChangeResponsibility(e.target.value)}
                   placeholder="start typing here"

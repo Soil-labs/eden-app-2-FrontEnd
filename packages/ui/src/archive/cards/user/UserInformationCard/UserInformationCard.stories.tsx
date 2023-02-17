@@ -1,4 +1,4 @@
-import { getPreviusProjectsTypeMock } from "@eden/package-mock";
+import { getPreviousProjectsTypeMock } from "@eden/package-mock";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 
 import { UserInformationCard } from "./UserInformationCard";
@@ -15,6 +15,6 @@ const Template: ComponentStory<typeof UserInformationCard> = (args) => (
 
 export const Default = Template.bind({});
 Default.args = {
-  previousProjects: getPreviusProjectsTypeMock(),
+  previousProjects: getPreviousProjectsTypeMock(),
   isEditable: true,
 };

@@ -74,7 +74,7 @@ export const SkillSelector = ({
     >
       <motion.div
         style={{ background: "rgba(137, 213, 255, 0.1)" }}
-        className="flex py-3 group w-full cursor-pointer items-center justify-between px-5"
+        className="group flex w-full cursor-pointer items-center justify-between py-3 px-5"
         onClick={() => {
           if (
             !levels &&
@@ -120,7 +120,7 @@ export const SkillSelector = ({
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           style={{ background: "rgba(137, 213, 255, 0.1)" }}
-          className="ml-2 px-4 pt-1 pb-2 user-select-none"
+          className="user-select-none ml-2 px-4 pt-1 pb-2"
         >
           <motion.p className="mb-1 text-xs font-medium text-slate-500">
             SKILL LEVEL
@@ -129,7 +129,7 @@ export const SkillSelector = ({
             {levels!.map((level, index) => (
               <Button
                 key={index}
-                className="text-xs hover:text-blue-800 hover:border-blue-500 hover:scale-110 transition-all duration-200 ease-out hover:font-bold"
+                className="text-xs transition-all duration-200 ease-out hover:scale-110 hover:border-blue-500 hover:font-bold hover:text-blue-800"
                 size="sm"
                 style={{ background: "rgba(137, 213, 255, 0.15)" }}
                 onClick={(e) => {

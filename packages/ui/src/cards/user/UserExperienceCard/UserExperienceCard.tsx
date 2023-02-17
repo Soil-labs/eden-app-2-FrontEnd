@@ -1,4 +1,4 @@
-import { Maybe, PreviusProjectsType } from "@eden/package-graphql/generated";
+import { Maybe, PreviousProjectsType } from "@eden/package-graphql/generated";
 import { Calendar, TextArea, TextField, TextHeading3 } from "@eden/package-ui";
 import { PlusCircleIcon } from "@heroicons/react/outline";
 import { useEffect, useState } from "react";
@@ -12,7 +12,7 @@ const INITIAL_DATA = {
 };
 
 export interface IUserExperienceCardProps {
-  background?: Maybe<Maybe<PreviusProjectsType>[]>;
+  background?: Maybe<Maybe<PreviousProjectsType>[]>;
   // eslint-disable-next-line no-unused-vars
   handleSubmit?: (val: any) => void;
   // eslint-disable-next-line no-unused-vars
@@ -96,7 +96,7 @@ const ExperienceForm = ({
   handleChange,
   relevant = false,
 }: {
-  defaultValue?: Maybe<PreviusProjectsType>;
+  defaultValue?: Maybe<PreviousProjectsType>;
   open?: boolean;
   // eslint-disable-next-line no-unused-vars
   handleOpen?: (open: boolean) => void;
@@ -104,7 +104,7 @@ const ExperienceForm = ({
   handleChange?: (val: any) => void;
   relevant?: boolean;
 }) => {
-  const [val, setVal] = useState<PreviusProjectsType>({
+  const [val, setVal] = useState<PreviousProjectsType>({
     title: defaultValue?.title,
     description: defaultValue?.description,
     startDate: defaultValue?.startDate,

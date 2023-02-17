@@ -1,6 +1,7 @@
 export * from "./ApplicationModal";
 export * from "./CongratulationsModal";
 export * from "./DiscoverTalentDropdownModal";
+export * from "./DiscoverTalentDropdownWithSkillSelectorModal";
 export * from "./FindTalentDropdownModal";
 export * from "./FindTalentModal";
 export * from "./GrantsModal";

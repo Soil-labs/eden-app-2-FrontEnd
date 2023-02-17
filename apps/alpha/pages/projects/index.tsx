@@ -13,6 +13,7 @@ import {
 } from "@eden/package-graphql/generated";
 import {
   AppUserSubmenuLayout,
+  Button,
   Card,
   CardGrid,
   FillUserProfileContainer,
@@ -80,8 +81,8 @@ const ProjectsPage: NextPageWithLayout = () => {
       // console.log("updateMember", updateNodesToMember);
       // setSubmitting(false);
     },
-    onError(error) {
-      console.log("error", error);
+    onError() {
+      console.log("error");
     },
   });
 
@@ -119,7 +120,6 @@ const ProjectsPage: NextPageWithLayout = () => {
         fields: {
           nodeType: type,
           nodesID: val,
-          memberID: currentUser?._id,
         },
       },
       context: { serviceName: "soilservice" },
@@ -138,6 +138,25 @@ const ProjectsPage: NextPageWithLayout = () => {
               <Card className={`lg:h-85 flex flex-col gap-2`}>
                 <Card shadow className={"bg-white p-6"}>
                   <SubmenuSelector title={`Good Morning,`} />
+                </Card>
+
+                <Card
+                  shadow
+                  className="my-4 flex h-20 w-full flex-grow justify-center bg-white py-6 font-semibold"
+                >
+                  <div className={``}>
+                    <Button
+                      variant="primary"
+                      radius="default"
+                      size="md"
+                      onClick={() => {
+                        setOpenModal(ProjectsModal.START_WELCOME);
+                        setStartWelcome(true);
+                      }}
+                    >
+                      Update search parameters
+                    </Button>
+                  </div>
                 </Card>
                 {currentUser && getFillProfilePercentage(currentUser) < 50 && (
                   <WarningCard
