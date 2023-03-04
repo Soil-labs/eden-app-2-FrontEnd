@@ -8,15 +8,15 @@ import { Graph } from "../../../../g6/GraphVisual/settings/interfaceGraph";
 import { backendGraphToVisualGraph } from "../utils/helperFunctions";
 
 const GraphVisual = dynamic(
-  () => import("@eden/package-ui/g6/GraphVisual/GraphVisual"),
+  () => import("@eden/package-ui/g6/GraphVisual2/GraphVisual2"),
   {
     ssr: false,
   }
 );
 
-const FIND_PROJECT_GRAPH = gql`
-  query ($fields: findProjectGraphInput!) {
-    findProjectGraph(fields: $fields) {
+const FIND_MEMBER_GRAPH = gql`
+  query ($fields: findMemberGraphInput!) {
+    findMemberGraph(fields: $fields) {
       nodesVisual {
         _id
         name
@@ -46,11 +46,11 @@ const FIND_PROJECT_GRAPH = gql`
   }
 `;
 
-export interface IProjectGraphProps {
-  projectId: string;
+export interface IMemberGraphProps {
+  memberId: string;
 }
 
-export const ProjectGraph = ({ projectId }: IProjectGraphProps) => {
+export const MemberGraph2 = ({ memberId }: IMemberGraphProps) => {
   const refContainer = useRef<HTMLDivElement>();
 
   const [data, setData] = useState<Graph>({
@@ -61,77 +61,45 @@ export const ProjectGraph = ({ projectId }: IProjectGraphProps) => {
 
   const [dataGraphAPI, setDataGraphAPI] = useState<any>(undefined);
 
-  const {} = useQuery(FIND_PROJECT_GRAPH, {
+  const {} = useQuery(FIND_MEMBER_GRAPH, {
     variables: {
       fields: {
-        projectID: projectId,
+        memberID: memberId,
         showAvatar: true,
         nodeSettings: [
-          // nodeSettingsPreset["Member"]["main"],
+          nodeSettingsPreset["Member"]["main"],
           nodeSettingsPreset["sub_typeProject"]["main"],
           nodeSettingsPreset["typeProject"]["main"],
           nodeSettingsPreset["sub_expertise"]["main"],
           nodeSettingsPreset["expertise"]["main"],
-          // nodeSettingsPreset["Project"]["main"],
-          {
-            ...nodeSettingsPreset["Project"]["main"],
-            style: {
-              ...nodeSettingsPreset["Project"]["main"].style,
-              size: 90,
-            },
-          },
-          {
-            ...nodeSettingsPreset["Role"]["main"],
-            style: {
-              ...nodeSettingsPreset["Role"]["main"].style,
-              size: 70,
-            },
-          },
-          // nodeSettingsPreset["skill"]["main"],
+          nodeSettingsPreset["skill"]["main"],
         ],
         edgeSettings: [
-          // // ------ split sub_typeProject|Member -------
-          // edgeSettingsPreset["sub_typeProject|Member"]["typeProject"],
-          // edgeSettingsPreset["sub_typeProject|typeProject"]["edge"],
-          // edgeSettingsPreset["typeProject|Member"]["edge"],
-          // // ------ split sub_typeProject|Member -------
-
-          // // ------ split sub_expertise|Member -------
-          // // edgeSettingsPreset["sub_expertise|Member"]["edge"],
-          // edgeSettingsPreset["sub_expertise|Member"]["expertise"],
-          // edgeSettingsPreset["sub_expertise|expertise"]["edge"],
-          // edgeSettingsPreset["expertise|Member"]["edge"],
-          // // ------ split sub_expertise|Member -------
-
-          // ------ Project Edges -------
-          edgeSettingsPreset["Project|Role"]["edgeXL"],
-          edgeSettingsPreset["sub_expertise|Role"]["edge"],
-          edgeSettingsPreset["sub_typeProject|Role"]["edge"],
-          // edgeSettingsPreset["skill|Role"]["edge"],
-          // ------ Project Edges -------
-
-          // // // ------ skill Edges -------
-          // // edgeSettingsPreset["skill|Member"]["edge"],
-          // edgeSettingsPreset["skill|Member"]["doubleSplitEdge"],
-          // edgeSettingsPreset["skill|sub_expertise"]["edge"],
-          // // edgeSettingsPreset["sub_expertise|Member"]["edge"],
-          // // // ------ skill Edges -------
-
-          // ------ split sub_expertise|Role -------
-          edgeSettingsPreset["sub_expertise|Role"]["expertise"],
-          edgeSettingsPreset["sub_expertise|expertise"]["edge"],
-          edgeSettingsPreset["expertise|Role"]["edge"],
-          // ------ split sub_expertise|Role -------
-
-          // ------ split sub_typeProject|Role -------
-          edgeSettingsPreset["sub_typeProject|Role"]["typeProject"],
+          // ------ split sub_typeProject|Member -------
+          edgeSettingsPreset["sub_typeProject|Member"]["typeProject"],
           edgeSettingsPreset["sub_typeProject|typeProject"]["edge"],
-          edgeSettingsPreset["typeProject|Role"]["edge"],
-          // ------ split sub_typeProject|Role -------
+          edgeSettingsPreset["typeProject|Member"]["edge"],
+          // ------ split sub_typeProject|Member -------
+
+          // ------ split skill|Member -------
+          edgeSettingsPreset["skill|Member"]["doubleSplitEdge"],
+          // edgeSettingsPreset["skill|Member"]["edge"],
+          edgeSettingsPreset["skill|sub_expertise"]["edge"],
+          // edgeSettingsPreset["sub_expertise|Member"]["edge"],
+          // ------ split skill|Member -------
+
+          // ------ split sub_expertise|Member -------
+          edgeSettingsPreset["sub_expertise|Member"]["expertise"],
+          edgeSettingsPreset["sub_expertise|expertise"]["edge"],
+          edgeSettingsPreset["expertise|Member"]["edge"],
+          // edgeSettingsPreset["sub_expertise|Member"]["edge"],
+          // ------ split sub_expertise|Member -------
 
           // //  ------ Create Far Distance between member and project ------
-          edgeSettingsPreset["Role|Role"]["hiddenEdge"],
-          edgeSettingsPreset["Project|expertise"]["hiddenEdge"],
+          edgeSettingsPreset["expertise|expertise"]["hiddenEdge"],
+          // edgeSettingsPreset["typeProject|sub_expertise"]["hiddenEdge"],
+          edgeSettingsPreset["expertise|typeProject"]["hiddenEdge"],
+          // edgeSettingsPreset["Project|expertise"]["hiddenEdge"],
           // edgeSettingsPreset["Projet|typeProject"]["hiddenEdge"],
           // edgeSettingsPreset["expertise|expertise"]["hiddenEdge"],
           // // edgeSettingsPreset["Project|Member"]["hiddenEdge"],
@@ -140,11 +108,11 @@ export const ProjectGraph = ({ projectId }: IProjectGraphProps) => {
         ],
       },
     },
-    skip: !projectId,
+    skip: !memberId,
     context: { serviceName: "soilservice" },
     onCompleted: (data) => {
       if (data) {
-        setDataGraphAPI(data.findProjectGraph);
+        setDataGraphAPI(data.findMemberGraph);
       }
     },
   });
@@ -162,9 +130,6 @@ export const ProjectGraph = ({ projectId }: IProjectGraphProps) => {
   }, [dataGraphAPI]);
   // ----------- Update the Graph Visual ----------
 
-  console.log("data = ", data);
-  console.log("dataGraphAPI = ", dataGraphAPI);
-
   useEffect(() => {
     const getwidth = () => {
       setWidth(refContainer.current?.offsetWidth!);
@@ -178,6 +143,7 @@ export const ProjectGraph = ({ projectId }: IProjectGraphProps) => {
     // remove the event listener before the component gets unmounted
     return () => window.removeEventListener("resize", getwidth);
   }, []);
+  console.log("dorothino = ");
   return (
     <>
       {/* {refContainer && ( */}
@@ -191,13 +157,8 @@ export const ProjectGraph = ({ projectId }: IProjectGraphProps) => {
             width={width}
             height={refContainer.current?.offsetHeight!}
             hasMenu={false}
-            // height={500}
-            // height={(1.3 * width) / 4}
-            // data2={data2}
-            // handleClick={handleClick}
           />
         ) : (
-          // <>{JSON.stringify(data)}</>
           <p>Dont have Graph Data Yet</p>
         )}
       </div>

@@ -143,25 +143,26 @@ export const MemberGraph = ({ memberId }: IMemberGraphProps) => {
     // remove the event listener before the component gets unmounted
     return () => window.removeEventListener("resize", getwidth);
   }, []);
+  console.log("dorothino = ");
   return (
     <>
-      {refContainer && (
-        <div
-          className="h-[540px] w-full"
-          ref={refContainer as RefObject<HTMLDivElement>}
-        >
-          {data && data.nodes && data.nodes.length > 0 ? (
-            <GraphVisual
-              data2={data}
-              width={width}
-              height={refContainer.current?.offsetHeight!}
-              hasMenu={false}
-            />
-          ) : (
-            <p>Dont have Graph Data Yet</p>
-          )}
-        </div>
-      )}
+      {/* {refContainer && ( */}
+      <div
+        className="h-full w-full"
+        ref={refContainer as RefObject<HTMLDivElement>}
+      >
+        {data && data.nodes && data.nodes.length > 0 ? (
+          <GraphVisual
+            data2={data}
+            width={width}
+            height={refContainer.current?.offsetHeight!}
+            hasMenu={false}
+          />
+        ) : (
+          <p>Dont have Graph Data Yet</p>
+        )}
+      </div>
+      {/* )} */}
     </>
   );
 };
