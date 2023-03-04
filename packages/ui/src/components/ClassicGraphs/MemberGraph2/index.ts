@@ -1,1 +1,0 @@
-export * from "./MemberGraph2";

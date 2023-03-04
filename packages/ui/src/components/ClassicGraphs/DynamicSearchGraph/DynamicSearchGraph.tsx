@@ -7,8 +7,8 @@ import { nodeSettingsPreset } from "../../../../g6/GraphVisual/data/nodeSettings
 import { Graph } from "../../../../g6/GraphVisual/settings/interfaceGraph";
 import { backendGraphToVisualGraph } from "../utils/helperFunctions";
 
-const GraphVisual = dynamic(
-  () => import("@eden/package-ui/g6/GraphVisual/GraphVisual"),
+const GraphVisual2 = dynamic(
+  () => import("@eden/package-ui/g6/GraphVisual2/GraphVisual2"),
   {
     ssr: false,
   }
@@ -136,6 +136,8 @@ export const DynamicSearchGraph = ({ nodesID }: IDynamicSearchGraphProps) => {
   }, []);
   // ----------- Update the Hight/Width of the Graph Visual ----------
 
+  const [graph2, setGraph2] = useState<any>();
+
   return (
     <>
       {refContainer && (
@@ -144,11 +146,13 @@ export const DynamicSearchGraph = ({ nodesID }: IDynamicSearchGraphProps) => {
           ref={refContainer as RefObject<HTMLDivElement>}
         >
           {data && data.nodes && data.nodes.length > 0 ? (
-            <GraphVisual
+            <GraphVisual2
               data2={data}
               width={width}
               height={refContainer.current?.offsetHeight!}
               hasMenu={false}
+              graph2={graph2}
+              setGraph2={setGraph2}
             />
           ) : (
             <p>Dont have Graph Data Yet</p>

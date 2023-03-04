@@ -180,8 +180,8 @@ export enum HomeTutorialSteps {
   STEP_4 = "step 4",
 }
 
-const GraphVisual = dynamic(
-  () => import("@eden/package-ui/g6/GraphVisual/GraphVisual"),
+const GraphVisual2 = dynamic(
+  () => import("@eden/package-ui/g6/GraphVisual2/GraphVisual2"),
   {
     ssr: false,
   }
@@ -209,9 +209,11 @@ const HomeTutorialModalContainer = () => {
     }
   }, [openModal]);
 
+  const [graph2, setGraph2] = useState<any>();
+
   return (
     <>
-      <section className="w-full h-screen flex flex-col items-center justify-center">
+      <section className="flex h-screen w-full flex-col items-center justify-center">
         {openModal === HomeTutorialSteps.STEP_1 && (
           <div>
             <h1 className="text-center text-2xl">Welcome to Eden!</h1>
@@ -283,11 +285,13 @@ const HomeTutorialModalContainer = () => {
         )} */}
         {openModal !== HomeTutorialSteps.STEP_4 && (
           <div className="flex justify-center">
-            <GraphVisual
+            <GraphVisual2
               hasMenu={false}
               data2={data}
               width={720}
               height={400}
+              graph2={graph2}
+              setGraph2={setGraph2}
             />
           </div>
         )}

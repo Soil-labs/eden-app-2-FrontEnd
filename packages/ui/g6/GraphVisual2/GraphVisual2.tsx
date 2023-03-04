@@ -23,6 +23,8 @@ export interface IGraphVisualisation {
   settingsGraphs?: any;
   updateSettings?: any;
   hasMenu?: boolean;
+  graph2: any;
+  setGraph2: any;
 }
 
 const loadingNode: Graph = {
@@ -45,7 +47,7 @@ function refreshDragedNodePosition(e: any) {
 }
 //  -------------- Graph Functions ------------
 
-let graph2: any;
+// let graph2: any;
 
 export const GraphVisual = ({
   width,
@@ -54,6 +56,8 @@ export const GraphVisual = ({
   settingsGraphs = undefined,
   updateSettings = undefined,
   hasMenu = true,
+  graph2,
+  setGraph2,
 }: IGraphVisualisation) => {
   const ref = React.useRef(null);
 
@@ -100,6 +104,7 @@ export const GraphVisual = ({
         plugins: [tooltip],
       });
 
+      setGraph2(graph2);
       // updateNodes(loadingNode, graph2, setItems, setCheckedItems);
       // updateNodesBackendSettings(loadingNode, graph2);
       updateNodesBackendSettings(
@@ -151,8 +156,13 @@ export const GraphVisual = ({
 
   useEffect(() => {
     if (graph2) {
-      graph2.changeSize(width, height);
-      graph2.refresh();
+      console.log("width, height = ", width, height);
+      if (width != undefined && height != undefined) {
+        if (width != 0 && height != 0) {
+          graph2.changeSize(width, height);
+          graph2.refresh();
+        }
+      }
     }
   }, [width, height]);
 

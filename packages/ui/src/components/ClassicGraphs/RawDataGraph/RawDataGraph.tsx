@@ -1,8 +1,8 @@
 import dynamic from "next/dynamic";
 import { RefObject, useEffect, useRef, useState } from "react";
 
-const GraphVisual = dynamic(
-  () => import("@eden/package-ui/g6/GraphVisual/GraphVisual"),
+const GraphVisual2 = dynamic(
+  () => import("@eden/package-ui/g6/GraphVisual2/GraphVisual2"),
   {
     ssr: false,
   }
@@ -30,6 +30,9 @@ export const RawDataGraph = ({ rawData }: IRawDataGraphProps) => {
     // remove the event listener before the component gets unmounted
     return () => window.removeEventListener("resize", getwidth);
   }, []);
+
+  const [graph2, setGraph2] = useState<any>();
+
   return (
     <>
       {refContainer && (
@@ -38,11 +41,13 @@ export const RawDataGraph = ({ rawData }: IRawDataGraphProps) => {
           ref={refContainer as RefObject<HTMLDivElement>}
         >
           {rawData?.nodes?.length > 0 ? (
-            <GraphVisual
+            <GraphVisual2
               data2={rawData}
               width={width}
               height={refContainer.current?.offsetHeight!}
               hasMenu={false}
+              graph2={graph2}
+              setGraph2={setGraph2}
             />
           ) : (
             <p>Dont have Graph Data Yet</p>

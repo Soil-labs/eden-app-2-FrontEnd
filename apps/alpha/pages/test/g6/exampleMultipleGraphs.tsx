@@ -1,4 +1,4 @@
-import { MemberGraph, MemberGraph2, ProjectGraph } from "@eden/package-ui";
+import { MemberGraph, ProjectGraph } from "@eden/package-ui";
 import React, { useState } from "react";
 
 import type { NextPageWithLayout } from "../../_app";
@@ -28,8 +28,8 @@ const GraphVisualPage: NextPageWithLayout = () => {
       content = (
         <div className={`flex h-[500px] w-full gap-4`}>
           <div className="w-full">
-            {/* <ProjectGraph projectId={"63ebca723f7197ebd2adbd21"} /> */}
-            <MemberGraph memberId={"908392557258604544"} />
+            <ProjectGraph projectId={"63ebca723f7197ebd2adbd21"} />
+            {/* <MemberGraph2 memberId={"908392557258604544"} /> */}
           </div>
         </div>
       );
@@ -38,9 +38,21 @@ const GraphVisualPage: NextPageWithLayout = () => {
       content = (
         <div className={`flex h-[500px] w-full gap-4`}>
           <div className="w-full">
+            {/* <ProjectGraph projectId={"63ebca723f7197ebd2adbd21"} /> */}
+            <MemberGraph memberId={"961730944170090516"} />
+
+            {/* <MemberGraph2 memberId={"961730944170090516"} /> */}
+          </div>
+        </div>
+      );
+      break;
+    case 4:
+      content = (
+        <div className={`flex h-[500px] w-full gap-4`}>
+          <div className="w-full">
             <ProjectGraph projectId={"63ebca723f7197ebd2adbd21"} />
 
-            {/* <MemberGraph memberId={"908392557258604544"} /> */}
+            {/* <MemberGraph2 memberId={"908392557258604544"} /> */}
           </div>
         </div>
       );
@@ -51,11 +63,11 @@ const GraphVisualPage: NextPageWithLayout = () => {
 
   return (
     <>
-      <div className="flex h-screen">
+      {/* <div className="flex h-screen">
         <div className="w-1/2 bg-gray-200">
           <div className={`flex h-[500px] w-full gap-4`}>
             <div className="w-full">
-              <MemberGraph memberId={"908392557258604544"} />
+              <MemberGraph2 memberId={"908392557258604544"} />
             </div>
           </div>
         </div>
@@ -66,11 +78,11 @@ const GraphVisualPage: NextPageWithLayout = () => {
             </div>
           </div>
         </div>
-      </div>
+      </div> */}
 
-      {/* <div> */}
-      {/* {content} */}
-      {/* <div className="mt-8 flex justify-center">
+      <div>
+        {content}
+        <div className="mt-8 flex justify-center">
           <div className="flex items-center">
             <div
               className={`h-12 w-12 rounded-full ${
@@ -113,8 +125,8 @@ const GraphVisualPage: NextPageWithLayout = () => {
             </button>
           </div>
         </div>
-        {content}
-      </div> */}
+      </div>
+      {/* ------------------ */}
       {/* <div
         style={{
           flexDirection: "column",
