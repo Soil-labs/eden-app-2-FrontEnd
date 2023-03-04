@@ -1,1 +1,1 @@
-export * from "./GraphVisual";
+export * from "./GraphVisual2";
