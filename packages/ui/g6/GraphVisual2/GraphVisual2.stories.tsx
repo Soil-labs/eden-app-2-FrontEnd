@@ -1,17 +1,17 @@
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 
-import { GraphVisual } from "./GraphVisual";
+import { GraphVisual2 } from "./GraphVisual2";
 import { Graph } from "./settings/interfaceGraph";
 
 export default {
-  title: "G6/GraphVisual",
-  component: GraphVisual,
+  title: "G6/GraphVisual2",
+  component: GraphVisual2,
   argTypes: {},
-} as ComponentMeta<typeof GraphVisual>;
+} as ComponentMeta<typeof GraphVisual2>;
 
-const Template: ComponentStory<typeof GraphVisual> = (args) => {
+const Template: ComponentStory<typeof GraphVisual2> = (args) => {
   // console.log("nodeTypeStyle", nodeTypeStyle);
-  return <GraphVisual {...args} />;
+  return <GraphVisual2 {...args} />;
 };
 
 const data2: Graph = {
