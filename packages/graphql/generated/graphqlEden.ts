@@ -258,6 +258,7 @@ export type Mutation = {
   relatedNode_name?: Maybe<Node>;
   saveCoreProductFeatureInteration?: Maybe<Scalars["Boolean"]>;
   saveDailyLogin?: Maybe<Scalars["Boolean"]>;
+  storeLongTermMemory?: Maybe<StoreLongTermMemoryOutput>;
   updateChatReply?: Maybe<Chats>;
   updateChatResult?: Maybe<Chats>;
   updateGrant?: Maybe<GrantTemplate>;
@@ -434,6 +435,10 @@ export type MutationSaveDailyLoginArgs = {
   fields?: InputMaybe<SaveDailyLoginInput>;
 };
 
+export type MutationStoreLongTermMemoryArgs = {
+  fields?: InputMaybe<StoreLongTermMemoryInput>;
+};
+
 export type MutationUpdateChatReplyArgs = {
   fields?: InputMaybe<UpdateChatReplyInput>;
 };
@@ -608,6 +613,8 @@ export type Query = {
   dynamicSearchToMemberGraph?: Maybe<Graph>;
   dynamicSearchToProjectGraph?: Maybe<Graph>;
   edenGPTreply?: Maybe<EdenGpTreplyOutput>;
+  edenGPTreplyChatAPI?: Maybe<EdenGpTreplyChatApiOutput>;
+  edenGPTreplyMemory?: Maybe<EdenGpTreplyMemoryOutput>;
   edenGPTsearchProfiles?: Maybe<EdenGpTsearchProfilesOutput>;
   errors?: Maybe<PaginatedErrorLogs>;
   findAllProjectsTeamsAnouncments?: Maybe<
@@ -669,6 +676,7 @@ export type Query = {
   match_projectToUser?: Maybe<ProjectUserMatchType>;
   membersStats?: Maybe<Array<Maybe<ResultCount>>>;
   members_autocomplete?: Maybe<Array<Maybe<Members>>>;
+  messageMapKG?: Maybe<MessageMapKgOutput>;
   nodes_autocomplete?: Maybe<Array<Maybe<Node>>>;
   setAllMatch_v2?: Maybe<Scalars["Boolean"]>;
   skills?: Maybe<PaginatedSkills>;
@@ -699,6 +707,14 @@ export type QueryDynamicSearchToProjectGraphArgs = {
 
 export type QueryEdenGpTreplyArgs = {
   fields?: InputMaybe<EdenGpTreplyInput>;
+};
+
+export type QueryEdenGpTreplyChatApiArgs = {
+  fields?: InputMaybe<EdenGpTreplyChatApiInput>;
+};
+
+export type QueryEdenGpTreplyMemoryArgs = {
+  fields?: InputMaybe<EdenGpTreplyMemoryInput>;
 };
 
 export type QueryEdenGpTsearchProfilesArgs = {
@@ -915,6 +931,10 @@ export type QueryMembersStatsArgs = {
 
 export type QueryMembers_AutocompleteArgs = {
   fields?: InputMaybe<Members_AutocompleteInput>;
+};
+
+export type QueryMessageMapKgArgs = {
+  fields?: InputMaybe<MessageMapKgInput>;
 };
 
 export type QueryNodes_AutocompleteArgs = {
@@ -1523,13 +1543,34 @@ export type DynamicSearchToProjectGraphInput = {
   showAvatar?: InputMaybe<Scalars["Boolean"]>;
 };
 
+export type EdenGpTreplyChatApiInput = {
+  conversation?: InputMaybe<Array<InputMaybe<MessageChat>>>;
+  message?: InputMaybe<Scalars["String"]>;
+  userID?: InputMaybe<Scalars["ID"]>;
+};
+
+export type EdenGpTreplyChatApiOutput = {
+  __typename?: "edenGPTreplyChatAPIOutput";
+  reply?: Maybe<Scalars["String"]>;
+};
+
 export type EdenGpTreplyInput = {
   message?: InputMaybe<Scalars["String"]>;
 };
 
+export type EdenGpTreplyMemoryInput = {
+  memorySort?: InputMaybe<Scalars["String"]>;
+  message?: InputMaybe<Scalars["String"]>;
+  userID?: InputMaybe<Scalars["ID"]>;
+};
+
+export type EdenGpTreplyMemoryOutput = {
+  __typename?: "edenGPTreplyMemoryOutput";
+  reply?: Maybe<Scalars["String"]>;
+};
+
 export type EdenGpTreplyOutput = {
   __typename?: "edenGPTreplyOutput";
-  keywords?: Maybe<Array<Maybe<Scalars["String"]>>>;
   reply?: Maybe<Scalars["String"]>;
 };
 
@@ -1855,6 +1896,13 @@ export type InputToGptOutput = {
   expectationsRole?: Maybe<Array<Maybe<Scalars["String"]>>>;
 };
 
+export type KeywordValue = {
+  __typename?: "keywordValue";
+  confidence?: Maybe<Scalars["Int"]>;
+  keyword?: Maybe<Scalars["String"]>;
+  nodeID?: Maybe<Scalars["ID"]>;
+};
+
 export enum LevelEnum {
   Junior = "junior",
   Learning = "learning",
@@ -2035,6 +2083,26 @@ export type Match_V2_UpdateType = {
 
 export type Members_AutocompleteInput = {
   search?: InputMaybe<Scalars["String"]>;
+};
+
+export type MessageChat = {
+  content?: InputMaybe<Scalars["String"]>;
+  role?: InputMaybe<Scalars["String"]>;
+};
+
+export type MessageInp = {
+  date?: InputMaybe<Scalars["String"]>;
+  message?: InputMaybe<Scalars["String"]>;
+  name?: InputMaybe<Scalars["String"]>;
+};
+
+export type MessageMapKgInput = {
+  message?: InputMaybe<Scalars["String"]>;
+};
+
+export type MessageMapKgOutput = {
+  __typename?: "messageMapKGOutput";
+  keywords?: Maybe<Array<Maybe<KeywordValue>>>;
 };
 
 export type MessageToGptInput = {
@@ -2385,6 +2453,17 @@ export type StatsInput = {
   endDate?: InputMaybe<Scalars["Date"]>;
   range?: InputMaybe<Range>;
   startDate?: InputMaybe<Scalars["Date"]>;
+};
+
+export type StoreLongTermMemoryInput = {
+  messages?: InputMaybe<Array<InputMaybe<MessageInp>>>;
+  userID?: InputMaybe<Scalars["ID"]>;
+};
+
+export type StoreLongTermMemoryOutput = {
+  __typename?: "storeLongTermMemoryOutput";
+  success?: Maybe<Scalars["Boolean"]>;
+  summary?: Maybe<Scalars["String"]>;
 };
 
 export type StyleEdgeIn = {

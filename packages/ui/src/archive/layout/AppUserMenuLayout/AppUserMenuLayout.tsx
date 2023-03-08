@@ -41,7 +41,6 @@ export const AppUserMenuLayout = ({
         },
       },
       skip: !currentUser,
-      context: { serviceName: "soilservice" },
     }
   );
 

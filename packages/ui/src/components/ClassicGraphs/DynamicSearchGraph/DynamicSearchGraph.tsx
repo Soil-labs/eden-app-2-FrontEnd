@@ -148,7 +148,6 @@ export const DynamicSearchGraph = ({
     },
     skip: nodesID == undefined || nodesID.length == 0,
     // skip: selectedOption !== "Option 8",
-    context: { serviceName: "soilservice" },
     onCompleted: (data) => {
       if (data) {
         console.log("IAM WORKINGINSDIFN  = ", nodesID, data.dynamicSearchGraph);

@@ -72,7 +72,6 @@ export const DiscoverTalent = ({
       },
     },
     skip: !nodeType,
-    context: { serviceName: "soilservice" },
   });
 
   // if (dataNodes?.findNodes) console.log("dataNodes", dataNodes?.findNodes);

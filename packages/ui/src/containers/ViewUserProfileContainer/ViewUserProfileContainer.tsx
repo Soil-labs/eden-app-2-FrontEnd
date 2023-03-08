@@ -57,7 +57,7 @@ export const ViewUserProfileContainer = ({
             }`}
           >
             <TextLabel1>🪪 Short bio</TextLabel1>
-            <p className="text-soilBody font-Inter font-normal whitespace-pre-wrap">
+            <p className="text-soilBody font-Inter whitespace-pre-wrap font-normal">
               {user?.bio}
             </p>
           </div>

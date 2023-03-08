@@ -96,7 +96,6 @@ const DiscoverWithChatPage: NextPageWithLayout = () => {
       },
     },
     skip: !nodesID || !selectedServerID,
-    context: { serviceName: "soilservice" },
   });
 
   // if (dataMembers) console.log("dataMembers", dataMembers);
@@ -108,7 +107,6 @@ const DiscoverWithChatPage: NextPageWithLayout = () => {
       },
     },
     skip: !router.query.project,
-    context: { serviceName: "soilservice" },
   });
 
   // if (dataProject) console.log("dataProject", dataProject);
@@ -557,7 +555,6 @@ const UserMessageModal = ({
       },
     },
     skip: messageUser == "",
-    context: { serviceName: "soilservice" },
   });
 
   // eslint-disable-next-line react-hooks/rules-of-hooks
@@ -591,7 +588,7 @@ const UserMessageModal = ({
     <ChatModal open={open} onClose={onClose}>
       {open && (
         <div
-          className="fixed -right-[340px] z-50 bg-white w-[300px] h-8/10 bottom-0 rounded-lg"
+          className="h-8/10 fixed -right-[340px] bottom-0 z-50 w-[300px] rounded-lg bg-white"
           onClick={(e) => {
             console.log("this event :)");
 

@@ -53,7 +53,6 @@ const ErrorLogPage: NextPageWithLayout = () => {
         errorType: typeSelected,
       },
     },
-    context: { serviceName: "soilservice" },
   });
 
   const { errorsData, pageInfo } = dataErrors?.errors || {};
@@ -76,7 +75,6 @@ const ErrorLogPage: NextPageWithLayout = () => {
           _id: _id,
         },
       },
-      context: { serviceName: "soilservice" },
     });
   };
 

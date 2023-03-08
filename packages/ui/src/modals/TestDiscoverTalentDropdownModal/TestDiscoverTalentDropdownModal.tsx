@@ -3,7 +3,7 @@ import { Node } from "@eden/package-graphql/generated";
 import {
   Button,
   Loading,
-  Modal,
+  // Modal,
   SelectBoxNode,
   TextBody,
   TextHeading3,
@@ -49,12 +49,12 @@ export interface ITestDiscoverTalentDropdownModalProps {
 export const TestDiscoverTalentDropdownModal = ({
   openModal,
   onNext,
-  onPrev,
+  // onPrev,
   title = `Your role`,
   subTitle = ``,
   nodeType,
-  batteryPercentage,
-}: ITestDiscoverTalentDropdownModalProps) => {
+}: // batteryPercentage,
+ITestDiscoverTalentDropdownModalProps) => {
   // console.log("hackathon talent dropdown modal", dataNodes);
   const section: Data = useMemo(
     () => ({
@@ -81,7 +81,6 @@ export const TestDiscoverTalentDropdownModal = ({
       },
     },
     skip: !nodeType,
-    context: { serviceName: "soilservice" },
   });
 
   // if (dataNodes?.findNodes) console.log("dataNodes", dataNodes?.findNodes);
@@ -94,9 +93,9 @@ export const TestDiscoverTalentDropdownModal = ({
     }
   };
 
-  const handleBack = () => {
-    if (onPrev) onPrev!();
-  };
+  // const handleBack = () => {
+  //   if (onPrev) onPrev!();
+  // };
 
   useEffect(() => {
     const _numMatches = numMatches;
@@ -108,6 +107,7 @@ export const TestDiscoverTalentDropdownModal = ({
     if (selectedItems) {
       const selectedNodeId: string[] = [];
       const selectedNodeNames: string[] = [];
+
       forEach(selectedItems, (el) => {
         if (!isEmpty(el)) {
           forEach(el, (item) => {

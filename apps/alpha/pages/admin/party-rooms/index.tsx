@@ -55,7 +55,6 @@ const DiscoverPage: NextPageWithLayout = () => {
     variables: {
       fields: {},
     },
-    context: { serviceName: "soilservice" },
   });
 
   if (dataRoom) console.log("dataRoom", dataRoom);
@@ -82,7 +81,6 @@ const DiscoverPage: NextPageWithLayout = () => {
           serverID: selectedServer?._id,
         },
       },
-      context: { serviceName: "soilservice" },
     });
   };
 

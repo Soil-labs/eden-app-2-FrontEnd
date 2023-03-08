@@ -110,7 +110,6 @@ export const MemberGraph = ({ memberId, disableZoom }: IMemberGraphProps) => {
       },
     },
     skip: !memberId,
-    context: { serviceName: "soilservice" },
     onCompleted: (data) => {
       if (data) {
         setDataGraphAPI(data.findMemberGraph);

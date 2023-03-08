@@ -104,7 +104,6 @@ export const EditProjectModal = ({
           ],
         },
       },
-      context: { serviceName: "soilservice" },
     });
   };
 

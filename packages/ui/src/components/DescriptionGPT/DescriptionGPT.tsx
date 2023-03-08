@@ -102,7 +102,6 @@ export const DescriptionGPT = ({
             prompt: prompt,
           },
         },
-        context: { serviceName: "soilservice" },
       });
     }
     if (onClickGPTCondition === "inputToGPT") {
@@ -116,7 +115,6 @@ export const DescriptionGPT = ({
             expertiseRole: expertiseRole,
           },
         },
-        context: { serviceName: "soilservice" },
       });
       // console.log("inputToGPT", inputToGPT);
       // console.log(

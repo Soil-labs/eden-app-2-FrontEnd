@@ -45,7 +45,6 @@ const OnboardPartyPage: NextPageWithLayout = () => {
       },
     },
     skip: !partyId,
-    context: { serviceName: "soilservice" },
   });
 
   // if (dataRoom?.findRoom) console.log("dataRoom", dataRoom?.findRoom);
@@ -60,7 +59,6 @@ const OnboardPartyPage: NextPageWithLayout = () => {
         },
       },
       skip: !nodesID || !dataRoom?.findRoom?.serverID,
-      context: { serviceName: "soilservice" },
     }
   );
 
@@ -73,7 +71,6 @@ const OnboardPartyPage: NextPageWithLayout = () => {
       },
     },
     skip: !memberID,
-    context: { serviceName: "soilservice" },
   });
 
   // if (dataMember) console.log("dataMember", dataMember?.findMember);
@@ -83,7 +80,6 @@ const OnboardPartyPage: NextPageWithLayout = () => {
       fields: { _id: partyId },
     },
     skip: !partyId,
-    context: { serviceName: "soilservice" },
   });
 
   const membersIds: Array<string> = dataRoomSubscription
@@ -97,7 +93,6 @@ const OnboardPartyPage: NextPageWithLayout = () => {
       fields: { _id: partyId },
     },
     skip: !partyId,
-    context: { serviceName: "soilservice" },
     onData: ({ data }) => {
       const newMemberData = data?.data?.memberUpdatedInRoom;
 
@@ -135,7 +130,6 @@ const OnboardPartyPage: NextPageWithLayout = () => {
           memberID: currentUser?._id,
         },
       },
-      context: { serviceName: "soilservice" },
     });
   }, [currentUser, membersIds, partyId, dataRoom]);
 
@@ -167,7 +161,6 @@ const OnboardPartyPage: NextPageWithLayout = () => {
       },
     },
     skip: !membersIds || members.length === membersIds.length,
-    context: { serviceName: "soilservice" },
     onCompleted: (data) => {
       if (data) {
         setMembers(data.findMembers);

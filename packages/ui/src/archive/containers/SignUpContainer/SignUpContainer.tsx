@@ -88,7 +88,6 @@ export const SignUpContainer = ({}: SignUpContainerProps) => {
           },
         },
       },
-      context: { serviceName: "soilservice" },
     });
   };
 

@@ -141,7 +141,6 @@ export const ApplyByRoleContainer = ({
                     favorite: !isFavorite,
                   },
                 },
-                context: { serviceName: "soilservice" },
               });
             }}
           />

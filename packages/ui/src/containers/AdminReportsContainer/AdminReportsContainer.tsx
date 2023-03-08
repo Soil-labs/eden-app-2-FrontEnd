@@ -458,7 +458,6 @@ export const BarsNewMembers = ({ range, startDate, endDate }: any) => {
       },
     },
     skip: !range || !startDate || !endDate,
-    context: { serviceName: "soilservice" },
   });
 
   const formatData = () => {

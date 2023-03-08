@@ -40,7 +40,6 @@ const ProjectPage: NextPageWithLayout = () => {
       },
     },
     skip: !_id,
-    context: { serviceName: "soilservice" },
   });
 
   const [selectedRole, setSelectedRole] = useState(
@@ -62,7 +61,6 @@ const ProjectPage: NextPageWithLayout = () => {
       !selectedRole ||
       !dataProject?.findProject?.serverID ||
       selectedServerID.length === 0,
-    context: { serviceName: "soilservice" },
   });
 
   // if (matchingMembers) console.log("matchingMembers", matchingMembers);

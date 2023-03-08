@@ -129,7 +129,6 @@ export const ApplyByRoleModal = ({
           ],
         },
       },
-      context: { serviceName: "soilservice" },
     });
     changeTeamMemberPhaseProject({
       variables: {
@@ -140,7 +139,6 @@ export const ApplyByRoleModal = ({
           phase: "engaged",
         },
       },
-      context: { serviceName: "soilservice" },
     });
 
     setApplied(true);

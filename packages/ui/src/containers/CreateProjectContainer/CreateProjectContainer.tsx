@@ -107,7 +107,6 @@ export const CreateProjectContainer = ({
               nodeType: `sub_expertise`,
             },
           },
-          context: { serviceName: "soilservice" },
         });
 
         if (createProject?.role && i >= createProject?.role?.length - 1) {
@@ -141,7 +140,6 @@ export const CreateProjectContainer = ({
               nodeType: `sub_expertise`,
             },
           },
-          context: { serviceName: "soilservice" },
         });
 
         if (updateProject?.role && i >= updateProject?.role?.length - 1) {
@@ -185,7 +183,6 @@ export const CreateProjectContainer = ({
             serverID: state?.serverID,
           },
         },
-        context: { serviceName: "soilservice" },
       });
     } else {
       createProject({
@@ -209,7 +206,6 @@ export const CreateProjectContainer = ({
             serverID: state?.serverID,
           },
         },
-        context: { serviceName: "soilservice" },
       });
     }
   };

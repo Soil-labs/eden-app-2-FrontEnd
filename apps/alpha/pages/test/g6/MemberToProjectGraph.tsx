@@ -126,7 +126,6 @@ const MemberToProjectGraph = (props: any) => {
       },
     },
     skip: props.selectedOption !== "Option 3",
-    context: { serviceName: "soilservice" },
   });
 
   console.log("dataGraphAPImember = ", dataGraphAPImember);

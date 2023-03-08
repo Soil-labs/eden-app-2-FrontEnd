@@ -37,7 +37,6 @@ const DiscoverPage: NextPageWithLayout = () => {
       },
     },
     skip: !nodesID || !selectedServerID,
-    context: { serviceName: "soilservice" },
   });
 
   const { data: dataProject } = useQuery(FIND_PROJECT, {
@@ -47,7 +46,6 @@ const DiscoverPage: NextPageWithLayout = () => {
       },
     },
     skip: !router.query.project,
-    context: { serviceName: "soilservice" },
   });
 
   return (

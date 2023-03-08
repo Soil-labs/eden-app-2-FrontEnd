@@ -108,10 +108,10 @@ const HomeHeroSection = ({
   return (
     <Card
       shadow
-      className={`w-1/2 min-w-[720px] h-85 scrollbar-hide m-auto flex flex-col overflow-scroll bg-white py-8`}
+      className={`h-85 scrollbar-hide m-auto flex w-1/2 min-w-[720px] flex-col overflow-scroll bg-white py-8`}
     >
       <h1 className="text-center text-2xl">{`Now, let's get you connected to the graph!`}</h1>
-      <div className="w-full h-full flex items-center">
+      <div className="flex h-full w-full items-center">
         {currentUser?._id && <MemberGraph memberId={currentUser?._id!} />}
       </div>
       {displayNav.map((item, index: number) => (

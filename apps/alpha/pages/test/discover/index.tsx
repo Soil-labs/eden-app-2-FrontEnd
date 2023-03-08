@@ -81,7 +81,6 @@ const DiscoverPage: NextPageWithLayout = () => {
       },
     },
     skip: !nodesID || !selectedServerID,
-    context: { serviceName: "soilservice" },
   });
 
   // if (dataMembers) console.log("dataMembers", dataMembers);
@@ -93,7 +92,6 @@ const DiscoverPage: NextPageWithLayout = () => {
       },
     },
     skip: !router.query.project,
-    context: { serviceName: "soilservice" },
   });
 
   // if (dataProject) console.log("dataProject", dataProject);

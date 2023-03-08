@@ -35,7 +35,6 @@ export const SelectNodes = ({
         node: nodeType,
       },
     },
-    context: { serviceName: "soilservice" },
     skip: !nodeType,
   });
 

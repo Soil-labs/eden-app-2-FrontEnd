@@ -70,7 +70,6 @@ export const EditProfileOnboardPartyNodesCard = ({
         _id: null,
       },
     },
-    context: { serviceName: "soilservice" },
   });
 
   const progress = getFillProfilePercentage(currentUser || {});
@@ -119,7 +118,6 @@ export const EditProfileOnboardPartyNodesCard = ({
           links: links,
         },
       },
-      context: { serviceName: "soilservice" },
     });
   };
 
@@ -136,7 +134,6 @@ export const EditProfileOnboardPartyNodesCard = ({
           nodesID: filteredNodes,
         },
       },
-      context: { serviceName: "soilservice" },
     });
   };
 

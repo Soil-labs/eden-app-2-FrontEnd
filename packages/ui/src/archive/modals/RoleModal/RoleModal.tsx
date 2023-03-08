@@ -28,7 +28,6 @@ export const RoleModal = ({
     variables: {
       fields: {},
     },
-    context: { serviceName: "soilservice" },
   });
 
   const onSelect = (val: Maybe<RoleTemplate>) => {

@@ -23,7 +23,6 @@ export const MemberModal = ({
       },
     },
     skip: !member?._id || !open,
-    context: { serviceName: "soilservice" },
   });
 
   const findMember = dataMemberInfo?.findMember;

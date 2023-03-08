@@ -60,7 +60,6 @@ export const ProjectRecommendedCard = ({
           favorite: !fav,
         },
       },
-      context: { serviceName: "soilservice" },
     });
     updateFav(!fav);
   };

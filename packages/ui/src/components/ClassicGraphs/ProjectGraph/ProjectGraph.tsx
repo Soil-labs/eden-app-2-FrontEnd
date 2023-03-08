@@ -141,7 +141,6 @@ export const ProjectGraph = ({ projectId }: IProjectGraphProps) => {
       },
     },
     skip: !projectId,
-    context: { serviceName: "soilservice" },
     onCompleted: (data) => {
       if (data) {
         setDataGraphAPI(data.findProjectGraph);

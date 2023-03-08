@@ -76,7 +76,6 @@ const GrantsAdminPage: NextPageWithLayout = () => {
           serverID: data.server._id,
         },
       },
-      context: { serviceName: "soilservice" },
     });
   };
 

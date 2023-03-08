@@ -68,7 +68,6 @@ const ProjectsPage: NextPageWithLayout = () => {
         },
       },
       skip: !nodesID || !selectedServerID,
-      context: { serviceName: "soilservice" },
     }
   );
 
@@ -121,7 +120,6 @@ const ProjectsPage: NextPageWithLayout = () => {
           nodesID: val,
         },
       },
-      context: { serviceName: "soilservice" },
     });
   };
 

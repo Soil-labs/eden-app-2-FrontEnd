@@ -622,7 +622,6 @@ const GraphVisualPage: NextPageWithLayout = () => {
       },
     },
     skip: selectedOption !== "Option 3",
-    context: { serviceName: "soilservice" },
   });
 
   const { data: dataGraphAPImemberProject } = useQuery(
@@ -690,7 +689,6 @@ const GraphVisualPage: NextPageWithLayout = () => {
         },
       },
       skip: selectedOption !== "Option 2",
-      context: { serviceName: "soilservice" },
     }
   );
 
@@ -769,7 +767,6 @@ const GraphVisualPage: NextPageWithLayout = () => {
       },
     },
     skip: selectedOption !== "Option 6",
-    context: { serviceName: "soilservice" },
   });
 
   const { data: dataDynamicSearch, refetch: refetchDynamicSearch } = useQuery(
@@ -835,7 +832,6 @@ const GraphVisualPage: NextPageWithLayout = () => {
         },
       },
       skip: selectedOption !== "Option 8",
-      context: { serviceName: "soilservice" },
     }
   );
 
@@ -929,7 +925,6 @@ const GraphVisualPage: NextPageWithLayout = () => {
       },
     },
     skip: selectedOption !== "Option 7",
-    context: { serviceName: "soilservice" },
   });
 
   const { data: dataGraphAPIProject } = useQuery(FIND_PROJECT_GRAPH, {
@@ -1012,7 +1007,6 @@ const GraphVisualPage: NextPageWithLayout = () => {
       },
     },
     skip: selectedOption !== "Option 4",
-    context: { serviceName: "soilservice" },
   });
 
   const { data: dataGraphAPIMultipleMembersProjects } = useQuery(
@@ -1127,7 +1121,6 @@ const GraphVisualPage: NextPageWithLayout = () => {
         },
       },
       skip: selectedOption !== "Option 5",
-      context: { serviceName: "soilservice" },
     }
   );
 

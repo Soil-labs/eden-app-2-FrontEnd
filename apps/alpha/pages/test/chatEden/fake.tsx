@@ -93,7 +93,6 @@ const chatEden: NextPageWithLayout = () => {
       },
     },
     skip: messageUser == "",
-    context: { serviceName: "soilservice" },
   });
 
   // eslint-disable-next-line react-hooks/rules-of-hooks
