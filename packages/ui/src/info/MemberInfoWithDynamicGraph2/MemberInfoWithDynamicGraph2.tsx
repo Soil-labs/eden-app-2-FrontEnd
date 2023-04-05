@@ -234,7 +234,7 @@ export const MemberInfoWithDynamicGraph2 = ({
                   // className={`px-2 py-1 text-white rounded ${getBackgroundColorClass(info.score)}`}
                   // className={`px-2 py-1 text-white rounded bg-purple-400`}
                   className={`rounded px-1 py-1 text-xs text-white ${info.color}`}
-                  cutText={14}
+                  cutText={18}
                 />
               ))}
             {/* {member.endorseSummary?.mainNodes!.map(
