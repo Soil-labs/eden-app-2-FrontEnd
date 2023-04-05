@@ -19,7 +19,7 @@ import {
   Card,
   CardGrid,
   ChatSimple,
-  CommonServerAvatarList,
+  // CommonServerAvatarList,
   DynamicSearchGraph,
   LongText,
   // MemberInfoWithDynamicGraph,
@@ -40,8 +40,9 @@ import {
   EDEN_GPT_REPLY_CHAT_API_V2,
   EDEN_GPT_REPLY_MEMORY,
   FIND_RELATED_NODE,
-  MESSAGE_MAP_KG_V2,
+  // MESSAGE_MAP_KG_V2,
   // MESSAGE_MAP_KG_V3,
+  MESSAGE_MAP_KG_V4,
   STORE_LONG_TERM_MEMORY,
 } from "../../../utils/data/GQLfuncitons";
 import type { NextPageWithLayout } from "../../_app";
@@ -159,6 +160,8 @@ const chatEden: NextPageWithLayout = () => {
     | []
   >([] as [{ user: string; message: string }] | []);
 
+  // const [assistantLastMessage, setAssistantLastMessage] = useState<string>("");
+
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const [chatNprepareGPT, setChatNprepareGPT] = useState<string>("");
 
@@ -234,11 +237,17 @@ const chatEden: NextPageWithLayout = () => {
     }
   );
 
-  const { data: dataMessageMapKGV2 } = useQuery(MESSAGE_MAP_KG_V2, {
+  const { data: dataMessageMapKGV4 } = useQuery(MESSAGE_MAP_KG_V4, {
     variables: {
       fields: {
         message: messageUser,
+        assistantMessage:
+          chatN.length > 3 ? chatN[chatN.length - 3]?.message : "",
+        // assistantMessage: assistantLastMessage,
         // assistantMessage: chatN[chatN.length - 2]?.message,
+        // assistantMessage: chatN.map((obj:any) => {
+        //   if ()
+        // })
       },
     },
     skip:
@@ -343,6 +352,7 @@ const chatEden: NextPageWithLayout = () => {
         message: newMessage,
       });
       setChatN(chatT as [{ user: string; message: string }]);
+      // setAssistantLastMessage(newMessage);
 
       // from chatT that is an array of objects, translate it to a string
       let chatNprepareGPTP = "";
@@ -365,13 +375,13 @@ const chatEden: NextPageWithLayout = () => {
 
   // ---------------- update nodes ------------
   useEffect(() => {
-    if (dataMessageMapKGV2) {
+    if (dataMessageMapKGV4) {
       // const newNodeID: any = [];
       // const newNodeConfidence: any = [];
 
       const newNodeObj: any = [];
 
-      dataMessageMapKGV2?.messageMapKG_V2?.keywords?.forEach((keyword: any) => {
+      dataMessageMapKGV4?.messageMapKG_V4?.keywords?.forEach((keyword: any) => {
         if (keyword.nodeID) {
           // newNodeID.push(keyword.nodeID);
           // newNodeConfidence.push(keyword.confidence);
@@ -482,7 +492,7 @@ const chatEden: NextPageWithLayout = () => {
       setNodeObj(newNodesObjK);
       // ------- Array of objects to disctionary ------------
     }
-  }, [dataMessageMapKGV2]);
+  }, [dataMessageMapKGV4]);
   // ---------------- update nodes ------------
 
   const handleSentMessage = (messageN: any, userN: any) => {
@@ -865,13 +875,13 @@ const UserDiscoverCard = ({
       </div>
       <div className="grid grid-cols-6">
         <div className="col-span-3">
-          {member?.serverID && (
+          {/* {member?.serverID && (
             <CommonServerAvatarList
               label={`common servers`}
               size={`xs`}
               serverID={member?.serverID as string[]}
             />
-          )}
+          )} */}
 
           {nodesPercentage && (
             <div>
