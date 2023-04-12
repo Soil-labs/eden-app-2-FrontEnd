@@ -83,7 +83,7 @@ export const ChatSimple = ({ chatN, handleSentMessage }: IChatSimple) => {
                           </span>
                         </div>
                         <img
-                          src={Users[chat.user].img}
+                          src={Users[chat.user]?.img}
                           alt="My profile"
                           className="order-1 h-6 w-6 rounded-full"
                         />
