@@ -24,7 +24,7 @@ export const ChatSimple = ({ chatN, handleSentMessage }: IChatSimple) => {
       img: "https://pbs.twimg.com/profile_images/1595723986524045312/fqOO4ZI__400x400.jpg",
     },
     "02": {
-      name: "USer",
+      name: "User",
       img: "https://cdn.discordapp.com/avatars/961730944170090516/e5844ca759a74e995027a0e50c5cb1bf.png",
     },
   };
