@@ -134,7 +134,7 @@ const InterviewEdenAIContainer = () => {
   const { companyID } = router.query;
   // --------- Company and User ------------
 
-  const [questions, setQuestions] = useState<Question[]>([]);
+  const [questionsT, setQuestionsT] = useState<Question[]>([]);
 
   const {} = useQuery(FIND_COMPANY, {
     variables: {
@@ -144,17 +144,47 @@ const InterviewEdenAIContainer = () => {
     },
     skip: companyID == "" || companyID == null,
     onCompleted: (data) => {
-      setQuestions(
-        data.findCompany.questionsToAsk.map((question: any) => {
+      // console.log(
+      //   "data.findCompany.questionsToAsk = ",
+      //   data.findCompany.questionsToAsk
+      // );
+
+      console.log("hey comapny = ");
+      const questionsTr = data.findCompany.questionsToAsk.map(
+        (question: any) => {
+          console.log("tiri ");
           return {
             _id: question.question._id,
             content: question.question.content,
             bestAnswer: question.bestAnswer,
           };
-        })
+        }
       );
+
+      console.log("questionsTr = ", questionsTr);
+
+      setQuestionsT(questionsTr);
+      console.log("questionT = ", questionT);
+
+      // setQuestionsT(
+      //   data.findCompany.questionsToAsk.map((question: any) => {
+      //     console.log(
+      //       "question - - - sss = ",
+      //       question.question._id,
+      //       question.question.content,
+      //       question.bestAnswer
+      //     );
+      // return {
+      //   _id: question.question._id,
+      //   content: question.question.content,
+      //   bestAnswer: question.bestAnswer,
+      // };
+      //   })
+      // );
     },
   });
+
+  console.log("questionsT 1= ", questionsT);
 
   // const {} = useMutation(ADD_CANDIDATE_TO_COMPANY, {
   //   variables: {
@@ -206,8 +236,8 @@ const InterviewEdenAIContainer = () => {
             sentMessageToEdenAIobj={sentMessageToEdenAIobj}
             setSentMessageToEdenAIobj={setSentMessageToEdenAIobj}
             placeholder={""}
-            questions={questions}
-            setQuestions={setQuestions}
+            questions={questionsT}
+            setQuestions={setQuestionsT}
             userID={currentUser?._id}
           />
         }
