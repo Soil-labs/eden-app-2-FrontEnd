@@ -51,7 +51,7 @@ const ADD_CANDIDATE_TO_COMPANY = gql`
 // }
 
 type Question = {
-  _id: number;
+  _id: string;
   content: string;
   bestAnswer: string;
 };
@@ -86,6 +86,11 @@ const InterviewEdenAIpage: React.FC = () => {
     onCompleted: (data) => {
       setQuestions(
         data.findCompany.questionsToAsk.map((question: any) => {
+          console.log("question zouko= ", {
+            _id: question.question._id,
+            content: question.question.content,
+            bestAnswer: question.bestAnswer,
+          });
           return {
             _id: question.question._id,
             content: question.question.content,
@@ -93,8 +98,11 @@ const InterviewEdenAIpage: React.FC = () => {
           };
         })
       );
+      console.log("cheeeck -- questions = ", questions);
     },
   });
+
+  console.log("questions = ", questions);
 
   const [addCandidateToCompany] = useMutation(ADD_CANDIDATE_TO_COMPANY, {
     onCompleted: (data) => {
