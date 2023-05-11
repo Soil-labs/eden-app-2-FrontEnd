@@ -1,18 +1,19 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @next/next/no-img-element */
 import { useEffect, useState } from "react";
+import { AiOutlinePlusCircle } from "react-icons/ai";
 
 import { EditText } from "../EditText";
 
 export interface IAddYourOwnQuestionsProps {
   questions: string[];
   // eslint-disable-next-line no-unused-vars
-  onEnter: any;
+  onChange: any;
 }
 
 export const AddYourOwnQuestions = ({
   questions,
-  onEnter,
+  onChange,
 }: IAddYourOwnQuestionsProps) => {
   const [newQuestionActive, setNewQuestionActive] = useState<boolean>(false);
 
@@ -59,10 +60,10 @@ export const AddYourOwnQuestions = ({
         )}
       </ol>
       <button
-        className="bg-transparent"
+        className="mt-2 bg-transparent"
         onClick={() => setNewQuestionActive(true)}
       >
-        <img className="mt-2 h-8 w-8" src="./plus.png" alt="" />
+        <AiOutlinePlusCircle size={35} />
       </button>
     </div>
   );
