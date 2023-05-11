@@ -8,12 +8,12 @@ import { EditText } from "../EditText";
 export interface IAddYourOwnQuestionsProps {
   questions: string[];
   // eslint-disable-next-line no-unused-vars
-  onChange: any;
+  onEnter: any;
 }
 
 export const AddYourOwnQuestions = ({
   questions,
-  onChange,
+  onEnter,
 }: IAddYourOwnQuestionsProps) => {
   const [newQuestionActive, setNewQuestionActive] = useState<boolean>(false);
 
