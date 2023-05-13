@@ -1,16 +1,21 @@
+import chromium from "chrome-aws-lambda";
 import { NextApiRequest, NextApiResponse } from "next";
-import puppeteer, { Browser, Page } from "puppeteer";
+import puppeteer from "puppeteer-core";
 
 async function extractLinkedInProfile(url: string): Promise<string> {
-  let browser: Browser;
+  let browser;
 
   try {
-    browser = await puppeteer.launch();
+    browser = await puppeteer.launch({
+      args: chromium.args,
+      executablePath: await chromium.executablePath,
+      headless: chromium.headless,
+    });
   } catch (error) {
     throw new Error(`Failed to launch browser: ${(error as Error).message}`);
   }
 
-  let page: Page;
+  let page;
 
   try {
     page = await browser.newPage();
@@ -24,7 +29,7 @@ async function extractLinkedInProfile(url: string): Promise<string> {
     throw new Error(`Failed to navigate to URL: ${(error as Error).message}`);
   }
 
-  let content: string;
+  let content;
 
   try {
     content = await page.content();
@@ -42,9 +47,8 @@ async function extractLinkedInProfile(url: string): Promise<string> {
 }
 
 function extractTextFromHTML(html: string): string {
-  const cheerio = require("cheerio");
-
   let $;
+  const cheerio = require("cheerio");
 
   try {
     $ = cheerio.load(html);
