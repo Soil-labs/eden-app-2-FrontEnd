@@ -67,7 +67,7 @@ const ADD_CANDIDATE_TO_COMPANY = gql`
 // }
 
 type Question = {
-  _id: number;
+  _id: string;
   content: string;
   bestAnswer: string;
 };
