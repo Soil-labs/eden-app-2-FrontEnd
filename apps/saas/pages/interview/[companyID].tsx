@@ -7,7 +7,7 @@ import {
   ChatMessage,
   CVUploadGPT,
   InterviewEdenAI,
-  RawDataGraph,
+  // RawDataGraph,
   SEO,
   Wizard,
   WizardStep,
@@ -15,13 +15,14 @@ import {
 import { useRouter } from "next/router";
 import { useContext, useEffect, useState } from "react";
 
-import { rawDataPersonProject } from "../../utils/data/rawDataPersonProject";
+// import { rawDataPersonProject } from "../../utils/data/rawDataPersonProject";
 import type { NextPageWithLayout } from "../_app";
 
 const HomePage: NextPageWithLayout = () => {
   const { currentUser } = useContext(UserContext);
   const router = useRouter();
   const { companyID } = router.query;
+  const [interviewEnded, setInterviewEnded] = useState(false);
 
   const {
     data: findCompanyData,
@@ -35,28 +36,56 @@ const HomePage: NextPageWithLayout = () => {
     skip: !companyID,
   });
 
+  const handleEnd = () => {
+    console.log("interview end");
+
+    setInterviewEnded(true);
+  };
+
   return (
     <>
       <SEO />
       <Card className="mx-auto mt-3 h-[88vh] w-full max-w-5xl bg-white" shadow>
         <div className="h-full w-full p-8">
-          <Wizard>
+          <Wizard canPrev={false}>
             <WizardStep label={"welcome"}>
               <section className="flex h-full flex-col items-center justify-center">
-                <h2 className="mb-8 text-2xl font-medium">
-                  Welcome to Eden AI
-                </h2>
+                <h2 className="mb-8 text-2xl font-medium">{`Hi! I'm Eden. 👋`}</h2>
                 {findCompanyData?.findCompany?.name ? (
-                  <p>
-                    You are selected to do an interview with{" "}
-                    {findCompanyData.findCompany.name}
-                  </p>
+                  <>
+                    <p>
+                      I am the AI that&lsquo;s here to help you unlock your next
+                      dream opportunity
+                    </p>
+                    <br />
+                    <p>
+                      🎉 You&lsquo;ve been invited to take the next steps with{" "}
+                      <b>{findCompanyData.findCompany.name}.</b> 🎉
+                    </p>
+                    <br />
+                    <p>
+                      If you need a refresher, here&lsquo;s the{" "}
+                      <Link href={"https://google.com"} target="_blank">
+                        <b className="underline hover:text-slate-600">
+                          opportunity
+                        </b>
+                      </Link>{" "}
+                      info
+                    </p>
+                    <br />
+                    <br />
+                    <br />
+                    <p>
+                      When you&lsquo;re ready, click next and you&lsquo;ll be
+                      doing your first interview with me!
+                    </p>
+                  </>
                 ) : (
                   <p> </p>
                 )}
               </section>
             </WizardStep>
-            <WizardStep label={"instructions"}>
+            {/* <WizardStep label={"instructions"}>
               <section className="flex h-full flex-col items-center justify-center">
                 {findCompanyData?.findCompany?.name && (
                   <h3 className="mb-8 text-lg font-medium">
@@ -71,21 +100,30 @@ const HomePage: NextPageWithLayout = () => {
                   />
                 </div>
               </section>
-            </WizardStep>
+            </WizardStep> */}
             <WizardStep label={"cv"}>
               <section className="flex h-full flex-col items-center justify-center">
-                <h3 className="mb-8 text-lg font-medium">
+                <h3 className="mb-8 text-center text-lg font-medium">
                   Hey {currentUser?.discordName}!
                 </h3>
-                <p className="mb-8">Upload your CV here</p>
+                <p className="mb-8 text-center">
+                  In order for me to be able to ask relevant questions,
+                  <br />
+                  please upload your CV first.
+                </p>
                 {/* <p>--- ADD UPLOAD CV BUTTON --</p> */}
                 <CVUploadGPT />
               </section>
             </WizardStep>
-            <WizardStep label={"chat"}>
+            <WizardStep nextDisabled={!interviewEnded} label={"chat"}>
               <div className="mx-auto h-[70vh] max-w-lg">
-                <InterviewEdenAIContainer />
+                <InterviewEdenAIContainer handleEnd={handleEnd} />
               </div>
+            </WizardStep>
+            <WizardStep label={"end"}>
+              <section className="flex h-full flex-col items-center justify-center">
+                <h2 className="mb-8 text-2xl font-medium">Thanks</h2>
+              </section>
             </WizardStep>
           </Wizard>
         </div>
@@ -99,6 +137,7 @@ HomePage.getLayout = (page) => <AppUserLayout>{page}</AppUserLayout>;
 export default HomePage;
 
 import { IncomingMessage, ServerResponse } from "http";
+import Link from "next/link";
 import { getSession } from "next-auth/react";
 
 export async function getServerSideProps(ctx: {
@@ -179,7 +218,13 @@ interface MessageObject {
   user?: string;
 }
 
-const InterviewEdenAIContainer = () => {
+interface InterviewEdenAIContainerProps {
+  handleEnd?: () => void;
+}
+
+const InterviewEdenAIContainer = ({
+  handleEnd,
+}: InterviewEdenAIContainerProps) => {
   const [sentMessageToEdenAIobj, setSentMessageToEdenAIobj] =
     useState<MessageObject>({ message: "", sentMessage: false, user: "" });
 
@@ -289,6 +334,9 @@ const InterviewEdenAIContainer = () => {
             userID={currentUser?._id}
             conversationID={conversationID}
             setConversationID={setConversationID}
+            handleEnd={() => {
+              if (handleEnd) handleEnd();
+            }}
           />
         }
       </div>

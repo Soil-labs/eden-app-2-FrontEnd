@@ -1,43 +1,58 @@
-import cheerio from "cheerio";
 import { NextApiRequest, NextApiResponse } from "next";
 import puppeteer, { Browser, Page } from "puppeteer";
 
-// Replace this with the actual LinkedIn profile URL
-
-// const linkedInProfileURL = "https://www.linkedin.com/in/michaelsypes/";
-
 async function extractLinkedInProfile(url: string): Promise<string> {
-  const browser: Browser = await puppeteer.launch({ headless: true });
-  const page: Page = await browser.newPage();
+  let browser: Browser;
 
-  // Sign in to LinkedIn
-  //   await signInToLinkedIn(page);
+  try {
+    browser = await puppeteer.launch();
+  } catch (error) {
+    throw new Error(`Failed to launch browser: ${(error as Error).message}`);
+  }
 
-  await page.goto(url, { waitUntil: "networkidle2" });
-  const content: string = await page.content();
+  let page: Page;
 
-  await browser.close();
+  try {
+    page = await browser.newPage();
+  } catch (error) {
+    throw new Error(`Failed to open a new page: ${(error as Error).message}`);
+  }
+
+  try {
+    await page.goto(url, { waitUntil: "networkidle2" });
+  } catch (error) {
+    throw new Error(`Failed to navigate to URL: ${(error as Error).message}`);
+  }
+
+  let content: string;
+
+  try {
+    content = await page.content();
+  } catch (error) {
+    throw new Error(`Failed to get page content: ${(error as Error).message}`);
+  }
+
+  try {
+    await browser.close();
+  } catch (error) {
+    throw new Error(`Failed to close browser: ${(error as Error).message}`);
+  }
+
   return content;
 }
 
-// async function signInToLinkedIn(page: Page): Promise<void> {
-//   // Add your LinkedIn credentials here
-//   const email = "miciti3036@carpetra.com";
-//   const password = "4)sk=gf.6,7PP*Y";
-
-//   await page.goto("https://www.linkedin.com/login", {
-//     waitUntil: "networkidle2",
-//   });
-//   await page.type("#username", email);
-//   await page.type("#password", password);
-//   await Promise.all([
-//     page.waitForNavigation({ waitUntil: "networkidle2" }),
-//     page.click(".login__form_action_container button"),
-//   ]);
-// }
-
 function extractTextFromHTML(html: string): string {
-  const $ = cheerio.load(html);
+  const cheerio = require("cheerio");
+
+  let $;
+
+  try {
+    $ = cheerio.load(html);
+  } catch (error) {
+    throw new Error(
+      `Failed to load HTML into Cheerio: ${(error as Error).message}`
+    );
+  }
 
   return $("body").text().replace(/\n/g, "");
 }
@@ -51,14 +66,25 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       return;
     }
 
-    try {
-      const profileHTML = await extractLinkedInProfile(url);
-      const profileText = extractTextFromHTML(profileHTML);
+    let profileHTML;
 
-      res.status(200).json({ profileText });
+    try {
+      profileHTML = await extractLinkedInProfile(url);
     } catch (error) {
-      res.status(500).json({ error: "Failed to scrape LinkedIn profile" });
+      res.status(500).json({ error: (error as Error).message });
+      return;
     }
+
+    let profileText;
+
+    try {
+      profileText = extractTextFromHTML(profileHTML);
+    } catch (error) {
+      res.status(500).json({ error: (error as Error).message });
+      return;
+    }
+
+    res.status(200).json({ profileText });
   } else {
     res.status(405).json({ error: "Method not allowed" });
   }

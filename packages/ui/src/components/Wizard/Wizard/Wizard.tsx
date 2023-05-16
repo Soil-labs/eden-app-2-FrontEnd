@@ -9,18 +9,20 @@ export interface IWizardProps {
   showStepsHeader?: boolean;
   // eslint-disable-next-line no-unused-vars
   onStepChange?: (val: any) => void;
+  canPrev?: boolean;
 }
 
 export const Wizard = ({
   children,
   showStepsHeader = false,
   onStepChange,
+  canPrev = true,
 }: IWizardProps) => {
   const [step, setStep] = useState<number>(0);
 
   // console.log(children);
 
-  const isPrevDisabled = () => {
+  const isHidePrev = () => {
     let _disabled = false;
 
     if (step <= 0) _disabled = true;
@@ -29,12 +31,25 @@ export const Wizard = ({
   };
 
   const handlePrevClick = () => {
-    if (!isPrevDisabled()) setStep(step - 1);
+    if (!isHidePrev()) setStep(step - 1);
   };
+
+  const isHideNext = () => {
+    let _hide = false;
+
+    if (step >= children.length - 1) _hide = true;
+
+    return _hide;
+  };
+
   const isNextDisabled = () => {
     let _disabled = false;
 
     if (step >= children.length - 1) _disabled = true;
+
+    const { nextDisabled } = children[step].props || false;
+
+    if (nextDisabled) _disabled = true;
 
     return _disabled;
   };
@@ -82,17 +97,17 @@ export const Wizard = ({
       </div>
       <div className="pt-20"></div>
       <div className="absolute bottom-0 left-0 flex w-full rounded-b-2xl bg-white p-4">
-        {!isPrevDisabled() && (
+        {!isHidePrev() && canPrev && (
           <Button
             className="mr-auto"
             variant="secondary"
             onClick={handlePrevClick}
-            disabled={isPrevDisabled()}
+            disabled={isHidePrev()}
           >
             Previous
           </Button>
         )}
-        {!isNextDisabled() && (
+        {!isHideNext() && (
           <Button
             className="ml-auto"
             variant="secondary"
