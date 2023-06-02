@@ -3,6 +3,8 @@ import { Members } from "@eden/package-graphql/generated";
 import { PopoverScoreReason } from "@eden/package-ui";
 import { FC, useEffect, useState } from "react";
 
+import { PercentageAnalysis } from "../../../components/PercentageAnalysis";
+
 // const CANDIDATE_NOTES_EDENAI = gql`
 //   query ($fields: candidateNotesEdenAIInput!) {
 //     candidateNotesEdenAI(fields: $fields) {
@@ -77,6 +79,9 @@ export const ReportNotes: FC<Props> = ({ candidate }) => {
 
   return (
     <>
+      <div className=" ml-14 w-10/12 ">
+        <PercentageAnalysis matchingMax={40} tabCategory="points" />
+      </div>
       <div className="space-y-4 rounded-lg p-4 py-12">
         {/* Render each category */}
         {Object.entries(meetingNotesData).map(([categoryName, items]) => (

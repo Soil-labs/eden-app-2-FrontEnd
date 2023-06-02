@@ -5,6 +5,7 @@ import { RefObject, useEffect, useRef, useState } from "react";
 import { edgeSettingsPreset } from "../../../../g6/GraphVisual/data/edgeSettingsPreset";
 import { nodeSettingsPreset } from "../../../../g6/GraphVisual/data/nodeSettingsPreset";
 import { Graph } from "../../../../g6/GraphVisual/settings/interfaceGraph";
+import { PercentageAnalysis } from "../../PercentageAnalysis";
 import { backendGraphToVisualGraph } from "../utils/helperFunctions";
 
 const GraphVisual = dynamic(
@@ -299,6 +300,9 @@ export const DynamicSearchMemberGraph = ({
 
   return (
     <>
+      <div className=" ml-24 w-9/12">
+        <PercentageAnalysis matchingMax={30} tabCategory="skills" />
+      </div>
       {refContainer && (
         <div
           className="h-full w-full"

@@ -13,4 +13,4 @@ const Template: ComponentStory<typeof PercentageAnalysis> = (args) => {
 };
 
 export const Default = Template.bind({});
-Default.args = {};
+Default.args = { tabCategory: "Skills", matchingMax: 100 };

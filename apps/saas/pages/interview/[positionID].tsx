@@ -32,6 +32,20 @@ const HomePage: NextPageWithLayout = () => {
   const [titleRole, setTitleRole] = useState(null);
   const [topSkills, setTopSkills] = useState([]);
 
+  const randomPercentageRounded = () => {
+    const min = 5;
+    const max = 100;
+    const randomNumber = Math.floor(Math.random() * (max - min + 1)) + min;
+
+    console.log("randomNumber ", randomNumber);
+
+    console.log("randomNumber > 50", randomNumber > 50);
+
+    return randomNumber;
+  };
+
+  const percentage = randomPercentageRounded();
+
   console.log("cvEnded = ", cvEnded);
   const {
     data: findPositionData,
@@ -81,20 +95,6 @@ const HomePage: NextPageWithLayout = () => {
     setTitleRole(role);
     setTopSkills(skills);
   };
-
-  const randomPercentage = () => {
-    const min = 5;
-    const max = 100;
-    const randomNumber = Math.floor(Math.random() * (max - min + 1)) + min;
-
-    console.log("randomNumber ", randomNumber);
-
-    console.log("randomNumber > 50", randomNumber > 50);
-
-    return randomNumber;
-  };
-
-  const percentage = randomPercentage();
 
   return (
     <>
