@@ -132,6 +132,11 @@ const PositionCRM: NextPageWithLayout = () => {
 
       setCandidates(data.findPosition.candidates);
 
+      console.log(
+        "data.findPosition.candidates ==================================================",
+        data.findPosition.candidates
+      );
+
       setCandidatesFromTalentList(data.findPosition.candidates);
 
       const questionPrep: Question[] = [];

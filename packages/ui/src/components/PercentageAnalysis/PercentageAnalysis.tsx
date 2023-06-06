@@ -26,7 +26,7 @@ export const PercentageAnalysis = ({
   const matchingCurrent = randomNumber(1, matchingMax);
 
   return (
-    <Card border className="flex flex-col items-center text-lg">
+    <Card shadow border className="flex flex-col items-center text-lg">
       <p className=" font-bold">Candidate&apos;s Match</p>
       <p className="text-soilPurple ">Score: {percentage}%</p>
       <div className="flex">

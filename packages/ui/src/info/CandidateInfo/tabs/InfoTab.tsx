@@ -7,7 +7,7 @@ import {
   UserBackground,
 } from "@eden/package-ui";
 import { ChevronDownIcon, ChevronUpIcon } from "@heroicons/react/outline";
-import { FC, useEffect, useState } from "react";
+import { FC, useState } from "react";
 
 type NodeDisplay = {
   nameRelevantNode: string;
@@ -224,7 +224,7 @@ export const InfoTab: FC<Props> = ({ member, mostRelevantMemberNode }) => {
         </div>
       </div>
       {member?.previousProjects && member?.previousProjects.length ? (
-        <section className=" w-9/12 pb-4 text-left">
+        <section className=" w-full pb-4 text-left">
           <TextLabel1 className="text-xs">🍒 BACKGROUND</TextLabel1>
           <UserBackground
             background={member?.previousProjects || []}
