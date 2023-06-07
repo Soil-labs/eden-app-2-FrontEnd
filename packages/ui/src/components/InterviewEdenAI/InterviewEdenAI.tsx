@@ -47,6 +47,7 @@ export interface IInterviewEdenAIProps {
   questions?: Question[];
   userID?: Maybe<string> | undefined;
   useMemory?: boolean;
+  positionTrainEdenAI?: boolean;
   conversationID?: String;
   positionID?: string | string[] | undefined;
   // eslint-disable-next-line no-unused-vars
@@ -79,6 +80,7 @@ export const InterviewEdenAI = ({
   questions,
   userID,
   useMemory = true,
+  positionTrainEdenAI,
   positionID,
   handleChangeNodes,
   handleChangeChat,
@@ -235,6 +237,44 @@ export const InterviewEdenAI = ({
   // }, [dataMessageMapKGV4]);
   // // -----------------------------------------
 
+  // ---------- Timer Count ------------
+  const [startTime, setStartTime] = useState<number>(0);
+  const [elapsedTime, setElapsedTime] = useState(0);
+
+  function toraFunc() {
+    if (startTime) {
+      setElapsedTime(Date.now() - startTime);
+    } else {
+      setStartTime(Date.now());
+    }
+  }
+
+  // function formatTime(time: number) {
+  //   const seconds = Math.floor(time / 1000);
+  //   const milliseconds = Math.floor(time % 1000);
+
+  //   return `${seconds}.${milliseconds} seconds`;
+  // }
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      if (startTime) {
+        setElapsedTime(Date.now() - startTime);
+      }
+    }, 10);
+
+    return () => clearInterval(interval);
+  }, [startTime]);
+
+  // useEffect(() => {
+  //   if (elapsedTime > 25000) {
+  //     setElapsedTime(0);
+  //     setStartTime(Date.now());
+  //   }
+  // }, [elapsedTime]);
+
+  // ---------- Timer Count ------------
+
   // ---------- AI GPT REPLY MESSAGE ----------
   const { data: dataInterviewEdenAI } = useQuery(INTERVIEW_EDEN_AI, {
     variables: {
@@ -247,6 +287,7 @@ export const InterviewEdenAI = ({
           }
           // }),
         }),
+        positionTrainEdenAI: positionTrainEdenAI,
         timesAsked: timesAsked,
         positionID: positionID,
         userID: userID,
@@ -267,6 +308,13 @@ export const InterviewEdenAI = ({
       questions?.length == 0 ||
       questions == undefined,
     onCompleted: (data) => {
+      // toraFunc();
+      // setElapsedTime(0);
+      // setStartTime(Date.now());
+      // console.log("setnmessae = ");
+
+      setStartTime(0);
+      setElapsedTime(0);
       if (
         data.interviewEdenAI.unansweredQuestionsArr &&
         data.interviewEdenAI.unansweredQuestionsArr.length === 0 &&
@@ -276,8 +324,6 @@ export const InterviewEdenAI = ({
       }
     },
   });
-
-  console.log("questions 2 = ", questions);
 
   // ---------- When GPT Reply, Store all convo messages and GPT friendly formated messages ------------
   useEffect(() => {
@@ -374,6 +420,10 @@ export const InterviewEdenAI = ({
       setNumMessageLongTermMem(0);
     }
 
+    toraFunc();
+    setElapsedTime(0);
+    setStartTime(Date.now());
+
     setMessageUser(messageN);
 
     setEdenAIsentMessage(true);
@@ -420,10 +470,29 @@ export const InterviewEdenAI = ({
   }, [nodeObj]);
 
   return (
-    <ChatSimple
-      chatN={chatN}
-      handleSentMessage={handleSentMessage}
-      placeholder={placeholder}
-    />
+    <>
+      <div className="flex flex-col items-center p-4">
+        {/* <div className="mb-4 text-4xl font-bold text-gray-800">
+          {formatTime(elapsedTime)}
+        </div> */}
+        {elapsedTime > 15000 && (
+          <div className="rounded-md bg-pink-400 p-2">
+            <h3 className="text-center font-bold text-white">
+              EdenAI is sleeping ➡️ Say hi Again
+            </h3>
+          </div>
+        )}
+      </div>
+
+      <ChatSimple
+        chatN={chatN}
+        handleSentMessage={handleSentMessage}
+        placeholder={placeholder}
+      />
+      {/* <div>
+        <button onClick={toraFunc}>Start Timer</button>
+        <div>Elapsed Time: {formatTime(elapsedTime)}</div>
+      </div> */}
+    </>
   );
 };
