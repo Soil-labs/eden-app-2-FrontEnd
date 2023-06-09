@@ -15,6 +15,8 @@ import { Pie } from "react-chartjs-2";
 import { GoGraph } from "react-icons/go";
 import { TbViewfinderOff } from "react-icons/tb";
 
+import { PercentageAnalysis } from "../../../components/PercentageAnalysis";
+
 const MEMBER_PIE_CHART_NODE_CATEGORY = gql`
   query ($fields: memberPieChartNodeCategoriesInput) {
     memberPieChartNodeCategories(fields: $fields) {
@@ -284,6 +286,7 @@ export const MatchTab: FC<Props> = ({ member, summaryQuestions }) => {
 
   return (
     <div className="relative pb-4 pt-4">
+      <PercentageAnalysis tabCategory="points" matchingMax={100} />
       <div className="mb-8 grid grid-cols-12">
         <div className="col-span-6 mb-4">
           <p className="mb-2 text-center">

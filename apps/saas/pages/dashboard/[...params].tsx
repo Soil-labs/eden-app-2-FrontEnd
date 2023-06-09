@@ -66,6 +66,7 @@ const PositionCRM: NextPageWithLayout = () => {
 
   useEffect(() => {
     if (params) {
+      console.log("params", params);
       setPositionID(params[0] as string);
       if (params[1]) setTalentListID(params[1] as string);
     }
