@@ -1271,14 +1271,14 @@ const PositionCRM: NextPageWithLayout = () => {
             approveCandidateFn={handleApproveCandidate}
             qualified={
               Boolean(
-                approvedTalentListCandidatesList?.find(
+                approvedTalentListCandidatesList.find(
                   (candidate) =>
                     candidate?.user?._id?.toString() ==
                     selectedUserId?.toString()
                 )
               ) ||
               Boolean(
-                rejectedTalentListCandidatesList?.find(
+                rejectedTalentListCandidatesList.find(
                   (candidate) =>
                     candidate?.user?._id?.toString() ==
                     selectedUserId?.toString()
