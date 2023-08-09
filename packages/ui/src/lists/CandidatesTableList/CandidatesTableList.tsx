@@ -113,6 +113,8 @@ export const CandidatesTableList: FC<CandidatesTableListProps> = ({
     }
   };
 
+  //start here
+
   return (
     <section className="bg-bgColor w-full overflow-hidden rounded-tl-md rounded-tr-md">
       <table className="w-full">
