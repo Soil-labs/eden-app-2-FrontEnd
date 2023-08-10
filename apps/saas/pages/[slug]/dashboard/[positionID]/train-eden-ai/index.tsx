@@ -81,6 +81,7 @@ const ADD_QUESTIONS_TO_POSITION = gql`
         question {
           _id
           content
+          category
         }
       }
     }
@@ -673,6 +674,7 @@ const FIND_POSITION = gql`
         question {
           _id
           content
+          category
         }
       }
     }
@@ -1703,9 +1705,12 @@ const CreateQuestions = ({}: ICreateQuestions) => {
         for (let j = 0; j < categoryQuestions.length; j++) {
           const question = categoryQuestions[j];
 
+          // console.log("question = " , question)
+
           questionsToAsk.push({
             questionContent: question.question,
             bestAnswer: "",
+            category: category,
           });
         }
       }
