@@ -14,7 +14,7 @@ export const AppDeviceLayout = ({ children }: IAppDeviceLayoutProps) => {
   //   )
   // );
 
-  return <h1>h</h1>;
+  // return <h1>h</h1>;
 
   // if (isMobile) {
   //   return (
@@ -33,5 +33,7 @@ export const AppDeviceLayout = ({ children }: IAppDeviceLayoutProps) => {
   //     </>
   //   );
   // } else {
-  //   return children;
+  return children;
+};
+
 export default AppDeviceLayout;
