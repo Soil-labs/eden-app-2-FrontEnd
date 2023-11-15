@@ -34,7 +34,4 @@ export const AppDeviceLayout = ({ children }: IAppDeviceLayoutProps) => {
   //   );
   // } else {
   //   return children;
-  // }
-};
-
 export default AppDeviceLayout;
