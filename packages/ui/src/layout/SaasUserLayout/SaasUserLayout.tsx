@@ -40,7 +40,7 @@ export const SaasUserLayout = ({
         <main
           className={classNames(
             "transition-pl bg-bgColor relative min-h-screen transition-all ease-in-out",
-            unwrappedNav ? "pl-[14.5rem]" : "pl-16"
+            unwrappedNav ? "p-[3.5rem]" : "p-8"
           )}
         >
           {children}

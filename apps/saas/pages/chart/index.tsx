@@ -17,15 +17,78 @@ const SHOW_CHART_STATE_VALUES = gql`
   }
 `;
 
+const FIND_STATE_CHART_OPTIMAL_INFO = gql`
+  query ($fields: findStateChartOptimalInfoInput) {
+    findStateChartOptimalInfo(fields: $fields) {
+      chartPoints
+      chartMinDate
+      chartMaxDate
+      chartStartDate
+      chartEndDate
+    }
+  }
+`;
+
 const ConnectTGPage: NextPageWithLayout = () => {
   const [chartData, setChartData] = useState<any>({});
 
-  const [numberChartPoints, setNumberChartPoints] = useState<number>(8);
+  const [selectedValues, setSelectedValues] = useState<string>("HAPPINESS");
 
-  const [selectedValues, setSelectedValues] = useState<string>("ENERGY");
+  // const [numberChartPoints, setNumberChartPoints] = useState<number>(8);
+  // const [minDate, setMinDate] = useState<any>("2023-11-10T13:59:53.121Z");
+  // const [maxDate, setMaxDate] = useState<any>("2023-11-14T13:59:53.121Z");
+  const [numberChartPoints, setNumberChartPoints] = useState<number>(0);
+  const [minDate, setMinDate] = useState<any>("");
+  const [maxDate, setMaxDate] = useState<any>("");
 
-  const [minDate, setMinDate] = useState<any>("2023-11-10T13:59:53.121Z");
-  const [maxDate, setMaxDate] = useState<any>("2023-11-14T13:59:53.121Z");
+  const [minDateTotalUser, setMinDateTotalUser] = useState<any>("");
+  const [maxDateTotalUser, setMaxDateTotalUser] = useState<any>("");
+
+  const {} = useQuery(FIND_STATE_CHART_OPTIMAL_INFO, {
+    variables: {
+      fields: {
+        userID: "9302939402012",
+        type: selectedValues,
+      },
+    },
+    onCompleted: (data) => {
+      console.log(
+        "data.findStateChartOptimalInfo = ",
+        data.findStateChartOptimalInfo
+      );
+
+      if (data?.findStateChartOptimalInfo) {
+        if (data.findStateChartOptimalInfo?.chartPoints)
+          setNumberChartPoints(data.findStateChartOptimalInfo.chartPoints);
+
+        if (data.findStateChartOptimalInfo?.chartStartDate)
+          setMinDate(data.findStateChartOptimalInfo.chartStartDate);
+
+        if (data.findStateChartOptimalInfo?.chartEndDate)
+          setMaxDate(data.findStateChartOptimalInfo.chartEndDate);
+
+        if (data.findStateChartOptimalInfo?.chartMinDate) {
+          const date = new Date(data.findStateChartOptimalInfo.chartMinDate);
+          const formattedDate = `${date.getFullYear()}-${(
+            "0" +
+            (date.getMonth() + 1)
+          ).slice(-2)}-${("0" + date.getDate()).slice(-2)}`;
+
+          setMinDateTotalUser(formattedDate);
+        }
+
+        if (data.findStateChartOptimalInfo?.chartMaxDate) {
+          const date = new Date(data.findStateChartOptimalInfo.chartMaxDate);
+          const formattedDate = `${date.getFullYear()}-${(
+            "0" +
+            (date.getMonth() + 1)
+          ).slice(-2)}-${("0" + date.getDate()).slice(-2)}`;
+
+          setMaxDateTotalUser(formattedDate);
+        }
+      }
+    },
+  });
 
   const {
     // data: showChartData,
@@ -42,7 +105,7 @@ const ConnectTGPage: NextPageWithLayout = () => {
         numberChartPoints: numberChartPoints,
       },
     },
-    //     skip: nodeSearchRelated == "",
+    skip: numberChartPoints == 0 || !minDate || !maxDate,
     onCompleted: (data) => {
       console.log("data", data);
 
@@ -88,17 +151,14 @@ const ConnectTGPage: NextPageWithLayout = () => {
 
   return (
     <>
-      <h1> hey</h1>
       {/* ------------------- Chart Points -------------- */}
-      <div
-        style={{ marginLeft: "10px", display: "flex", alignItems: "center" }}
-      >
+      <div style={{ display: "flex", alignItems: "center" }}>
         <label style={{ marginRight: "10px" }}>Chart Points:</label>
         <input
           id="chartPoints"
           type="range"
           min="1"
-          max="20"
+          max="30"
           value={numberChartPoints}
           onChange={(e) => setNumberChartPoints(Number(e.target.value))}
           className="w-64 cursor-pointer bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
@@ -118,6 +178,7 @@ const ConnectTGPage: NextPageWithLayout = () => {
           <option value="ENERGY">Energy</option>
           <option value="HAPPINESS">Happiness</option>
           <option value="PRODUCTIVITY">Productivity</option>
+          <option value="STRESS">Stress</option>
         </select>
       </div>
       {/* ------------------- Type Chart -------------- */}
@@ -128,6 +189,8 @@ const ConnectTGPage: NextPageWithLayout = () => {
         <input
           type="date"
           value={minDate}
+          min={minDateTotalUser}
+          max={maxDateTotalUser}
           onChange={(e) => setMinDate(e.target.value)}
         />
       </div>
@@ -136,6 +199,8 @@ const ConnectTGPage: NextPageWithLayout = () => {
         <input
           type="date"
           value={maxDate}
+          min={minDateTotalUser}
+          max={maxDateTotalUser}
           onChange={(e) => setMaxDate(e.target.value)}
         />
       </div>
@@ -150,6 +215,12 @@ const ConnectTGPage: NextPageWithLayout = () => {
             height={600}
             options={{
               maintainAspectRatio: false,
+              scales: {
+                y: {
+                  min: 0,
+                  max: 10,
+                },
+              },
             }}
           />
         )}
