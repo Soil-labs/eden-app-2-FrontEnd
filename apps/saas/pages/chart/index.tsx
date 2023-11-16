@@ -47,7 +47,7 @@ const ConnectTGPage: NextPageWithLayout = () => {
   const {} = useQuery(FIND_STATE_CHART_OPTIMAL_INFO, {
     variables: {
       fields: {
-        userID: "9302939402012",
+        userID: "9302939402013",
         type: selectedValues,
       },
     },
@@ -96,7 +96,7 @@ const ConnectTGPage: NextPageWithLayout = () => {
   } = useQuery(SHOW_CHART_STATE_VALUES, {
     variables: {
       fields: {
-        userID: "9302939402012",
+        userID: "9302939402013",
         type: selectedValues,
         // startDate: "2023-11-10T13:59:53.121Z",
         startDate: minDate,

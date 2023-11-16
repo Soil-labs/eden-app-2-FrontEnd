@@ -30,7 +30,7 @@ const ConnectTGPage: NextPageWithLayout = () => {
     await saveStateData({
       variables: {
         fields: {
-          userID: "9302939402012",
+          userID: "9302939402013",
           type: "ENERGY",
           value: parseInt(energy),
         },
@@ -40,7 +40,7 @@ const ConnectTGPage: NextPageWithLayout = () => {
     await saveStateData({
       variables: {
         fields: {
-          userID: "9302939402012",
+          userID: "9302939402013",
           type: "STRESS",
           value: parseInt(stress),
         },
@@ -50,7 +50,7 @@ const ConnectTGPage: NextPageWithLayout = () => {
     await saveStateData({
       variables: {
         fields: {
-          userID: "9302939402012",
+          userID: "9302939402013",
           type: "HAPPINESS",
           value: parseInt(happiness),
         },
