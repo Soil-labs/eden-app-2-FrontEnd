@@ -1057,7 +1057,7 @@ const PositionPage: NextPageWithLayout = ({
                     <Button
                       onClick={() => {
                         router.push(
-                          `/${position.company?.name}/dashboard/${position._id}`
+                          `/${position.company?.slug}/dashboard/${position._id}`
                         );
                       }}
                     >
@@ -1067,7 +1067,7 @@ const PositionPage: NextPageWithLayout = ({
                       variant="secondary"
                       onClick={() => {
                         router.push(
-                          `/${position.company?.name}/dashboard/${position._id}/train-eden-ai`
+                          `/${position.company?.slug}/dashboard/${position._id}/train-eden-ai`
                         );
                       }}
                     >
