@@ -15,7 +15,6 @@ import { useRouter } from "next/router";
 import { getSession } from "next-auth/react";
 import { useContext, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-// import { useContext } from "react";
 import { BiCheck, BiInfinite } from "react-icons/bi";
 import { BsCreditCard } from "react-icons/bs";
 import {
@@ -213,9 +212,29 @@ const PRODUCTS: PRODUCTS_TYPE = [
 ];
 
 const SubscribePage: NextPageWithLayout = () => {
-  // const router = useRouter();
+  const router = useRouter();
 
-  // const { currentUser } = useContext(UserContext);
+  const { currentUser } = useContext(UserContext);
+  const [loadingSpinner, setLoadingSpinner] = useState(false);
+
+  useEffect(() => {
+    const reRoute = async () => {
+      if (
+        currentUser?.companies &&
+        currentUser?.companies[0] &&
+        currentUser?.companies[0].company?.slug
+      ) {
+        setLoadingSpinner(true);
+        await router.push(
+          `/${currentUser?.companies[0].company?.slug}/dashboard`
+        );
+        setLoadingSpinner(false);
+      }
+    };
+
+    reRoute();
+  }, [currentUser, router]);
+
   const [openCreateCompanyId, setOpenCreateCompanyId] = useState<String | null>(
     null
   );
@@ -382,6 +401,7 @@ const SubscribePage: NextPageWithLayout = () => {
       >
         <CreateCompany onSubmit={handleSubscribeClick} />
       </Modal>
+      <EdenAiProcessingModal open={loadingSpinner} title="Redirecting..." />
     </>
   );
 };
@@ -394,14 +414,13 @@ export async function getServerSideProps(ctx: {
   query: { slug: string };
 }) {
   const session = await getSession(ctx);
-
-
-  const url = ctx.req.url;
+  //removes the next error in the url
+  const url = (ctx as any).resolvedUrl;
 
   if (!session) {
     return {
       redirect: {
-        destination: `/?redirect=${url}`,
+        destination: `/?redirect=${encodeURIComponent(url)}`,
         permanent: false,
       },
     };

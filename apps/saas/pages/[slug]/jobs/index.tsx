@@ -13,7 +13,6 @@ import {
 import Head from "next/head";
 import Image from "next/image";
 import { useRouter } from "next/router";
-import { signIn } from "next-auth/react";
 import { useContext, useEffect, useRef, useState } from "react";
 // import { IconPickerItem } from "react-fa-icon-picker";
 import ReactTooltip from "react-tooltip";
@@ -133,11 +132,7 @@ const HomePage: NextPageWithLayout = () => {
   );
 
   const handlePostJobClick = async () => {
-    if (!currentUser) {
-      signIn("google", {
-        callbackUrl: router.asPath,
-      });
-    } else if (
+    if (
       currentUser?.companies &&
       currentUser?.companies[0] &&
       currentUser?.companies[0].company?.slug
@@ -148,13 +143,13 @@ const HomePage: NextPageWithLayout = () => {
       );
       setLoadingSpinner(false);
     } else {
-      console.log("2222222");
-      router.push(`/pricing?community=${company?._id}`);
+      setLoadingSpinner(true);
+      await router.push(`/pricing?community=${company?._id}`);
+      setLoadingSpinner(false);
     }
   };
 
   const handlePickJobs = async (pos: any) => {
-    console.log("ahahahaha");
     setLoadingSpinner(true);
     await router.push(`/eden/jobs/${pos._id}`);
     setLoadingSpinner(false);
