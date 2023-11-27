@@ -31,6 +31,8 @@ const EDEN_API_WSS = process.env.NEXT_PUBLIC_GRAPHQL_WSS || "";
 const EDEN_API_URL = process.env.NEXT_PUBLIC_GRAPHQL_URL;
 const httpLinkEden = new HttpLink({ uri: EDEN_API_URL, fetch });
 
+console.log("EDEN_API_WSS", EDEN_API_WSS);
+
 const edenLink = new ApolloLink((operation, forward) => {
   const token = localStorage.getItem("eden_access_token");
 

@@ -414,9 +414,13 @@ const PositionPage: NextPageWithLayout = ({
                     </Tooltip>
                   </div>
                   <p className="text-edenGray-500 text-xs">
-                    <Button onClick={() => handleInterviewNav()}>
+                    <a
+                      href="#"
+                      onClick={() => handleInterviewNav()}
+                      className="cursor-pointer text-blue-500 underline"
+                    >
                       Upload your resume
-                    </Button>{" "}
+                    </a>{" "}
                     to unlock
                   </p>
                 </div>
@@ -544,8 +548,8 @@ const PositionPage: NextPageWithLayout = ({
                 //   alt={position?.company?.name || ""}
                 // />
                 <Image
-                  width="96"
-                  height="96"
+                  width="180"
+                  height="180"
                   className="mb-6"
                   src={`${
                     position?.company?.imageUrl

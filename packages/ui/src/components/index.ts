@@ -33,6 +33,7 @@ export * from "./ReadMoreComp";
 export * from "./ReportBugButton";
 export * from "./Requirements";
 export * from "./SalaryPopup";
+export * from "./SearchEdenAI";
 export * from "./SendMessageToChampion";
 export * from "./SendMessageToUser";
 export * from "./SendMessageUserToUser";

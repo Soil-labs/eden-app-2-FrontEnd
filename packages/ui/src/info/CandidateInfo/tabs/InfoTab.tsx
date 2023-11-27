@@ -181,15 +181,15 @@ export const InfoTab: FC<Props> = ({
       </section>
 
       {/* ---- skills ---- */}
-      <section className="mb-10">
+      {/* <section className="mb-10">
         <div className="border-edenGreen-300 mb-2 border-b px-4">
           <h3 className="text-edenGreen-500 mb-3">Top Skills</h3>
         </div>
         {mostRelevantMemberNode &&
-        member &&
-        member?.user?._id &&
-        Object.keys(mostRelevantMemberNode).length > 0 &&
-        mostRelevantMemberNode[member?.user._id] ? (
+          member &&
+          member?.user?._id &&
+          Object.keys(mostRelevantMemberNode).length > 0 &&
+          mostRelevantMemberNode[member?.user._id] ? (
           <>
             <div className="ml-4 flex-wrap">
               {mostRelevantMemberNode[member?.user._id].nodes
@@ -215,7 +215,7 @@ export const InfoTab: FC<Props> = ({
             </div>
           </div>
         )}
-      </section>
+      </section> */}
     </>
   );
 };

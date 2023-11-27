@@ -149,6 +149,7 @@ const HomePage: NextPageWithLayout = () => {
   const [updatePositionLoading, setUpdatePositionLoading] =
     useState<boolean>(false);
   const [createPositionOpen, setCreatePositionOpen] = useState<boolean>(false);
+  const [comingSoon, setComingSoon] = useState<boolean>(false);
   const [newPositionId, setNewPositionId] = useState<string | null>(null);
 
   const { data: findCompanyData } = useQuery(FIND_COMPANY_FROM_SLUG, {
@@ -273,22 +274,29 @@ const HomePage: NextPageWithLayout = () => {
       </Head>
 
       {creatingPositionModal}
+      <Modal open={comingSoon} onClose={() => setComingSoon(false)} closeOnEsc>
+        <div
+          className={`font-poppins bg-white p-8 text-center text-3xl font-semibold text-gray-600`}
+        >
+          Coming Soon
+        </div>
+      </Modal>
       <CreatePositionModal
         onClose={() => setCreatePositionOpen(false)}
         open={createPositionOpen}
         onSubmit={handleSubmitCreatePosition}
       />
 
-      <div className="mx-auto h-full w-full rounded px-8">
-        <div className="z-40 flex h-full w-full flex-row gap-2">
-          <div className="bg-edenPink-100 relative h-full min-w-[330px]">
+      <div className="relative mx-auto h-full max-w-screen-2xl rounded">
+        <div className="z-40 grid h-full grid-cols-12 gap-4">
+          <div className="bg-edenPink-100 relative col-span-3 h-full pl-1 pr-2">
             <div className="border-edenGreen-400 relative mb-2 border-b pb-2 text-center">
               <h1 className="text-edenGreen-600">
                 {"Communities you're subscribed to"}
               </h1>
             </div>
 
-            <div className="scrollbar-hide h-[calc(100%-106px)] overflow-y-auto pt-4">
+            <div className="scrollbar-hide h-[calc(100%-106px)] overflow-y-auto px-2 pt-4">
               <div className="bg-edenPink-300 flex flex-row items-center rounded-lg px-2 py-4">
                 <Image
                   width="56"
@@ -314,14 +322,14 @@ const HomePage: NextPageWithLayout = () => {
               </Button>
             </div>
           </div>
-          <div className="min-w-1/2 h-full flex-grow bg-white px-20">
+          <div className="col-span-6 h-full flex-grow bg-white px-[7%]">
             <h1 className="text-edenGreen-600 mb-5">Your Opportunities</h1>
-            <div className="grid-wrap scrollbar-hide grid h-[calc(100%-54px)] grid-cols-2 gap-4 overflow-y-auto">
+            <div className="grid-wrap scrollbar-hide grid h-[calc(100%-54px)] grid-cols-2 gap-x-[8%] gap-y-6 overflow-y-auto">
               <div
-                className="flex h-[200px] min-w-[300px] flex-col items-center rounded-lg bg-[url('/new-opportunity.png')] bg-cover bg-no-repeat p-3 align-baseline opacity-70"
+                className="flex min-h-[200px] flex-col items-center rounded-lg bg-[url('/new-opportunity.png')] bg-cover bg-no-repeat p-3 align-baseline opacity-70 hover:cursor-pointer hover:opacity-80 hover:shadow-lg"
                 onClick={handleCreatePosition}
               >
-                <div className="mt-9 flex h-[60px] w-[60px] items-center justify-center">
+                <div className="mt-9 flex aspect-square h-[30%] items-center justify-center">
                   <svg
                     width="55"
                     height="55"
@@ -346,7 +354,7 @@ const HomePage: NextPageWithLayout = () => {
                 findCompanyData.findCompanyFromSlug.positions.map(
                   (position: any, index: number) => (
                     <div
-                      className="bg-edenGreen-400 text-edenPink-400 relative h-[200px] min-w-[300px] rounded-lg p-3"
+                      className="bg-edenGreen-400 text-edenPink-400 relative min-h-[200px] rounded-lg p-3 hover:cursor-pointer hover:bg-[#6c9584] hover:shadow-lg"
                       key={`position${index}`}
                       onClick={() =>
                         router.push(
@@ -374,7 +382,7 @@ const HomePage: NextPageWithLayout = () => {
                           />
                         </svg>
                       </div>
-                      <div className="text-edenGreen-200 text-[8px]">
+                      <div className="text-edenGreen-200 text-left text-[8px]">
                         <span>posted on </span>
                         <span className="underline">24th of November 2023</span>
                         <span> Miltiadis Saratzidis</span>
@@ -446,15 +454,18 @@ const HomePage: NextPageWithLayout = () => {
                 )}
             </div>
           </div>
-          <div className="bg-edenPink-100 relative h-full min-w-[330px]">
+          <div className="bg-edenPink-100 relative col-span-3 h-full pl-2 pr-1">
             <div className="border-edenGreen-400 relative mb-2 border-b pb-2 text-center">
               <h1 className="text-edenGreen-600">
                 {"AI-powered Engage Flows"}
               </h1>
             </div>
 
-            <div className="scrollbar-hide max-h-[calc(100%-160px)] overflow-y-auto pt-2">
-              <div className="bg-edenPink-300 m-4 flex flex-row items-center rounded-md py-2">
+            <div className="scrollbar-hide max-h-[calc(100%-160px)] overflow-y-auto px-2 pt-2">
+              <button
+                className="bg-edenPink-300 hover:bg-edenPink-400 my-4 flex w-[calc(100%-32px)] flex-row items-center rounded-md py-2 hover:cursor-pointer hover:shadow-md"
+                onClick={() => setComingSoon(true)}
+              >
                 <div className="border-edenGreen-300 flex h-11 w-14 items-center justify-center border-r">
                   <svg
                     width="20"
@@ -507,8 +518,11 @@ const HomePage: NextPageWithLayout = () => {
                     Fav profile based recruitment
                   </p>
                 </div>
-              </div>
-              <div className="bg-edenPink-300 m-4 flex flex-row items-center rounded-md py-2">
+              </button>
+              <button
+                className="bg-edenPink-300 hover:bg-edenPink-400 my-4 flex w-[calc(100%-32px)] flex-row items-center rounded-md py-2 hover:cursor-pointer hover:shadow-md"
+                onClick={() => setComingSoon(true)}
+              >
                 <div className="border-edenGreen-300 flex h-11 w-14 items-center justify-center border-r">
                   <svg
                     width="37"
@@ -563,8 +577,11 @@ const HomePage: NextPageWithLayout = () => {
                     Ask the right people for referrals
                   </p>
                 </div>
-              </div>
-              <div className="bg-edenPink-300 m-4 flex flex-row items-center rounded-md py-2">
+              </button>
+              <button
+                className="bg-edenPink-300 hover:bg-edenPink-400 my-4 flex w-[calc(100%-32px)] flex-row items-center rounded-md py-2 hover:cursor-pointer hover:shadow-md"
+                onClick={() => setComingSoon(true)}
+              >
                 <div className="border-edenGreen-300 flex h-11 w-14 items-center justify-center border-r">
                   <svg
                     width="24"
@@ -602,7 +619,7 @@ const HomePage: NextPageWithLayout = () => {
                     Reach talent that is not actively looking
                   </p>
                 </div>
-              </div>
+              </button>
             </div>
             <div className="bg-edenGreen-600 absolute bottom-0 flex w-full justify-around px-6 py-2">
               <Button
@@ -614,7 +631,10 @@ const HomePage: NextPageWithLayout = () => {
             </div>
           </div>
         </div>
-        <div className="text-edenGreen-600 fixed right-1/3 top-3 z-[200] flex flex-row">
+        <button
+          className="text-edenGreen-600 absolute -top-14 right-[300px] z-[200] flex flex-row hover:font-medium"
+          onClick={() => router.push(`/${router.query.slug}/dashboard-new`)}
+        >
           <svg
             width="30"
             height="29"
@@ -647,7 +667,7 @@ const HomePage: NextPageWithLayout = () => {
             />
           </svg>
           All your opportunities
-        </div>
+        </button>
       </div>
     </div>
   );

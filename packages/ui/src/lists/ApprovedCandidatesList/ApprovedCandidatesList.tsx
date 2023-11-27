@@ -95,13 +95,13 @@ export const ApprovedCandidatesList = ({
   return (
     <div className="w-full">
       {candidatesList.map((candidate) => (
-        <div
+        <button
           key={candidate.user?._id}
           className={`${
             candidate.user?._id === candidateIDRowSelected
               ? "border-edenGreen-600 border-2 shadow-md"
               : ""
-          } bg-edenPink-300 mb-2 flex h-24 flex-row items-center justify-around rounded-lg`}
+          } bg-edenPink-300 hover:bg-edenPink-400 mb-2 flex h-24 w-full flex-row items-center justify-around rounded-lg hover:shadow-md`}
           onClick={() => handleObjectDataSelection(candidate)}
         >
           <ColumnStyled extraCssClass="border-r-0 pr-0 flex">
@@ -129,7 +129,7 @@ export const ApprovedCandidatesList = ({
                 </div>
               )}
           </ColumnStyled>
-        </div>
+        </button>
       ))}
     </div>
   );

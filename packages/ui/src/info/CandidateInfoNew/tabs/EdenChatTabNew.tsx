@@ -38,7 +38,7 @@ export const EdenChatTabNew: React.FC<Props> = ({ conversationID, member }) => {
     <>
       <Card
         border
-        className="mx-auto mt-3 h-[calc(100vh-12rem)] max-w-3xl overflow-scroll !border-gray-200 bg-white"
+        className="mx-32 mt-3 h-[calc(100vh-12rem)] overflow-scroll !border-gray-200 bg-white"
       >
         <div className="scrollbar-thumb-blue scrollbar-thumb-rounded scrollbar-track-blue-lighter scrollbar-hide scrolling-touch flex flex-col space-y-4 p-3">
           <div>

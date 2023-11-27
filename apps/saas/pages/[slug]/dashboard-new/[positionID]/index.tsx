@@ -1048,9 +1048,9 @@ const PositionCRM: NextPageWithLayout = () => {
                     <div
                       className={`${
                         topic === aiTopic.topic
-                          ? "border-edenGreen-600 border-2"
+                          ? "border-edenGreen-600 border-2 shadow-md"
                           : ""
-                      } bg-edenPink-300 flex h-24 flex-row items-center rounded-lg px-4 py-2`}
+                      } bg-edenPink-300 hover:bg-edenPink-400 flex h-24 flex-row items-center rounded-lg px-4 py-2 hover:cursor-pointer hover:shadow-md`}
                       key={`${aiTopic.topic}`}
                       onClick={() => {
                         setTopic(aiTopic.topic);
@@ -1078,11 +1078,13 @@ const PositionCRM: NextPageWithLayout = () => {
             )}
 
             <div className="border-edenGreen-400 relative mb-2 border-b pb-2 text-center">
-              <div onClick={handleAIListMenuOpen}>
+              <button
+                className="absolute left-0 top-3"
+                onClick={handleAIListMenuOpen}
+              >
                 <svg
                   width="19"
                   height="11"
-                  className="absolute left-0 top-3"
                   viewBox="0 0 19 11"
                   xmlns="http://www.w3.org/2000/svg"
                 >
@@ -1091,7 +1093,7 @@ const PositionCRM: NextPageWithLayout = () => {
                     className="fill-edenGreen-600 hover:fill-edenGreen-400 hover:shadow-md"
                   />
                 </svg>
-              </div>
+              </button>
               <h1 className="text-edenGreen-600">{topic}</h1>
             </div>
 
@@ -1140,19 +1142,20 @@ const PositionCRM: NextPageWithLayout = () => {
             {findPositionData && (
               <div className="flex w-full flex-col items-center">
                 <div className="relative mb-2 w-full pb-2 text-center">
-                  <svg
-                    width="19"
-                    height="11"
-                    className="absolute left-0 top-3"
-                    viewBox="0 0 19 11"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M9.34682 10.9101C9.5816 10.7839 9.72797 10.5438 9.72797 10.2827V6.21729H17.7823C18.189 6.21729 18.519 5.89596 18.519 5.50003C18.519 5.1041 18.189 4.78276 17.7823 4.78276H9.72797V0.717314C9.72797 0.455274 9.5816 0.21523 9.34682 0.0899481C9.11203 -0.0372466 8.82519 -0.0286395 8.59826 0.110031L0.802319 4.89274C0.588167 5.02472 0.458496 5.25329 0.458496 5.50003C0.458496 5.74676 0.588167 5.97533 0.802319 6.10731L8.59826 10.89C8.71811 10.9627 8.85466 11 8.9912 11C9.11301 11 9.23581 10.9694 9.34682 10.9101Z"
-                      fill="#00462C"
-                    />
-                  </svg>
+                  <button className="absolute left-0 top-3">
+                    <svg
+                      width="19"
+                      height="11"
+                      viewBox="0 0 19 11"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M9.34682 10.9101C9.5816 10.7839 9.72797 10.5438 9.72797 10.2827V6.21729H17.7823C18.189 6.21729 18.519 5.89596 18.519 5.50003C18.519 5.1041 18.189 4.78276 17.7823 4.78276H9.72797V0.717314C9.72797 0.455274 9.5816 0.21523 9.34682 0.0899481C9.11203 -0.0372466 8.82519 -0.0286395 8.59826 0.110031L0.802319 4.89274C0.588167 5.02472 0.458496 5.25329 0.458496 5.50003C0.458496 5.74676 0.588167 5.97533 0.802319 6.10731L8.59826 10.89C8.71811 10.9627 8.85466 11 8.9912 11C9.11301 11 9.23581 10.9694 9.34682 10.9101Z"
+                        className="fill-edenGreen-600 hover:fill-edenGreen-400 hover:shadow-md"
+                      />
+                    </svg>
+                  </button>
 
                   <h1 className="text-edenGreen-600 border-edenGreen-400 border-b pl-8 pr-4">
                     <CutTextTooltip
@@ -1205,8 +1208,8 @@ const PositionCRM: NextPageWithLayout = () => {
             </div>
           </div>
         </div>
-        <div
-          className="text-edenGreen-600 fixed right-1/3 top-3 z-[200] flex flex-row"
+        <button
+          className="text-edenGreen-600 fixed right-[300px] top-9 z-[200] flex flex-row hover:font-medium"
           onClick={() => router.push(`/${router.query.slug}/dashboard-new`)}
         >
           <svg
@@ -1241,7 +1244,7 @@ const PositionCRM: NextPageWithLayout = () => {
             />
           </svg>
           All your opportunities
-        </div>
+        </button>
       </div>
       {invitationPopup ? (
         <ModalNew
@@ -1330,7 +1333,7 @@ const PositionCRM: NextPageWithLayout = () => {
                     </div>
                   </div>
                 ) : (
-                  <div
+                  <button
                     className="border-edenGreen-600 my-2 flex flex-row items-center justify-between border-b px-4 py-2"
                     key={`interviewmeeting${index}`}
                     onClick={() =>
@@ -1371,7 +1374,7 @@ const PositionCRM: NextPageWithLayout = () => {
                         />
                       </svg>
                     </div>
-                  </div>
+                  </button>
                 )
               )}
             </div>

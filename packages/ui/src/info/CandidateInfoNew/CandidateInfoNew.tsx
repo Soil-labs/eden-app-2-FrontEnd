@@ -178,7 +178,7 @@ export const CandidateInfoNew = ({
 
   return (
     <div className="relative h-full">
-      <div className="scrollbar-hide eden-green-200 h-full	overflow-y-scroll overscroll-y-contain">
+      <div className="scrollbar-hide eden-green-200 h-full overflow-y-scroll overscroll-y-contain">
         <section className="w-full flex-col">
           {/* ---- Header ---- */}
           <div>
@@ -515,7 +515,7 @@ export const CandidateInfoNew = ({
               ))}
             </Tab.List>
             <Tab.Panels>
-              <div className="">
+              <div className="w-full">
                 {tabs.map(({ Content }, index) => (
                   <Tab.Panel key={index}>
                     <div className="px-8 py-4">
