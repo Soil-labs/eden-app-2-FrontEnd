@@ -13,7 +13,7 @@ import {
   SEO,
   Tooltip,
 } from "@eden/package-ui";
-import SeoImage from "@eden/package-ui/src/components/SeoImage";
+// import SeoImage from "@eden/package-ui/src/components/SeoImage";
 import { classNames } from "@eden/package-ui/utils";
 import axios from "axios";
 import {
