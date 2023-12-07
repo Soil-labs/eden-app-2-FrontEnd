@@ -13,6 +13,7 @@ import {
   SEO,
   Tooltip,
 } from "@eden/package-ui";
+import SeoImage from "@eden/package-ui/src/components/SeoImage";
 import { classNames } from "@eden/package-ui/utils";
 import axios from "axios";
 import {
@@ -292,6 +293,10 @@ const PositionPage: NextPageWithLayout = ({
         description={position?.name || ""}
         image={position?.company?.imageUrl || ""}
       />
+      {/* <SeoImage
+        title={position?.name}
+        image={position?.company?.imageUrl || ""}
+      /> */}
       <Head>
         <title>{position?.name}</title>
         <meta

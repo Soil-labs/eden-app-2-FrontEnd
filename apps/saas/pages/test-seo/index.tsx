@@ -1,8 +1,9 @@
 // components/OgImageTemplate.tsx
 
+import Image from "next/image";
 import React from "react";
-import { TbMoneybag } from "react-icons/tb";
 import { SlLocationPin } from "react-icons/sl";
+import { TbMoneybag } from "react-icons/tb";
 interface OgImageTemplateProps {
   title: string;
   company: string;
@@ -17,7 +18,10 @@ const OgImageTemplate: React.FC<OgImageTemplateProps> = (
   }
 ) => {
   return (
-    <div className=" w-[76rem] h-[40rem]  bg-emerald-900 rounded-lg">
+    <div className=" w-[76rem] h-[40rem]  bg-emerald-900 rounded-lg relative">
+      <div className="absolute right-12 top-8">
+        <Image src={"/eden_logo_seo.png"} alt="" width={63} height={63} />
+      </div>
       <div className="  flex pt-8 pl-24">
         <div className="flex flex-col justify-center ">
           <span className="text-edenPink-500 text-8xl font-bold font-Moret leading-2">
@@ -72,7 +76,14 @@ const OgImageTemplate: React.FC<OgImageTemplateProps> = (
                     with
                   </span>
                   {/* Icon 1 */}
-                  <div className=" w-28 h-28  border " />
+                  <div className=" w-28 h-28 ml-4 ">
+                    <Image
+                      src={"/D_D-logo.png"}
+                      alt=""
+                      width={124}
+                      height={124}
+                    />
+                  </div>
                 </div>
               </div>
             </div>
