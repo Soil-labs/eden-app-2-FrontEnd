@@ -13,7 +13,7 @@ import {
   SEO,
   Tooltip,
 } from "@eden/package-ui";
-import SeoImage from "@eden/package-ui/src/components/SeoImage";
+// import SeoImage from "@eden/package-ui/src/components/SeoImage";
 import { classNames } from "@eden/package-ui/utils";
 import axios from "axios";
 import {
@@ -293,7 +293,7 @@ const PositionPage: NextPageWithLayout = ({
         description={position?.name || ""}
         image={position?.company?.imageUrl || ""}
       />
-      <SeoImage
+      {/* <SeoImage
         title={position?.name}
         image={position?.company?.imageUrl || ""}
         salary={`${
@@ -320,7 +320,7 @@ const PositionPage: NextPageWithLayout = ({
         }`}
         officePolicy={getValues("generalDetails.officePolicy")}
         officeLocation={getValues("generalDetails.officeLocation")}
-      />
+      /> */}
       <Head>
         <title>{position?.name}</title>
         <meta
