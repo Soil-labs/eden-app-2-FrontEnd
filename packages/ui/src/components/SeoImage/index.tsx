@@ -1,21 +1,27 @@
 // components/OgImageTemplate.tsx
 
+import { Maybe } from "@eden/package-graphql/generated";
 import Image from "next/image";
 import React from "react";
 import { SlLocationPin } from "react-icons/sl";
 import { TbMoneybag } from "react-icons/tb";
 interface OgImageTemplateProps {
-  title: string;
-  company: string;
+  title: Maybe<string> | undefined;
+  // company: string;
   image: any;
+  salary: string | number;
+  officePolicy: string;
+  officeLocation: string;
 }
 
 const OgImageTemplate: React.FC<OgImageTemplateProps> = ({
   title,
   image,
+  officePolicy,
+  officeLocation,
   //   company,
   //   companyImage
-  //   salary
+  salary,
 }) => {
   return (
     <div className=" w-[76rem] h-[40rem]  bg-emerald-900 rounded-lg relative">
@@ -40,17 +46,19 @@ const OgImageTemplate: React.FC<OgImageTemplateProps> = ({
         <div>
           <div className=" pr-14 py-1   justify-start items-start gap-5 inline-flex">
             <div className="flex flex-col space-y-10 ">
-              <div className="flex items-center">
-                <TbMoneybag
-                  size={30}
-                  className="text-edenPink-500 mr-3 inline-block"
-                />
-                <div className="  w-80 px-5 bg-edenPink-500 rounded-2xl justify-center items-center gap-5 inline-flex ">
-                  <div className=" text-center text-emerald-900 text-3xl font-bold font-Moret leading-10 ">
-                    $120K - $190K + equity
+              {salary && (
+                <div className="flex items-center">
+                  <TbMoneybag
+                    size={30}
+                    className="text-edenPink-500 mr-3 inline-block"
+                  />
+                  <div className="  w-80 px-5 bg-edenPink-500 rounded-2xl justify-center items-center gap-5 inline-flex ">
+                    <div className=" text-center text-emerald-900 text-3xl font-bold font-Moret leading-10 ">
+                      {salary}
+                    </div>
                   </div>
                 </div>
-              </div>
+              )}
               <div>
                 <div className="flex items-center">
                   <SlLocationPin
@@ -59,12 +67,12 @@ const OgImageTemplate: React.FC<OgImageTemplateProps> = ({
                   />
                   <div className=" px-5   bg-edenPink-500 rounded-2xl justify-center items-center gap-5 inline-flex mr-6">
                     <div className=" text-center text-emerald-900 text-3xl font-bold font-Moret leading-10">
-                      Remote
+                      {officePolicy}
                     </div>
                   </div>
                   <div className=" px-5 bg-edenPink-500 rounded-2xl justify-center items-center gap-5 inline-flex">
                     <div className=" text-center text-edenGreen-600 text-3xl font-bold font-Moret leading-10">
-                      SF, CA
+                      {officeLocation}
                     </div>
                   </div>
                 </div>

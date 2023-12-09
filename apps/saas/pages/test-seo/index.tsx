@@ -7,16 +7,15 @@ import { TbMoneybag } from "react-icons/tb";
 interface OgImageTemplateProps {
   title: string;
   company: string;
+  salary: string | number;
 }
 
-const OgImageTemplate: React.FC<OgImageTemplateProps> = (
-  {
-    //   title,
-    //   company,
-    //   companyImage
-    //   salary
-  }
-) => {
+const OgImageTemplate: React.FC<OgImageTemplateProps> = ({
+  //   title,
+  //   company,
+  //   companyImage
+  salary,
+}) => {
   return (
     <div className=" w-[76rem] h-[40rem]  bg-emerald-900 rounded-lg relative">
       <div className="absolute right-12 top-8">
@@ -47,7 +46,7 @@ const OgImageTemplate: React.FC<OgImageTemplateProps> = (
                 />
                 <div className="  w-80 px-5 bg-edenPink-500 rounded-2xl justify-center items-center gap-5 inline-flex ">
                   <div className=" text-center text-emerald-900 text-3xl font-bold font-Moret leading-10 ">
-                    $120K - $190K + equity
+                    {salary}
                   </div>
                 </div>
               </div>
