@@ -1,6 +1,7 @@
 // components/OgImageTemplate.tsx
 
 import { Maybe } from "@eden/package-graphql/generated";
+import { classNames } from "@eden/package-ui/utils";
 import Image from "next/image";
 import React from "react";
 import { SlLocationPin } from "react-icons/sl";
@@ -23,8 +24,20 @@ const OgImageTemplate: React.FC<OgImageTemplateProps> = ({
   //   companyImage
   salary,
 }) => {
+  function countWords(input: typeof title): number | undefined {
+    const words = input?.split(/[\s,.!?;:()]+/);
+
+    const filteredWords = words?.filter((word) => word.length > 0);
+
+    return filteredWords?.length;
+  }
   return (
-    <div className=" w-[76rem] h-[40rem]  bg-emerald-900 rounded-lg relative">
+    <div
+      className={classNames(
+        " w-[76rem] h-[40rem]  bg-emerald-900 rounded-lg relative",
+        (countWords(title) ?? 0) > 2 ? "h-[35rem]" : "h-[40rem]"
+      )}
+    >
       <div className="absolute right-12 top-8">
         <Image src={"/eden_logo_seo.png"} alt="" width={63} height={63} />
       </div>
@@ -33,9 +46,16 @@ const OgImageTemplate: React.FC<OgImageTemplateProps> = ({
           <span className="text-edenPink-500 text-8xl font-bold font-Moret leading-2">
             know a great
           </span>
-          <span className="text-edenPink-500 text-9xl font-bold font-Moret leading-2 w-full ">
-            {title}?
-          </span>
+          {title && (
+            <span
+              className={classNames(
+                "text-edenPink-500  font-bold font-Moret leading-2 w-full",
+                (countWords(title) ?? 0) > 2 ? " text-7xl " : "text-9xl"
+              )}
+            >
+              {title}?
+            </span>
+          )}
         </div>
       </div>
 
