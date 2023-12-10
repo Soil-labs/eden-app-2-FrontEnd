@@ -46,7 +46,7 @@ const OgImageTemplate: React.FC<OgImageTemplateProps> = ({
         <div>
           <div className=" pr-14 py-1   justify-start items-start gap-5 inline-flex">
             <div className="flex flex-col space-y-10 ">
-              {salary && (
+              {salary ? (
                 <div className="flex items-center">
                   <TbMoneybag
                     size={30}
@@ -58,6 +58,8 @@ const OgImageTemplate: React.FC<OgImageTemplateProps> = ({
                     </div>
                   </div>
                 </div>
+              ) : (
+                <div className="h-14"></div>
               )}
               <div>
                 <div className="flex items-center">
@@ -76,7 +78,7 @@ const OgImageTemplate: React.FC<OgImageTemplateProps> = ({
                     </div>
                   </div>
                 </div>
-                <div className="flex justify-center items-center">
+                <div className="flex justify-center items-center mt-7">
                   <span className="text-edenPink-500 text-8xl font-bold font-Moret underline leading-10">
                     refer/apply
                   </span>
