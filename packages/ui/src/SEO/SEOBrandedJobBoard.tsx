@@ -62,7 +62,7 @@ export const SEOBrandedJobBoard: FC<SEOBrandedJobBoardProps> = ({
       <meta
         property="og:image"
         content={
-          company.slug === "developer-dao"
+          company?.slug === "developer-dao"
             ? "https://developer-dao.joineden.ai/d_d-og-image.png"
             : encodeURI(ogImage).replace(/&amp;/g, "&")
         }
