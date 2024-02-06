@@ -74,6 +74,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
         destination: redirect || "/jobs",
         permanent: false,
       },
+      props: {},
     };
   }
 
