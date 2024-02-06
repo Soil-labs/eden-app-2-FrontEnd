@@ -64,7 +64,7 @@ const CreateCompany: NextPageWithLayout = () => {
   const [addEmployeesCompany] = useMutation(ADD_EMPLOYEES_COMPANY, {
     onCompleted(data) {
       if (data.addEmployeesCompany) {
-        router.push(`/${data.addEmployeesCompany.slug}/dashboard`);
+        router.push(`/dashboard/${data.addEmployeesCompany.slug}`);
       }
     },
     onError() {

@@ -232,9 +232,9 @@ const SubscribePage: NextPageWithLayout = () => {
         // eslint-disable-next-line camelcase
         price_id: openCreateCompanyId,
         // eslint-disable-next-line camelcase
-        success_url: `${origin}/${slug}/dashboard`,
+        success_url: `${origin}/dashboard/${slug}`,
         // eslint-disable-next-line camelcase
-        cancel_url: `${origin}/${slug}/dashboard/subscription`,
+        cancel_url: `${origin}/dashboard/${slug}/subscription`,
         companySlug: slug,
       },
       {

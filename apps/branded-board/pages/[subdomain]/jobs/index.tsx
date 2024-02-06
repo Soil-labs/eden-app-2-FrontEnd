@@ -6,8 +6,8 @@ import {
   EdenAiProcessingModal,
   EdenIconExclamation,
   EdenTooltip,
-  SEOJobBoard,
 } from "@eden/package-ui";
+import SEOBrandedJobBoard from "@eden/package-ui/src/SEO/SEOBrandedJobBoard";
 import axios from "axios";
 import { InferGetStaticPropsType } from "next";
 import Image from "next/image";
@@ -63,7 +63,7 @@ const JobsPage: NextPageWithLayout = ({
 
   return (
     <>
-      <SEOJobBoard
+      <SEOBrandedJobBoard
         title={company?.name}
         description={company?.description}
         company={company}

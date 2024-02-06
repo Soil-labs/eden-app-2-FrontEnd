@@ -1,16 +1,21 @@
 // import { UserContext } from "@eden/package-context";
 import { Button, SaasUserLayout } from "@eden/package-ui";
+import useAuthGate from "@eden/package-ui/src/hooks/useAuthGate/useAuthGate";
 import { classNames, getCookieFromContext } from "@eden/package-ui/utils";
 import axios from "axios";
 import { IncomingMessage, ServerResponse } from "http";
 import { useRouter } from "next/router";
 // import { useContext } from "react";
 import { BiCheck, BiInfinite } from "react-icons/bi";
-import { HiOutlineBuildingStorefront } from "react-icons/hi2";
+import {
+  HiOutlineBuildingOffice,
+  HiOutlineBuildingOffice2,
+  HiOutlineBuildingStorefront,
+} from "react-icons/hi2";
 import { MdClose } from "react-icons/md";
 
-import { IS_PRODUCTION } from "../../../../../../constants";
-import type { NextPageWithLayout } from "../../../../../_app";
+import { IS_PRODUCTION } from "../../../../../constants";
+import type { NextPageWithLayout } from "../../../../_app";
 
 type PRODUCTS_TYPE = {
   name: string;
@@ -31,12 +36,12 @@ type PRODUCTS_TYPE = {
 
 const PRODUCTS: PRODUCTS_TYPE = [
   {
-    name: "Startup Promo",
+    name: "Startup",
     description:
       "For those looking to build the future with likeminded people.",
-    monthlyPrice: 0,
+    monthlyPrice: 249,
     priceID: IS_PRODUCTION
-      ? "price_1O2rCtBxX85c6z0CHtnLOoD1"
+      ? "price_1NxUDfBxX85c6z0CTCpGb31x"
       : "price_1NnKzqBxX85c6z0CuUKA0uku",
     featured: false,
     icon: <HiOutlineBuildingStorefront />,
@@ -75,9 +80,101 @@ const PRODUCTS: PRODUCTS_TYPE = [
       },
     },
   },
+  {
+    name: "Scaleup",
+    description:
+      "For those looking to build the future with likeminded people.",
+    monthlyPrice: 499,
+    priceID: IS_PRODUCTION
+      ? "price_1NxUBRBxX85c6z0CgmukMjft"
+      : "price_1NnKzqBxX85c6z0CuUKA0uku",
+    featured: true,
+    icon: <HiOutlineBuildingOffice />,
+    features: {
+      access: {
+        magicJobPosts: { value: 5, text: "Magic job posts" },
+        outreachCredits: { value: 25, text: "Outreach credits" },
+        talentMatches: {
+          value: 100,
+          text: "AI-assisted high-precision talent matches",
+        },
+      },
+      curation: {
+        continuousLearning: {
+          value: true,
+          text: "Continuous learning from your talent preferences",
+        },
+        weeklyTalentPlaylists: {
+          value: true,
+          text: "Weekly talent discovery playlists curated for you by Eden & D_D talent stewards",
+        },
+        reputationGating: {
+          value: true,
+          text: "Reputation gating (coming soon) ",
+        },
+      },
+      exposure: {
+        jobBoard: {
+          value: true,
+          text: "A top-spot on our job board that gets 20.000 hits/month",
+        },
+        socials: {
+          value: true,
+          text: "Bi-weekly shoutouts on our socials w aggregated audience of 100.000 web3 enthusiasts & professionals",
+        },
+      },
+    },
+  },
+  {
+    name: "Head of platform @ VC",
+    description:
+      "For those looking to build the future with likeminded people.",
+    monthlyPrice: 999,
+    priceID: IS_PRODUCTION
+      ? "price_1NxUAHBxX85c6z0CwonUgMF5"
+      : "price_1NnKzqBxX85c6z0CuUKA0uku",
+    featured: false,
+    icon: <HiOutlineBuildingOffice2 />,
+    features: {
+      access: {
+        magicJobPosts: { value: 9999, text: "Magic job posts" },
+        outreachCredits: { value: 9999, text: "Outreach credits" },
+        talentMatches: {
+          value: 9999,
+          text: "AI-assisted high-precision talent matches",
+        },
+      },
+      curation: {
+        continuousLearning: {
+          value: true,
+          text: "Continuous learning from your talent preferences",
+        },
+        weeklyTalentPlaylists: {
+          value: true,
+          text: "Weekly talent discovery playlists curated for you by Eden & D_D talent stewards",
+        },
+        reputationGating: {
+          value: true,
+          text: "Reputation gating (coming soon) ",
+        },
+      },
+      exposure: {
+        jobBoard: {
+          value: true,
+          text: "A top-spot on our job board that gets 20.000 hits/month",
+        },
+        socials: {
+          value: true,
+          text: "Bi-weekly shoutouts on our socials w aggregated audience of 100.000 web3 enthusiasts & professionals",
+        },
+      },
+    },
+  },
 ];
 
 const SubscribePage: NextPageWithLayout = () => {
+  useAuthGate();
+
   // eslint-disable-next-line no-unused-vars
   const router = useRouter();
   const slug = router.query.slug;
@@ -95,9 +192,9 @@ const SubscribePage: NextPageWithLayout = () => {
         // eslint-disable-next-line camelcase
         price_id: priceID,
         // eslint-disable-next-line camelcase
-        success_url: `${origin}/${slug}/dashboard`,
+        success_url: `${origin}/dashboard/${slug}`,
         // eslint-disable-next-line camelcase
-        cancel_url: `${origin}/${slug}/dashboard/subscription`,
+        cancel_url: `${origin}/dashboard/${slug}/subscription`,
         companySlug: slug,
       },
       {
@@ -113,7 +210,6 @@ const SubscribePage: NextPageWithLayout = () => {
   return (
     <div className="flex h-screen items-center justify-center">
       <div className="grid max-w-6xl grid-cols-3 gap-4">
-        <div className="col-span-1"></div>
         {PRODUCTS.map((product, index) => (
           <div
             key={index}

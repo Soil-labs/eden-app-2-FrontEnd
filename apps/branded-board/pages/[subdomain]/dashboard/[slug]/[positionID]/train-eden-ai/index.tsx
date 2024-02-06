@@ -35,7 +35,7 @@ import { InterviewEdenAIContainer } from "@/components/TrainEdenAiSteps/Intervie
 import { PrioritiesAndTradeOffsContainer } from "@/components/TrainEdenAiSteps/PrioritiesAndTradeOffsContainer";
 import { ProfileQuestionsContainer } from "@/components/TrainEdenAiSteps/ProfileQuestionsContainer";
 
-import type { NextPageWithLayout } from "../../../../../../_app";
+import type { NextPageWithLayout } from "../../../../../_app";
 
 export const WEBPAGE_TO_MEMORY = gql`
   mutation ($fields: websiteToMemoryCompanyInput!) {
@@ -449,7 +449,7 @@ const TrainAiPage: NextPageWithLayout = () => {
           },
         },
         onCompleted() {
-          router.push(`/${company?.slug}/dashboard/${positionID}`);
+          router.push(`/dashboard/${company?.slug}/${positionID}`);
         },
         onError() {
           toast.error("There was an error while submitting");
@@ -925,7 +925,7 @@ const TrainAiPage: NextPageWithLayout = () => {
                     className="absolute bottom-8 right-8 z-30 mx-auto"
                     variant={"primary"}
                     onClick={() => {
-                      router.push(`/${company?.slug}/dashboard/${positionID}`);
+                      router.push(`/dashboard/${company?.slug}/${positionID}`);
                     }}
                   >
                     Continue to Dashboard
@@ -1042,7 +1042,7 @@ export async function getServerSideProps(ctx: {
   ) {
     return {
       redirect: {
-        destination: `/${_companyAuth.company.slug}/dashboard/subscription`,
+        destination: `/dashboard/${_companyAuth.company.slug}/subscription`,
         permanent: false,
       },
     };

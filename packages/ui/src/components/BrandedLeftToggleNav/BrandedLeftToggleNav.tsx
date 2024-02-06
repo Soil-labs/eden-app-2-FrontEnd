@@ -70,17 +70,17 @@ const BULK_UPDATE_POSITION = gql`
   }
 `;
 
-export interface LeftToggleNavProps {
+export interface BrandedLeftToggleNavProps {
   unwrapped: boolean;
   logoLink?: string;
   onToggleNav?: () => void;
 }
 
-export const LeftToggleNav = ({
+export const BrandedLeftToggleNav = ({
   unwrapped = false,
   logoLink = "/",
   onToggleNav,
-}: LeftToggleNavProps) => {
+}: BrandedLeftToggleNavProps) => {
   const router = useRouter();
   const { company, getCompanyFunc } = useContext(CompanyContext);
 
@@ -263,7 +263,7 @@ export const LeftToggleNav = ({
                 .map((position, index) => (
                   <Link
                     key={index}
-                    href={`/${company.slug}/dashboard/${position?._id}`}
+                    href={`/dashboard/${company.slug}/${position?._id}`}
                   >
                     <div
                       className={classNames(
@@ -324,7 +324,7 @@ export const LeftToggleNav = ({
                           ]?.map((_talentList, index) => (
                             <li key={index}>
                               <Link
-                                href={`/${company.slug}/dashboard/${
+                                href={`/dashboard/${company.slug}/${
                                   position?._id
                                 }${
                                   _talentList?._id !== "000"
@@ -406,7 +406,7 @@ const UserButton = ({ unwrapped }: UserButtonProps) => {
           key={0}
           className="text-edenGray-700 hover:bg-edenGreen-100 border-edenGray-100 cursor-pointer border-b px-4 py-1 text-sm"
           onClick={() => {
-            router.push(`/${company.slug}/dashboard/pending-requests`);
+            router.push(`/dashboard/${company.slug}/pending-requests`);
           }}
         >
           user access requests

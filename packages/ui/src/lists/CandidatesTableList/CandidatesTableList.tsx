@@ -272,7 +272,7 @@ export const CandidatesTableList: FC<CandidatesTableListProps> = ({
                     <Avatar
                       size="xs"
                       src={candidate.user?.discordAvatar!}
-                      alt={`${candidate.user?.discordName!.trim()}-avatar`}
+                      alt={`${candidate.user?.discordName?.trim()}-avatar`}
                     />
                     <span className="ml-2">{candidate.user?.discordName!}</span>
                   </div>

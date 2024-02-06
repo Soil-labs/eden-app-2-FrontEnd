@@ -72,8 +72,9 @@ const PendingRequestsPage: NextPageWithLayout = () => {
         {company?.name} pending employee access requests:
       </h1>
       {company &&
-        company
-          ?.employees!.filter((employee) => employee?.status === "PENDING")
+        company?.employees &&
+        company?.employees
+          ?.filter((employee) => employee?.status === "PENDING")
           .map((employee, index) => (
             <div
               key={index}

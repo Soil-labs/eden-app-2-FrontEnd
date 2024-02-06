@@ -22,7 +22,7 @@ const RedirectPostJobPage: NextPageWithLayout = () => {
         currentUser?.companies[0] &&
         currentUser?.companies[0].company?.slug
       ) {
-        router.push(`/${currentUser?.companies[0].company?.slug}/dashboard`);
+        router.push(`/dashboard/${currentUser?.companies[0].company?.slug}`);
       } else {
         router.push(`/pricing?community=${communityIDs[0]}`);
       }
