@@ -7,7 +7,7 @@ import Head from "next/head";
 import { useRouter } from "next/router";
 import { ReactElement, useContext, useMemo, useState } from "react";
 
-import { NextPageWithLayout } from "./_app";
+import { NextPageWithLayout } from "../_app";
 
 const LoginPage: NextPageWithLayout = ({
   redirect,
