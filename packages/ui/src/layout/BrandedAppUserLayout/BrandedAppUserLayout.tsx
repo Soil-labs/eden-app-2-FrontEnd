@@ -1,10 +1,6 @@
-import { DynamicSessionContext, UserContext } from "@eden/package-context";
 import { useRouter } from "next/router";
-import { useContext } from "react";
-import { FiLogOut } from "react-icons/fi";
 
-import { MenuDropdown } from "../../components";
-import { Avatar } from "../../elements";
+import UserButton from "./UserButton";
 
 export interface IBrandedAppUserLayoutProps {
   children: React.ReactNode;
@@ -18,7 +14,7 @@ export const BrandedAppUserLayout = ({
   const router = useRouter();
 
   return (
-    <div className="bg-[#EFEFEF]">
+    <div className="min-h-screen bg-[#EFEFEF]">
       <nav className="fixed left-0 top-0 z-40 h-16 w-screen bg-[#EFEFEF]">
         <div className="mx-auto flex h-16 w-full max-w-6xl items-center px-4">
           <img
@@ -42,44 +38,3 @@ export const BrandedAppUserLayout = ({
 };
 
 export default BrandedAppUserLayout;
-
-const UserButton = () => {
-  const { currentUser } = useContext(UserContext);
-  const { logOut } = useContext(DynamicSessionContext);
-
-  const handleLogout = () => {
-    logOut();
-  };
-
-  return currentUser ? (
-    <div className={"relative"}>
-      <div className="z-10">
-        <MenuDropdown
-          positionX="left"
-          positionY="bottom"
-          clickableElement={
-            <div className="flex items-center">
-              <div className="mr-2 inline-block">
-                <Avatar size="xs" src={currentUser.discordAvatar!} />
-              </div>
-              <span className="font-Moret whitespace-nowrap font-bold">
-                {currentUser.discordName}
-              </span>
-            </div>
-          }
-        >
-          {[
-            <li
-              key={1}
-              className="text-edenGray-700 hover:bg-edenGreen-100 border-edenGray-100 cursor-pointer border-b px-4 py-1 text-sm"
-              onClick={handleLogout}
-            >
-              <FiLogOut className="inline pb-px" size={16} />
-              {" log out"}
-            </li>,
-          ]}
-        </MenuDropdown>
-      </div>
-    </div>
-  ) : null;
-};

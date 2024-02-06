@@ -681,7 +681,7 @@ export async function getServerSideProps(ctx: GetServerSidePropsContext) {
     {
       method: "POST",
       body: JSON.stringify({
-        userID: session?.user!.id,
+        userID: session?._id,
         companySlug: ctx.query.slug,
       }),
       headers: { "Content-Type": "application/json" },

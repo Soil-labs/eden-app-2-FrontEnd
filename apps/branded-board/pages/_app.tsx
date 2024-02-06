@@ -3,7 +3,7 @@ import "react-toastify/dist/ReactToastify.css";
 
 import type { NextPage } from "next";
 import type { AppProps } from "next/app";
-import dynamic from "next/dynamic";
+// import dynamic from "next/dynamic";
 import type { ReactElement, ReactNode } from "react";
 import * as React from "react";
 
@@ -11,12 +11,12 @@ import { AppProviders } from "@/components/config/AppProviders";
 
 import mixpanelConfig from "../utils/tools/mixpanel";
 
-const AppDeviceLayout = dynamic(
-  () => import(`@eden/package-ui/src/layout/AppDeviceLayout/AppDeviceLayout`),
-  {
-    ssr: false,
-  }
-);
+// const AppDeviceLayout = dynamic(
+//   () => import(`@eden/package-ui/src/layout/AppDeviceLayout/AppDeviceLayout`),
+//   {
+//     ssr: false,
+//   }
+// );
 
 export { reportWebVitals } from "next-axiom";
 
@@ -42,7 +42,7 @@ const App = ({
     <AppProviders>
       <>
         {/* <AppMaintainanceLayout /> */}
-        <AppDeviceLayout />
+        {/* <AppDeviceLayout /> */}
         {getLayout(<Component {...pageProps} />)}
       </>
     </AppProviders>
