@@ -68,6 +68,14 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   // } else if (redirect && typeof redirect === "string") {
   //   redirectUrl = redirect;
   // }
+  if (!redirect) {
+    return {
+      redirect: {
+        destination: redirect || "/jobs",
+        permanent: false,
+      },
+    };
+  }
 
   if (session) {
     return {
