@@ -26,16 +26,23 @@ export async function middleware(req: NextRequest) {
   // Clone the URL
   const url = req.nextUrl.clone();
 
+  console.log("middleware.ts", url.pathname, req.nextUrl.pathname);
+
   // Skip public files
   if (PUBLIC_FILE.test(url.pathname) || url.pathname.includes("_next")) return;
-
-  const host = req.headers.get("host");
-  const subdomain =
-    process.env.NEXT_PUBLIC_FORCE_SLUG_LOCALHOST || getValidSubdomain(host);
 
   if (url.pathname.includes("/api/")) {
     return;
   }
+
+  if (url.pathname.includes("robots.txt")) {
+    console.log("robots.txt", url.pathname);
+    return;
+  }
+
+  const host = req.headers.get("host");
+  const subdomain =
+    process.env.NEXT_PUBLIC_FORCE_SLUG_LOCALHOST || getValidSubdomain(host);
 
   if (subdomain) {
     // Subdomain available, rewriting
