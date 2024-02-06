@@ -54,7 +54,7 @@ const CandidateInfo = dynamic(
   }
 );
 
-import { NextPageWithLayout } from "../../../../../_app";
+import { NextPageWithLayout } from "../../../../_app";
 
 const CREATE_FAKE_USER_CV = gql`
   mutation CreateFakeUserCVnew($fields: createFakeUserCVnewInput) {
@@ -748,7 +748,7 @@ const PositionCRM: NextPageWithLayout = () => {
             // setTalentListSelected({ _id: "000", name: "All candidates" });
             router.push(
               {
-                pathname: `/${company?.slug}/dashboard/${positionID}`,
+                pathname: `/dashboard/${company?.slug}/${positionID}`,
               },
               undefined,
               { shallow: true }
@@ -785,7 +785,7 @@ const PositionCRM: NextPageWithLayout = () => {
           // setTalentListSelected(editedTalentList);
           router.push(
             {
-              pathname: `/${company?.slug}/dashboard/${positionID}`,
+              pathname: `/dashboard/${company?.slug}/${positionID}`,
               query: {
                 listID: editedTalentList._id,
               },
@@ -838,7 +838,7 @@ const PositionCRM: NextPageWithLayout = () => {
 
   const handleTrainButtonClick = () => {
     // setTrainModalOpen(true);
-    router.push(`/${slug}/dashboard/${positionID}/train-eden-ai`);
+    router.push(`/dashboard/${slug}/${positionID}/train-eden-ai`);
   };
 
   const [createFakeUserCV] = useMutation(CREATE_FAKE_USER_CV);
@@ -884,7 +884,7 @@ const PositionCRM: NextPageWithLayout = () => {
     //   // setTalentListSelected(talentListToShow);
     //   router.push(
     //     {
-    //       pathname: `/${company?.slug}/dashboard/${positionID}`,
+    //       pathname: `/dashboard/${company?.slug}/${positionID}`,
     //       query: {
     //         listID: talentListToShow._id,
     //       },
@@ -907,7 +907,7 @@ const PositionCRM: NextPageWithLayout = () => {
       // setTalentListSelected(list);
       router.push(
         {
-          pathname: `/${company?.slug}/dashboard/${positionID}`,
+          pathname: `/dashboard/${company?.slug}/${positionID}`,
           query: {
             listID: list._id,
           },
@@ -920,7 +920,7 @@ const PositionCRM: NextPageWithLayout = () => {
       // setTalentListSelected({ _id: "000", name: "All candidates" });
       router.push(
         {
-          pathname: `/${company?.slug}/dashboard/${positionID}`,
+          pathname: `/dashboard/${company?.slug}/${positionID}`,
         },
         undefined,
         { shallow: true }
@@ -1856,7 +1856,7 @@ const PositionCRM: NextPageWithLayout = () => {
                       setSelectedUserId(null);
                       router.push(
                         {
-                          pathname: `/${company?.slug}/dashboard/${positionID}`,
+                          pathname: `/dashboard/${company?.slug}/${positionID}`,
                           query: {
                             candidate1: newTalentListCandidatesIds[0],
                             candidate2: newTalentListCandidatesIds[1],
@@ -2000,7 +2000,7 @@ const PositionCRM: NextPageWithLayout = () => {
                   onClose={() => {
                     router.push(
                       {
-                        pathname: `/${company?.slug}/dashboard/${positionID}`,
+                        pathname: `/dashboard/${company?.slug}/${positionID}`,
                       },
                       undefined,
                       { shallow: true }
@@ -2033,7 +2033,7 @@ const PositionCRM: NextPageWithLayout = () => {
                   onClose={() => {
                     router.push(
                       {
-                        pathname: `/${company?.slug}/dashboard/${positionID}`,
+                        pathname: `/dashboard/${company?.slug}/${positionID}`,
                       },
                       undefined,
                       { shallow: true }

@@ -10,7 +10,7 @@ import { useContext } from "react";
 import { toast } from "react-toastify";
 
 // import { useContext } from "react";
-import type { NextPageWithLayout } from "../../../../../_app";
+import type { NextPageWithLayout } from "../../../../_app";
 
 const ADD_EMPLOYEES_COMPANY = gql`
   mutation ($fields: addEmployeesCompanyInput!) {
@@ -67,39 +67,69 @@ const PendingRequestsPage: NextPageWithLayout = () => {
   };
 
   return (
-    <div className="p-8">
-      <h1 className="text-edenGreen-600 mb-4">
-        {company?.name} pending employee access requests:
-      </h1>
-      {company &&
-        company
-          ?.employees!.filter((employee) => employee?.status === "PENDING")
-          .map((employee, index) => (
-            <div
-              key={index}
-              className="bg-edenPink-300 mb-2 flex w-[20rem] items-center rounded-md px-4 py-2"
-            >
-              <div className="h-8">
-                <Avatar
-                  src={employee?.user?.discordAvatar as string}
-                  size="xs"
-                />
-              </div>
-              <h3 className="ml-2">{employee?.user?.discordName}</h3>
-              <Button
-                onClick={() => handleAcceptEmployee(employee?.user?._id!)}
-                className="ml-auto mr-2 !px-2 !py-1 text-sm"
-              >
-                Accept
-              </Button>
-              <Button
-                onClick={() => handleRejectEmployee(employee?.user?._id!)}
-                className="text-utilityRed border-utilityRed hover:bg-utilityRed hover:border-utilityRed !px-2 !py-1 text-sm hover:text-white"
-              >
-                Reject
-              </Button>
+    <div className="grid grid-cols-12 p-8">
+      <section className="md:col-span-6">
+        <h2 className="text-edenGreen-600 mb-4">{company?.name} employees</h2>
+        <div className="mb-4 flex flex-col">
+          {company?.employees?.map((employee, index) => (
+            <div key={index} className="mb-3 flex items-center">
+              <Avatar src={employee?.user?.discordAvatar as string} size="xs" />
+              <span className="ml-2">{employee?.user?.discordName}</span>
             </div>
           ))}
+        </div>
+      </section>
+      <section className="md:col-span-6">
+        <div>
+          <h2 className="text-edenGreen-600 mb-4">
+            Invite employees to {company?.name}
+          </h2>
+          <div className="mb-4 mr-2 flex">
+            <input
+              className="border-edenGray-500 rounded-md border-2"
+              type="text"
+            />
+            <Button className="ml-2 flex h-8 items-center justify-center">
+              Invite
+            </Button>
+          </div>
+        </div>
+        <div>
+          <h2 className="text-edenGreen-600 mb-4">
+            {company?.name} pending employee access requests:
+          </h2>
+          {company &&
+            company?.employees &&
+            company?.employees
+              .filter((employee) => employee?.status === "PENDING")
+              .map((employee, index) => (
+                <div
+                  key={index}
+                  className="bg-edenPink-300 mb-2 flex w-[20rem] items-center rounded-md px-4 py-2"
+                >
+                  <div className="h-8">
+                    <Avatar
+                      src={employee?.user?.discordAvatar as string}
+                      size="xs"
+                    />
+                  </div>
+                  <h3 className="ml-2">{employee?.user?.discordName}</h3>
+                  <Button
+                    onClick={() => handleAcceptEmployee(employee?.user?._id!)}
+                    className="ml-auto mr-2 !px-2 !py-1 text-sm"
+                  >
+                    Accept
+                  </Button>
+                  <Button
+                    onClick={() => handleRejectEmployee(employee?.user?._id!)}
+                    className="text-utilityRed border-utilityRed hover:bg-utilityRed hover:border-utilityRed !px-2 !py-1 text-sm hover:text-white"
+                  >
+                    Reject
+                  </Button>
+                </div>
+              ))}
+        </div>
+      </section>
     </div>
   );
 };

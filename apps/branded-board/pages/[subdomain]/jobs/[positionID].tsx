@@ -177,7 +177,7 @@ const PositionPage: NextPageWithLayout = ({
           toast.success("Saved as draft");
         }
         // router.push(
-        //   `/${position.company?.name}/dashboard/${position._id}/train-eden-ai`
+        //   `/dashboard/${position.company?.name}/${position._id}/train-eden-ai`
         // );
       },
       onError() {
@@ -383,7 +383,7 @@ const PositionPage: NextPageWithLayout = ({
                     className="!bg-utilityRed !text-white hover:opacity-75"
                     onClick={() => {
                       router.push(
-                        `/${position.company?.slug}/dashboard/${position._id}`
+                        `/dashboard/${position.company?.slug}/${position._id}`
                       );
                     }}
                   >
@@ -1254,7 +1254,7 @@ const PositionPage: NextPageWithLayout = ({
                     <Button
                       onClick={() => {
                         router.push(
-                          `/${position.company?.slug}/dashboard/${position._id}`
+                          `/dashboard/${position.company?.slug}/${position._id}`
                         );
                       }}
                     >
@@ -1264,7 +1264,7 @@ const PositionPage: NextPageWithLayout = ({
                       variant="secondary"
                       onClick={() => {
                         router.push(
-                          `/${position.company?.slug}/dashboard/${position._id}/train-eden-ai`
+                          `/dashboard/${position.company?.slug}/${position._id}/train-eden-ai`
                         );
                       }}
                     >
@@ -1461,7 +1461,7 @@ export async function getServerSideProps(ctx: GetServerSidePropsContext) {
   ) {
     return {
       redirect: {
-        destination: `/${_companyAuth.company.slug}/dashboard/subscription`,
+        destination: `/dashboard/${_companyAuth.company.slug}/subscription`,
         permanent: false,
       },
     };
