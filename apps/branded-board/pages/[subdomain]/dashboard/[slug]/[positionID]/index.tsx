@@ -17,6 +17,7 @@ import {
   AI_INTERVIEW_SERVICES,
   AskEdenPopUp,
   Avatar,
+  BrandedSaasUserLayout,
   Button,
   // CandidateInfo,
   CandidatesTableList,
@@ -27,7 +28,6 @@ import {
   MenuDropdown,
   Modal,
   NodeList,
-  SaasUserLayout,
   SelectList,
   TextField,
   TrainQuestionsEdenAI,
@@ -2068,7 +2068,9 @@ const PositionCRM: NextPageWithLayout = () => {
   );
 };
 
-PositionCRM.getLayout = (page: any) => <SaasUserLayout>{page}</SaasUserLayout>;
+PositionCRM.getLayout = (page: any) => (
+  <BrandedSaasUserLayout>{page}</BrandedSaasUserLayout>
+);
 
 export default PositionCRM;
 

@@ -2,9 +2,9 @@ import { gql, useMutation } from "@apollo/client";
 import { UserContext } from "@eden/package-context";
 import { EmployeeTypeInput } from "@eden/package-graphql/generated";
 import {
+  BrandedSaasUserLayout,
   Button,
   EdenAiProcessingModal,
-  SaasUserLayout,
 } from "@eden/package-ui";
 import { getCookieFromContext } from "@eden/package-ui/utils";
 import { IncomingMessage, ServerResponse } from "http";
@@ -189,7 +189,7 @@ const CreateCompany: NextPageWithLayout = () => {
 };
 
 CreateCompany.getLayout = (page: any) => (
-  <SaasUserLayout>{page}</SaasUserLayout>
+  <BrandedSaasUserLayout>{page}</BrandedSaasUserLayout>
 );
 
 export async function getServerSideProps(ctx: {

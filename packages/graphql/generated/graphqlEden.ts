@@ -177,6 +177,7 @@ export type Combo = {
 export type Company = {
   __typename?: "Company";
   _id?: Maybe<Scalars["ID"]>;
+  approvedEmails?: Maybe<Array<Maybe<Scalars["String"]>>>;
   benefits?: Maybe<Scalars["String"]>;
   candidatesNum?: Maybe<Scalars["Int"]>;
   communitiesSubscribed?: Maybe<Array<Maybe<Company>>>;
@@ -1328,6 +1329,7 @@ export type NodeOutputType = {
   __typename?: "NodeOutputType";
   node?: Maybe<Node>;
   scoreCard?: Maybe<Scalars["Float"]>;
+  scoreHop?: Maybe<Scalars["Float"]>;
   scoreNode?: Maybe<Scalars["Float"]>;
   scoreTotal?: Maybe<Scalars["Float"]>;
 };
@@ -1419,15 +1421,6 @@ export enum PositionStatus {
   Unpublished = "UNPUBLISHED",
 }
 
-export type PrimitiveCardInput = {
-  __typename?: "PrimitiveCardInput";
-  cardMemoryInput?: Maybe<CardMemory>;
-  cardMemoryOutput?: Maybe<Array<Maybe<CardMemoryOutputType>>>;
-  neighborNodeWithMemOutput?: Maybe<Array<Maybe<NeighborNodeWithMem>>>;
-  nodeInput?: Maybe<Node>;
-  score?: Maybe<Scalars["Float"]>;
-};
-
 export type PrimitiveCardMemInput = {
   importance?: InputMaybe<Scalars["Int"]>;
   nodeID?: InputMaybe<Scalars["ID"]>;
@@ -1437,6 +1430,16 @@ export type PrimitiveCardMemType = {
   __typename?: "PrimitiveCardMemType";
   node?: Maybe<Node>;
   score?: Maybe<Scalars["Float"]>;
+};
+
+export type PrimitiveCardType = {
+  __typename?: "PrimitiveCardType";
+  cardMemoryInput?: Maybe<CardMemory>;
+  cardMemoryOutput?: Maybe<Array<Maybe<CardMemoryOutputType>>>;
+  neighborNodeWithMemOutput?: Maybe<Array<Maybe<NeighborNodeWithMem>>>;
+  nodeInput?: Maybe<Node>;
+  score?: Maybe<Scalars["Float"]>;
+  scoreReal?: Maybe<Scalars["Float"]>;
 };
 
 export type PrimitiveInput = {
@@ -2239,7 +2242,7 @@ export type ServerTemplate = {
 export type ShowMembersConnectedToNodesOutput = {
   __typename?: "ShowMembersConnectedToNodesOutput";
   member?: Maybe<Members>;
-  primitiveCardMemInput?: Maybe<Array<Maybe<PrimitiveCardInput>>>;
+  primitiveCardMemInput?: Maybe<Array<Maybe<PrimitiveCardType>>>;
   rank?: Maybe<Scalars["Int"]>;
   score?: Maybe<Scalars["Float"]>;
 };
@@ -2426,7 +2429,7 @@ export type Team = {
 export type TextToPrimitivesAndTalentOutput = {
   __typename?: "TextToPrimitivesAndTalentOutput";
   member?: Maybe<Members>;
-  primitiveCardMemInput?: Maybe<Array<Maybe<PrimitiveCardInput>>>;
+  primitiveCardMemInput?: Maybe<Array<Maybe<PrimitiveCardType>>>;
   rank?: Maybe<Scalars["Int"]>;
   score?: Maybe<Scalars["Float"]>;
 };
@@ -5557,6 +5560,7 @@ export type TextToPrimitivesAndTalentInput = {
   neighborNodeMaxSize?: InputMaybe<Scalars["Int"]>;
   pageNumber?: InputMaybe<Scalars["Int"]>;
   pageSize?: InputMaybe<Scalars["Int"]>;
+  scoreCardMaxSize?: InputMaybe<Scalars["Int"]>;
   text?: InputMaybe<Scalars["String"]>;
 };
 
@@ -5716,6 +5720,7 @@ export type UpdateCompanyInput = {
   _id?: InputMaybe<Scalars["ID"]>;
   addCompanySubscribersID?: InputMaybe<Array<InputMaybe<Scalars["ID"]>>>;
   addPositionSubscribersID?: InputMaybe<Array<InputMaybe<Scalars["ID"]>>>;
+  approvedEmails?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>;
   communitiesSubscribedID?: InputMaybe<Array<InputMaybe<Scalars["ID"]>>>;
   description?: InputMaybe<Scalars["String"]>;
   name?: InputMaybe<Scalars["String"]>;
@@ -5916,6 +5921,7 @@ export type UpdateQueryResponseInput = {
   question?: InputMaybe<Scalars["String"]>;
   responderID?: InputMaybe<Scalars["ID"]>;
   responderType?: InputMaybe<SendRespTypeEnum>;
+  scheduleInterviewUrl?: InputMaybe<Scalars["String"]>;
   senderID?: InputMaybe<Scalars["ID"]>;
   senderType?: InputMaybe<SendRespTypeEnum>;
   sentFlag?: InputMaybe<Scalars["Boolean"]>;

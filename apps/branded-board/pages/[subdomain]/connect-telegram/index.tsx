@@ -1,5 +1,5 @@
 import { UserContext } from "@eden/package-context";
-import { SaasUserLayout } from "@eden/package-ui";
+import { BrandedSaasUserLayout } from "@eden/package-ui";
 import { getCookieFromContext } from "@eden/package-ui/utils";
 import { IncomingMessage, ServerResponse } from "http";
 import { useContext } from "react";
@@ -20,7 +20,9 @@ const ConnectTGPage: NextPageWithLayout = () => {
   );
 };
 
-ConnectTGPage.getLayout = (page) => <SaasUserLayout>{page}</SaasUserLayout>;
+ConnectTGPage.getLayout = (page) => (
+  <BrandedSaasUserLayout>{page}</BrandedSaasUserLayout>
+);
 
 export default ConnectTGPage;
 

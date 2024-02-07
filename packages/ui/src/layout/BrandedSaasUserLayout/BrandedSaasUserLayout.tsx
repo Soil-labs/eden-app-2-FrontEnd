@@ -1,19 +1,19 @@
-import { LeftToggleNav } from "@eden/package-ui";
+import { BrandedLeftToggleNav } from "@eden/package-ui";
 import { classNames } from "@eden/package-ui/utils";
 import { useRouter } from "next/router";
 import { useState } from "react";
 
 import { LeftNav } from "../../components/LeftNav";
 
-export interface ISaasUserLayoutProps {
+export interface IBrandedSaasUserLayoutProps {
   children: React.ReactNode;
   logoLink?: string;
 }
 
-export const SaasUserLayout = ({
+export const BrandedSaasUserLayout = ({
   children,
   logoLink = `/`,
-}: ISaasUserLayoutProps) => {
+}: IBrandedSaasUserLayoutProps) => {
   const [unwrappedNav, setUnwrappedNav] = useState(true);
 
   const router = useRouter();
@@ -30,7 +30,7 @@ export const SaasUserLayout = ({
         router.pathname.includes("/request-access") ? (
           <LeftNav logoLink={logoLink} />
         ) : (
-          <LeftToggleNav
+          <BrandedLeftToggleNav
             unwrapped={unwrappedNav}
             onToggleNav={() => setUnwrappedNav(!unwrappedNav)}
             logoLink={logoLink}
@@ -50,4 +50,4 @@ export const SaasUserLayout = ({
   );
 };
 
-export default SaasUserLayout;
+export default BrandedSaasUserLayout;

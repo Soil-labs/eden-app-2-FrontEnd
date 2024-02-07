@@ -1,5 +1,5 @@
 // import { UserContext } from "@eden/package-context";
-import { Button, SaasUserLayout } from "@eden/package-ui";
+import { BrandedSaasUserLayout, Button } from "@eden/package-ui";
 import useAuthGate from "@eden/package-ui/src/hooks/useAuthGate/useAuthGate";
 import { classNames, getCookieFromContext } from "@eden/package-ui/utils";
 import axios from "axios";
@@ -337,7 +337,9 @@ const SubscribePage: NextPageWithLayout = () => {
   );
 };
 
-SubscribePage.getLayout = (page) => <SaasUserLayout>{page}</SaasUserLayout>;
+SubscribePage.getLayout = (page) => (
+  <BrandedSaasUserLayout>{page}</BrandedSaasUserLayout>
+);
 
 export async function getServerSideProps(ctx: {
   req: IncomingMessage;
