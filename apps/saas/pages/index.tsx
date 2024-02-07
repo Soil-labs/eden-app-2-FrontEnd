@@ -68,6 +68,15 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   // } else if (redirect && typeof redirect === "string") {
   //   redirectUrl = redirect;
   // }
+  if (!redirect) {
+    return {
+      redirect: {
+        destination: redirect || "/developer-dao/jobs",
+        permanent: false,
+      },
+      props: {},
+    };
+  }
 
   if (session) {
     return {
@@ -80,8 +89,9 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   }
 
   return {
-    redirect: redirect || "/developer-dao/jobs",
-    props: {},
+    props: {
+      redirect: redirect || "/developer-dao/jobs",
+    },
   };
 };
 
