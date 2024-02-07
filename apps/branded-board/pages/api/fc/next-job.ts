@@ -3,11 +3,6 @@ import { Position } from "@eden/package-graphql/generated";
 import axios from "axios";
 import { NextApiRequest, NextApiResponse } from "next";
 
-const baseUrl =
-  process.env.NEXT_PUBLIC_ENV_BRANCH === "develop"
-    ? `https://eden-saas-staging.vercel.app`
-    : `https://app.joineden.ai`;
-
 export default async (req: NextApiRequest, res: NextApiResponse) => {
   if (req.method === "POST") {
     try {
@@ -54,6 +49,11 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
           `,
         }
       );
+
+      const baseUrl =
+        process.env.NEXT_PUBLIC_ENV_BRANCH === "develop"
+          ? `https://${community}.preview.joineden.ai`
+          : `https://${community}.joineden.ai`;
 
       const _positions =
         communityPositions.data.data.findPositionsOfCommunity.filter(
@@ -107,6 +107,11 @@ function getImageUrl(position: Position) {
   const imageSrc = position.company?.imageUrl
     ? position.company?.imageUrl
     : DEFAULT_IMAGE;
+
+  const baseUrl =
+    process.env.NEXT_PUBLIC_ENV_BRANCH === "develop"
+      ? `https://${position.company?.slug}.preview.joineden.ai`
+      : `https://${position.company?.slug}.joineden.ai`;
 
   let imageUrl = `${baseUrl}/api/og/position?image=${imageSrc}`;
 

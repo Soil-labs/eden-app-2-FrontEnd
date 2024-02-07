@@ -330,7 +330,7 @@ const PositionPage: NextPageWithLayout = ({
   const redirectUrl =
     process.env.NEXT_PUBLIC_ENV_BRANCH === "develop"
       ? `https://eden-saas-staging.vercel.app/${position.company?.slug}/jobs/${position._id}`
-      : `https://www.app.joineden.ai/${position.company?.slug}/jobs/${position._id}`;
+      : `https://app.joineden.ai/${position.company?.slug}/jobs/${position._id}`;
 
   return (
     <>

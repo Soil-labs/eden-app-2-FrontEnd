@@ -323,7 +323,7 @@ const PositionPage: NextPageWithLayout = ({
                 className="group col-span-1 flex w-fit cursor-pointer items-center"
                 onClick={() => {
                   navigator.clipboard.writeText(
-                    `https://app.joineden.ai/${position.company?.slug}/jobs/${position._id}`
+                    `https://${position.company?.slug}.joineden.ai/jobs/${position._id}`
                   );
                   toast.success("Job link copied");
                 }}

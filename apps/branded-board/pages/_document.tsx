@@ -6,10 +6,10 @@ import Document, {
   NextScript,
 } from "next/document";
 
-const appUrl =
-  process.env.NEXT_PUBLIC_ENV_BRANCH === "develop"
-    ? `https://eden-saas-staging.vercel.app/`
-    : `https://app.joineden.ai/`;
+// const appUrl =
+//   process.env.NEXT_PUBLIC_ENV_BRANCH === "develop"
+//     ? `https://eden-saas-staging.vercel.app/`
+//     : `https://app.joineden.ai/`;
 
 class MyDocument extends Document {
   static async getInitialProps(ctx: DocumentContext) {
@@ -19,6 +19,11 @@ class MyDocument extends Document {
   }
 
   render() {
+    const appUrl =
+      process.env.NEXT_PUBLIC_ENV_BRANCH === "develop"
+        ? `https://developer-dao.preview.joineden.ai/`
+        : `https://developer-dao.joineden.ai/`;
+
     return (
       <Html>
         <Head>

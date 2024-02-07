@@ -94,7 +94,7 @@ export const SEOPosition: FC<SEOPositionProps> = ({
             content={
               process.env.NEXT_PUBLIC_ENV_BRANCH === "develop"
                 ? `https://eden-saas-staging.vercel.app/api/fc/redirect?redirect=${redirectUrl}`
-                : `https://www.app.joineden.ai/api/fc/redirect?redirect=${redirectUrl}`
+                : `https://app.joineden.ai/api/fc/redirect?redirect=${redirectUrl}`
             }
           />
           <meta property="fc:frame:button:1:action" content="post_redirect" />

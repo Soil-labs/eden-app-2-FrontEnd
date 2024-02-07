@@ -35,7 +35,7 @@ const ConfirmEmailContainer = ({
             candidateName: currentUser?.discordName,
             jobTitle: position?.name,
             companyName: position?.company?.name,
-            applicationSubmittedUrl: `https://app.joineden.ai/interview/${position?._id}/submitted`,
+            applicationSubmittedUrl: `https://${position?.company?.slug}.joineden.ai/interview/${position?._id}/submitted`,
           },
           {
             headers: {
