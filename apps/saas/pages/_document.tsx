@@ -9,7 +9,7 @@ import Document, {
 const appUrl =
   process.env.NEXT_PUBLIC_ENV_BRANCH === "develop"
     ? `https://eden-saas-staging.vercel.app/`
-    : `https://edenprotocol.app/`;
+    : `https://app.joineden.ai/`;
 
 class MyDocument extends Document {
   static async getInitialProps(ctx: DocumentContext) {

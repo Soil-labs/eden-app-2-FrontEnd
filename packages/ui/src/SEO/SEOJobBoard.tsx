@@ -34,7 +34,7 @@ export const SEOJobBoard: FC<SEOJobBoardProps> = ({
     apiUrl = apiUrl + `&title=${title}`;
   }
 
-  let ogImage = "https://edenprotocol.app" + apiUrl;
+  let ogImage = "https://app.joineden.ai" + apiUrl;
 
   if (process.env.NEXT_PUBLIC_ENV_BRANCH === "develop") {
     ogImage = "https://eden-saas-staging.vercel.app" + apiUrl;
@@ -77,7 +77,7 @@ export const SEOJobBoard: FC<SEOJobBoardProps> = ({
         content={
           process.env.NEXT_PUBLIC_ENV_BRANCH === "develop"
             ? `https://eden-saas-staging.vercel.app/api/fc/next-job?job=${firstPosition}&community=${company?.slug}`
-            : `https://edenprotocol.app/api/fc/next-job?job=${firstPosition}&community=${company?.slug}`
+            : `https://app.joineden.ai/api/fc/next-job?job=${firstPosition}&community=${company?.slug}`
         }
       />
 

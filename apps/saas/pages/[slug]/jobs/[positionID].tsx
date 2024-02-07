@@ -330,7 +330,7 @@ const PositionPage: NextPageWithLayout = ({
   const redirectUrl =
     process.env.NEXT_PUBLIC_ENV_BRANCH === "develop"
       ? `https://eden-saas-staging.vercel.app/${position.company?.slug}/jobs/${position._id}`
-      : `https://www.edenprotocol.app/${position.company?.slug}/jobs/${position._id}`;
+      : `https://www.app.joineden.ai/${position.company?.slug}/jobs/${position._id}`;
 
   return (
     <>
@@ -854,7 +854,7 @@ const PositionPage: NextPageWithLayout = ({
                 className="group col-span-1 flex w-fit cursor-pointer items-center"
                 onClick={() => {
                   navigator.clipboard.writeText(
-                    `https://edenprotocol.app/${position.company?.slug}/jobs/${position._id}`
+                    `https://app.joineden.ai/${position.company?.slug}/jobs/${position._id}`
                   );
                   toast.success("Job link copied");
                 }}

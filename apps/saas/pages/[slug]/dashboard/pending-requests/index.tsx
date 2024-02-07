@@ -53,7 +53,7 @@ const sendInviteEmail = async (
     {
       mailTo: email,
       companyName: companyName,
-      inviteUrl: `https://edenprotocol.app/${companySlug}/dashboard/invite`,
+      inviteUrl: `https://app.joineden.ai/${companySlug}/dashboard/invite`,
     },
     {
       headers: {

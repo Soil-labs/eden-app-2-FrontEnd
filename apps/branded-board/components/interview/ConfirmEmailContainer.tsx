@@ -35,7 +35,7 @@ const ConfirmEmailContainer = ({
             candidateName: currentUser?.discordName,
             jobTitle: position?.name,
             companyName: position?.company?.name,
-            applicationSubmittedUrl: `https://edenprotocol.app/interview/${position?._id}/submitted`,
+            applicationSubmittedUrl: `https://app.joineden.ai/interview/${position?._id}/submitted`,
           },
           {
             headers: {
