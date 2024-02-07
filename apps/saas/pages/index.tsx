@@ -80,9 +80,8 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   }
 
   return {
-    props: {
-      redirect: redirect || "/developer-dao/jobs",
-    },
+    redirect: redirect || "/developer-dao/jobs",
+    props: {},
   };
 };
 
