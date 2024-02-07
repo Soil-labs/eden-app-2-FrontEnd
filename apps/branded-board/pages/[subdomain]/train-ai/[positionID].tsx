@@ -1,6 +1,6 @@
 import {
-  Card,
   BrandedSaasUserLayout,
+  Card,
   SEO,
   Wizard,
   WizardStep,

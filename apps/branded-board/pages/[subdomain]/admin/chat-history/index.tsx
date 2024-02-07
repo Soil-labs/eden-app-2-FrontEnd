@@ -4,7 +4,7 @@ import {
   FIND_CHAT_HISTORY,
 } from "@eden/package-graphql";
 import { ChatExternalApp, Members } from "@eden/package-graphql/generated";
-import { Button, Loading, BrandedSaasUserLayout } from "@eden/package-ui";
+import { BrandedSaasUserLayout, Button, Loading } from "@eden/package-ui";
 import React, { useEffect, useMemo, useRef, useState } from "react";
 
 function classNames(...classes: string[]) {
