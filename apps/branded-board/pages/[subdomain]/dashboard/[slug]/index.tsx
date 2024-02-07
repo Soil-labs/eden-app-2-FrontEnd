@@ -2,10 +2,10 @@ import { gql, useMutation, useQuery } from "@apollo/client";
 import { CompanyContext } from "@eden/package-context";
 import { Position } from "@eden/package-graphql/generated";
 import {
+  BrandedSaasUserLayout,
   Button,
   EdenAiProcessingModal,
   Modal,
-  SaasUserLayout,
 } from "@eden/package-ui";
 import useAuthGate from "@eden/package-ui/src/hooks/useAuthGate/useAuthGate";
 import { getCookieFromContext } from "@eden/package-ui/utils";
@@ -327,7 +327,9 @@ const HomePage: NextPageWithLayout = () => {
   );
 };
 
-HomePage.getLayout = (page) => <SaasUserLayout>{page}</SaasUserLayout>;
+HomePage.getLayout = (page) => (
+  <BrandedSaasUserLayout>{page}</BrandedSaasUserLayout>
+);
 
 export default HomePage;
 

@@ -45,6 +45,7 @@ const FIND_COMPANY_FROM_SLUG = gql`
           imageUrl
         }
       }
+      approvedEmails
       employees {
         status
         typeT

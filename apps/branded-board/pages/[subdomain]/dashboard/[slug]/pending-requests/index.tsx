@@ -2,11 +2,13 @@
 import { gql, useMutation } from "@apollo/client";
 import { CompanyContext } from "@eden/package-context";
 import { EmployeeTypeInput } from "@eden/package-graphql/generated";
-import { Avatar, Button, SaasUserLayout } from "@eden/package-ui";
+import { Avatar, BrandedSaasUserLayout, Button } from "@eden/package-ui";
 import useAuthGate from "@eden/package-ui/src/hooks/useAuthGate/useAuthGate";
 import { getCookieFromContext } from "@eden/package-ui/utils";
+import axios from "axios";
 import { IncomingMessage, ServerResponse } from "http";
-import { useContext } from "react";
+import { useContext, useRef, useState } from "react";
+import { FaTrash } from "react-icons/fa";
 import { toast } from "react-toastify";
 
 // import { useContext } from "react";
@@ -29,16 +31,67 @@ const ADD_EMPLOYEES_COMPANY = gql`
   }
 `;
 
+const UPDATE_COMPANY = gql`
+  mutation ($fields: updateCompanyInput!) {
+    updateCompany(fields: $fields) {
+      _id
+      name
+      type
+      slug
+      description
+    }
+  }
+`;
+
+const sendInviteEmail = async (
+  email: string,
+  companySlug: string,
+  companyName: string
+) => {
+  axios.post(
+    `${process.env.NEXT_PUBLIC_AUTH_URL}/mail-service/send-mail-invite-employee` as string,
+    {
+      mailTo: email,
+      companyName: companyName,
+      inviteUrl: `https://developer-dao.joineden.ai/dashboard/${companySlug}/invite`,
+    },
+    {
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*",
+      },
+    }
+  );
+};
+
 const PendingRequestsPage: NextPageWithLayout = () => {
   useAuthGate();
 
-  const { company } = useContext(CompanyContext);
+  const { company, getCompanyFunc } = useContext(CompanyContext);
+
+  const [inviteEmail, setInviteEmail] = useState<string | null>(null);
+
+  const inputRef = useRef<HTMLInputElement>(null);
 
   const [addEmployeesCompany] = useMutation(ADD_EMPLOYEES_COMPANY, {
     onError() {
       toast.error("An error occurred while updating user");
     },
   });
+
+  const [updateCompany, { loading: loadingUpdate }] = useMutation(
+    UPDATE_COMPANY,
+    {
+      // eslint-disable-next-line no-unused-vars
+      onCompleted({ data }) {
+        getCompanyFunc();
+        inputRef.current?.value && (inputRef.current.value = "");
+      },
+      onError() {
+        toast.error("An error occurred while submitting");
+      },
+    }
+  );
 
   const handleAcceptEmployee = (employeeID: string) => {
     addEmployeesCompany({
@@ -66,6 +119,55 @@ const PendingRequestsPage: NextPageWithLayout = () => {
     });
   };
 
+  const _newApproveEmails = (email: string) => {
+    if (company?.approvedEmails) {
+      if (company?.approvedEmails.includes(email)) {
+        return company?.approvedEmails;
+      }
+      return [...company?.approvedEmails, email];
+    } else {
+      return [email];
+    }
+  };
+
+  const _newDeleteApproveEmails = (email: string) => {
+    if (company?.approvedEmails) {
+      return company?.approvedEmails.filter(
+        (approvedEmail) => approvedEmail !== email
+      );
+    }
+    return [];
+  };
+
+  const handleInvite = () => {
+    sendInviteEmail(
+      inviteEmail as string,
+      company?.slug as string,
+      company?.name as string
+    );
+    if (inviteEmail)
+      updateCompany({
+        variables: {
+          fields: {
+            _id: company?._id,
+            approvedEmails: _newApproveEmails(inviteEmail),
+          },
+        },
+      });
+  };
+
+  const handleDeleteInvite = (email: string) => {
+    if (email)
+      updateCompany({
+        variables: {
+          fields: {
+            _id: company?._id,
+            approvedEmails: _newDeleteApproveEmails(email),
+          },
+        },
+      });
+  };
+
   return (
     <div className="grid grid-cols-12 p-8">
       <section className="md:col-span-6">
@@ -84,12 +186,34 @@ const PendingRequestsPage: NextPageWithLayout = () => {
           <h2 className="text-edenGreen-600 mb-4">
             Invite employees to {company?.name}
           </h2>
+          <div className="mb-8">
+            {company?.approvedEmails?.map((email, index) => (
+              <div
+                key={index}
+                className="hover:bg-edenGray-50 mb-2 flex max-w-sm items-center justify-between rounded-md px-3 py-0.5"
+              >
+                <span>{email}</span>
+                <FaTrash
+                  onClick={() => {
+                    if (email) handleDeleteInvite(email);
+                  }}
+                  className="text-utilityRed ml-2 cursor-pointer text-sm hover:text-black"
+                />
+              </div>
+            ))}
+          </div>
           <div className="mb-4 mr-2 flex">
             <input
-              className="border-edenGray-500 rounded-md border-2"
+              ref={inputRef}
+              className="border-edenGray-500 rounded-md border-2 px-2"
               type="text"
+              onChange={(e) => setInviteEmail(e.target.value)}
             />
-            <Button className="ml-2 flex h-8 items-center justify-center">
+            <Button
+              onClick={handleInvite}
+              className="ml-2 flex h-8 items-center justify-center"
+              loading={loadingUpdate}
+            >
               Invite
             </Button>
           </div>
@@ -135,7 +259,7 @@ const PendingRequestsPage: NextPageWithLayout = () => {
 };
 
 PendingRequestsPage.getLayout = (page) => (
-  <SaasUserLayout>{page}</SaasUserLayout>
+  <BrandedSaasUserLayout>{page}</BrandedSaasUserLayout>
 );
 
 export async function getServerSideProps(ctx: {

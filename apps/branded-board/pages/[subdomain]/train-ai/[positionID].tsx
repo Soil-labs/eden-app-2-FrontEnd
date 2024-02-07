@@ -1,6 +1,6 @@
 import {
+  BrandedSaasUserLayout,
   Card,
-  SaasUserLayout,
   SEO,
   Wizard,
   WizardStep,
@@ -31,6 +31,8 @@ const HomePage: NextPageWithLayout = () => {
   );
 };
 
-HomePage.getLayout = (page) => <SaasUserLayout>{page}</SaasUserLayout>;
+HomePage.getLayout = (page) => (
+  <BrandedSaasUserLayout>{page}</BrandedSaasUserLayout>
+);
 
 export default HomePage;

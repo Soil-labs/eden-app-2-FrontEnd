@@ -1,6 +1,6 @@
 // import { UserContext } from "@eden/package-context";
 import { UserContext } from "@eden/package-context";
-import { Loading, SaasUserLayout } from "@eden/package-ui";
+import { BrandedSaasUserLayout, Loading } from "@eden/package-ui";
 import { getCookieFromContext } from "@eden/package-ui/utils";
 import { IncomingMessage, ServerResponse } from "http";
 import { useRouter } from "next/router";
@@ -37,7 +37,7 @@ const RedirectPostJobPage: NextPageWithLayout = () => {
 };
 
 RedirectPostJobPage.getLayout = (page) => (
-  <SaasUserLayout>{page}</SaasUserLayout>
+  <BrandedSaasUserLayout>{page}</BrandedSaasUserLayout>
 );
 
 export async function getServerSideProps(ctx: {

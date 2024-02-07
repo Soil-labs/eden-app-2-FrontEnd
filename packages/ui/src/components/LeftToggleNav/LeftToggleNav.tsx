@@ -1,6 +1,10 @@
 import { gql, useMutation } from "@apollo/client";
 import { useDynamicContext } from "@dynamic-labs/sdk-react-core";
-import { CompanyContext, UserContext } from "@eden/package-context";
+import {
+  CompanyContext,
+  DynamicSessionContext,
+  UserContext,
+} from "@eden/package-context";
 import {
   Avatar,
   Button,
@@ -378,7 +382,7 @@ export const LeftToggleNav = ({
   );
 };
 
-export interface UserButtonProps {
+interface UserButtonProps {
   unwrapped: boolean;
 }
 
@@ -387,6 +391,7 @@ const UserButton = ({ unwrapped }: UserButtonProps) => {
   const { currentUser } = useContext(UserContext);
   const { company } = useContext(CompanyContext);
   const { handleLogOut } = useDynamicContext();
+  const { edenSession } = useContext(DynamicSessionContext);
 
   const handleLogout = () => {
     handleLogOut();
@@ -394,11 +399,12 @@ const UserButton = ({ unwrapped }: UserButtonProps) => {
   };
 
   const userIsAdmin =
-    company?.employees &&
-    company?.employees?.some(
-      (_empl) =>
-        _empl?.user?._id === currentUser?._id && _empl?.typeT === "ADMIN"
-    );
+    (company?.employees &&
+      company?.employees?.some(
+        (_empl) =>
+          _empl?.user?._id === currentUser?._id && _empl?.typeT === "ADMIN"
+      )) ||
+    edenSession?.accessLevel === 5;
 
   const menuItems = userIsAdmin
     ? [
@@ -406,10 +412,10 @@ const UserButton = ({ unwrapped }: UserButtonProps) => {
           key={0}
           className="text-edenGray-700 hover:bg-edenGreen-100 border-edenGray-100 cursor-pointer border-b px-4 py-1 text-sm"
           onClick={() => {
-            router.push(`/${company.slug}/dashboard/pending-requests`);
+            router.push(`/${company?.slug}/dashboard/pending-requests`);
           }}
         >
-          user access requests
+          manage employees
         </li>,
         <li
           key={1}
@@ -463,7 +469,7 @@ const UserButton = ({ unwrapped }: UserButtonProps) => {
   ) : null;
 };
 
-export interface CreatePositionModalProps {
+interface CreatePositionModalProps {
   open: boolean;
   onClose: () => void;
   // eslint-disable-next-line no-unused-vars
