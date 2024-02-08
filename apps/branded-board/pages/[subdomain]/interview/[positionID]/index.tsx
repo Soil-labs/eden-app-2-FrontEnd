@@ -594,7 +594,7 @@ export async function getServerSideProps(ctx: {
 }) {
   const session = getCookieFromContext(ctx);
 
-  const url = (ctx as any).resolvedUrl;
+  const url = (ctx as any).req.url;
 
   if (!session) {
     return {

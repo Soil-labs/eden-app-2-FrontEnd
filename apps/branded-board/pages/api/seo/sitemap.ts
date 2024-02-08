@@ -1,5 +1,5 @@
+import { Position } from "@eden/package-graphql/generated";
 import axios from "axios";
-import { log } from "console";
 import { NextApiRequest, NextApiResponse } from "next";
 import { SitemapStream, streamToPromise } from "sitemap";
 
@@ -23,6 +23,7 @@ const getSubdomainUrls = async (subdomain: string) => {
           findCompanyFromSlug(fields: $fields) {
             positions {
               _id
+              status
             }
           }
         }
@@ -31,9 +32,9 @@ const getSubdomainUrls = async (subdomain: string) => {
   );
 
   const _positionIds =
-    companyRes?.data?.data?.findCompanyFromSlug?.positions?.map(
-      (position: { _id: string }) => position._id
-    ) || [];
+    companyRes?.data?.data?.findCompanyFromSlug?.positions
+      ?.filter((_pos: Position) => _pos.status === "ACTIVE")
+      .map((position: { _id: string }) => position._id) || [];
 
   const positionRoutes: Url[] = _positionIds.map((id: string) => ({
     url: `/jobs/${id}`,
@@ -41,7 +42,6 @@ const getSubdomainUrls = async (subdomain: string) => {
     priority: 0.7,
   }));
 
-  log("positionRoutes", positionRoutes);
   return [
     { url: "/jobs", changefreq: "daily", priority: 1 },
     ...positionRoutes,
