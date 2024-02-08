@@ -73,7 +73,11 @@ export const SEOBrandedJobBoard: FC<SEOBrandedJobBoardProps> = ({
       <meta property="fc:frame" content="vNext" />
       <meta
         property="fc:frame:image"
-        content={encodeURI(ogImage).replace(/&amp;/g, "&")}
+        content={
+          company?.slug === "developer-dao"
+            ? "https://developer-dao.joineden.ai/d_d-og-image.png"
+            : encodeURI(ogImage).replace(/&amp;/g, "&")
+        }
       />
       <meta property="fc:frame:button:1" content="See opportunities" />
       <meta
@@ -91,7 +95,11 @@ export const SEOBrandedJobBoard: FC<SEOBrandedJobBoardProps> = ({
       <meta property="twitter:description" content={appDescription} />
       <meta
         property="twitter:image:src"
-        content={encodeURI(ogImage).replace(/&amp;/g, "&")}
+        content={
+          company?.slug === "developer-dao"
+            ? "https://developer-dao.joineden.ai/d_d-og-image.png"
+            : encodeURI(ogImage).replace(/&amp;/g, "&")
+        }
       />
       <meta property="twitter:image:width" content="800" />
       <meta property="twitter:image:height" content="400" />
