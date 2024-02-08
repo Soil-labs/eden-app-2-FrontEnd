@@ -12,7 +12,6 @@ import axios from "axios";
 import { InferGetStaticPropsType } from "next";
 import Image from "next/image";
 import Link from "next/link";
-import { useRouter } from "next/router";
 import { Dispatch, SetStateAction, useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
 import { BiChevronDown, BiChevronUp } from "react-icons/bi";
@@ -337,20 +336,17 @@ type PositionCardProps = {
 };
 
 const PositionCard = ({ position, setLoadingSpinner }: PositionCardProps) => {
-  const router = useRouter();
-
-  const handlePickJobs = async (pos: any) => {
+  const handlePickJobs = async () => {
     setLoadingSpinner(true);
-    await router.push(`/jobs/${pos._id}`);
-    setLoadingSpinner(false);
   };
 
   return (
-    <div
+    <Link
       className="transition-ease-in-out group relative col-span-1 w-full cursor-pointer rounded-md bg-[#F7F8F7] p-1 shadow-sm transition-all hover:scale-[101%] hover:shadow-md"
       onClick={() => {
-        handlePickJobs(position);
+        handlePickJobs();
       }}
+      href={`/jobs/${position._id}`}
     >
       <div className="bg-edenGreen-200 relative flex h-56 w-full items-center rounded-md p-2">
         {(!!position?.generalDetails?.yearlySalary?.min ||
@@ -410,7 +406,7 @@ const PositionCard = ({ position, setLoadingSpinner }: PositionCardProps) => {
           </div>
         </EdenTooltip>
       </div>
-    </div>
+    </Link>
   );
 };
 

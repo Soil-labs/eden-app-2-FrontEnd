@@ -13,8 +13,8 @@ import {
 } from "@eden/package-graphql/generated";
 import {
   AI_INTERVIEW_SERVICES,
-  AppUserLayout,
   AskEdenPopUp,
+  BrandedAppUserLayout,
   Button,
   EdenAiProcessingModal,
   EdenIconExclamation,
@@ -22,12 +22,13 @@ import {
   Loading,
   Modal,
   SEOPosition,
-  Tooltip,
 } from "@eden/package-ui";
 import { classNames, getCookieFromContext } from "@eden/package-ui/utils";
 import axios from "axios";
 import { GetServerSidePropsContext } from "next";
-import Image from "next/image";
+// dynamic import tooltip
+import dynamic from "next/dynamic";
+import Link from "next/link";
 import { useRouter } from "next/router";
 import { useContext, useEffect, useRef, useState } from "react";
 import Confetti from "react-confetti";
@@ -40,7 +41,7 @@ import {
   UseFormRegister,
 } from "react-hook-form";
 import { AiOutlineEyeInvisible, AiOutlineUserAdd } from "react-icons/ai";
-import { BsChevronLeft, BsLightningFill, BsStar } from "react-icons/bs";
+import { BsChevronLeft, BsLightningFill } from "react-icons/bs";
 import { GoTag } from "react-icons/go";
 import {
   HiOutlineHeart,
@@ -54,6 +55,12 @@ import { TbMoneybag } from "react-icons/tb";
 import { toast } from "react-toastify";
 
 import type { NextPageWithLayout } from "../../_app";
+const Tooltip = dynamic(
+  () => import("@eden/package-ui").then((mod) => mod.Tooltip),
+  {
+    ssr: false,
+  }
+);
 
 const BULK_UPDATE = gql`
   mutation (
@@ -301,8 +308,6 @@ const PositionPage: NextPageWithLayout = ({
 
   const handleInterviewNav = async () => {
     setLoadingSpinner(true);
-    await router.push(`/interview/${position._id}`);
-    setLoadingSpinner(false);
   };
 
   const getGrade = (percentage: number) => {
@@ -351,7 +356,7 @@ const PositionPage: NextPageWithLayout = ({
                 onClick={() => {
                   setBackToDashboardModalOpen(true);
                 }}
-                className="text-edenGreen-400 font-Moret hover:text-edenGreen-300 mr-auto cursor-pointer text-lg"
+                className="text-edenGray-600 hover:text-edenGray-500 mr-auto cursor-pointer text-lg"
               >
                 <BsChevronLeft className="-mt-1 mr-1 inline" size={16} />
                 Go back to dashboard
@@ -364,9 +369,7 @@ const PositionPage: NextPageWithLayout = ({
             >
               <div className="flex flex-col items-center justify-center px-28 py-8 text-center">
                 <EdenIconExclamation className="mb-2 h-16" />
-                <h2 className="text-edenGreen-600 mb-4">
-                  Go back to dashboard?
-                </h2>
+                <h2 className=" mb-4">Go back to dashboard?</h2>
                 <p className="mb-12">
                   {"Be careful! Unsaved changes won't be applied"}
                 </p>
@@ -378,90 +381,44 @@ const PositionPage: NextPageWithLayout = ({
                   >
                     Stay here
                   </Button>
-                  <Button
-                    variant="secondary"
-                    className="!bg-utilityRed !text-white hover:opacity-75"
-                    onClick={() => {
-                      router.push(
-                        `/dashboard/${position.company?.slug}/${position._id}`
-                      );
-                    }}
+                  <Link
+                    className="font-Moret !bg-utilityRed flex items-center rounded-md px-4 py-2 text-lg font-bold !text-white hover:opacity-75"
+                    href={`/dashboard/${position.company?.slug}/${position._id}`}
                   >
                     Go back to dashboard
-                  </Button>
+                  </Link>
                 </div>
               </div>
             </Modal>
           </>
         )}
-        <section
-          className="flex w-full justify-center py-24"
-          style={{
-            backgroundImage: "url(/banner.png)",
-            backgroundSize: "cover",
-            backgroundPosition: "center",
-          }}
-        >
-          <div className="relative grid w-4/5 max-w-4xl grid-cols-12 rounded-md bg-white p-10">
-            {/* {editMode && (
-              <button
-                className="bg-edenGray-500 text-utilityOrange border-utilityOrange disabled:text-edenGray-700 disabled:border-edenGray-700 absolute right-4 top-4 flex items-center whitespace-nowrap rounded-md border px-2"
-                onClick={() => {
-                  setEditCompany(!editCompany);
-                }}
-              >
-                <HiPencil size={16} className="mr-2 inline-block" />
-                Edit
-              </button>
-            )} */}
-            <div className="col-span-5">
-              <div className="mb-10">
-                <h1 className="text-edenGreen-600 mb-2">
-                  {editMode && editCompany ? (
-                    <>
-                      <input
-                        {...register("name")}
-                        className={classNames(editInputClasses, "")}
-                      />
-                      {`, ${position?.company?.name}`}
-                    </>
-                  ) : (
-                    `${getValues("name")}, ${position?.company?.name}`
-                  )}
-                </h1>
-                {editMode && editCompany ? (
-                  <div className="bg-edenGray-100 w-fit rounded-md px-2 text-sm">
-                    <select
-                      {...register("generalDetails.contractType")}
-                      disabled={!(editMode && editCompany)}
-                      className={classNames(
-                        editInputClasses,
-                        "disabled:border-0 disabled:opacity-100"
-                      )}
-                    >
-                      <option value={""} disabled hidden>
-                        Select an option...
-                      </option>
-                      <option value="Full-time">Full-time</option>
-                      <option value="Part-time">Part-time</option>
-                      <option value="Contractor">Contractor</option>
-                    </select>
-                  </div>
-                ) : (
-                  <div className="bg-edenGray-100 w-fit rounded-md px-2 text-sm">
-                    {getValues("generalDetails.contractType")}
-                  </div>
-                )}
-              </div>
 
+        <section className="mx-auto max-w-screen-xl px-2 md:px-8">
+          <div className="relative flex w-full flex-col items-center justify-center rounded-lg bg-black bg-[url('/banner-job-board-mobile.png')] bg-cover bg-center px-4 pb-36 pt-8 md:h-96 md:bg-[url('/banner-job-board.png')] md:px-12 md:pb-2 md:pt-4">
+            <h1 className="mb-2 text-center text-white">
               {editMode && editCompany ? (
-                <div className="mb-4">
-                  <TbMoneybag
-                    size={24}
-                    className="text-edenGreen-600 mr-3 inline-block"
+                <>
+                  <input
+                    {...register("name")}
+                    className={classNames(editInputClasses, "")}
                   />
-                  <div className="bg-edenGreen-600 text-edenPink-300 font-Moret inline-block rounded-xl px-3 py-0.5 font-bold">
+                  {`, ${position?.company?.name}`}
+                </>
+              ) : (
+                `${getValues("name")}, ${position?.company?.name}`
+              )}
+            </h1>
+            <section className="flex justify-center">
+              {editMode && editCompany ? (
+                <div className="border-edenGray-50 mb-4 mr-3 border-r pr-4">
+                  <TbMoneybag
+                    color="#F7F8F7"
+                    size={20}
+                    className="mr-2 inline-block"
+                  />
+                  <div className="inline-block rounded-xl px-3 py-0.5 text-white">
                     {`$ `}
+
                     <input
                       type="number"
                       placeholder="min salary"
@@ -485,12 +442,13 @@ const PositionPage: NextPageWithLayout = ({
                 getValues("generalDetails.yearlySalary.min") === 0 ||
                 getValues("generalDetails.yearlySalary.max") ||
                 getValues("generalDetails.yearlySalary.max") === 0 ? (
-                <div className="mb-4">
+                <div className="border-edenGray-50 mb-4 mr-3 border-r pr-4">
                   <TbMoneybag
-                    size={24}
-                    className="text-edenGreen-600 mr-3 inline-block"
+                    color="#F7F8F7"
+                    size={20}
+                    className="mr-2 inline-block"
                   />
-                  <div className="bg-edenGreen-600 text-edenPink-300 font-Moret inline-block rounded-xl px-3 py-0.5 font-bold">
+                  <div className="inline-block rounded-xl text-white">
                     {`${
                       getValues("generalDetails.yearlySalary.min") ||
                       getValues("generalDetails.yearlySalary.min") === 0
@@ -516,71 +474,18 @@ const PositionPage: NextPageWithLayout = ({
                   </div>
                 </div>
               ) : null}
-              <div className="mb-4 flex items-center">
-                <BsStar
-                  size={24}
-                  className="text-edenGreen-600 mr-3 inline-block"
-                />
-                <div className="text-edenGray-600 border-edenGray-300 ml-1 mr-3 flex items-center justify-center rounded-md border px-6 py-1.5">
-                  {submitted ? (
-                    typeof matchstimate === "number" ? (
-                      <h4
-                        className={classNames(
-                          "text-lg",
-                          getGrade(matchstimate).color
-                        )}
-                      >
-                        {getGrade(matchstimate).letter}
-                      </h4>
-                    ) : (
-                      <div
-                        className="h-8 w-8"
-                        style={{ animation: "spin 2s ease-in-out infinite" }}
-                      >
-                        <EdenIconExclamationAndQuestion className="h-full w-full" />
-                      </div>
-                    )
-                  ) : (
-                    <h4 className="text-lg">?</h4>
-                  )}
-                </div>
-                <div>
-                  <div className="flex flex-nowrap items-center">
-                    <h3 className="text-edenGreen-600">Matchstimate{"  "}</h3>
-                    <Tooltip className="inline">
-                      This helps candidates understand if this opportunity is a
-                      match for them.
-                    </Tooltip>
-                  </div>
-                  <p className="text-edenGray-500 text-xs">
-                    {!submitted ? (
-                      <>
-                        <a
-                          href="#"
-                          onClick={() => handleInterviewNav()}
-                          className="cursor-pointer text-blue-500 underline"
-                        >
-                          Upload your resume
-                        </a>{" "}
-                        to unlock
-                      </>
-                    ) : typeof matchstimate !== "number" ? (
-                      <>Your score is being processed</>
-                    ) : null}
-                  </p>
-                </div>
-              </div>
 
               {(getValues("generalDetails.officeLocation") ||
                 getValues("generalDetails.officePolicy") ||
                 (editMode && editCompany)) && (
                 <div className="mb-4">
                   <SlLocationPin
-                    size={24}
-                    className="text-edenGreen-600 mr-3 inline-block"
+                    size={18}
+                    color="#FFFFFF"
+                    className=" mr-3 inline-block"
                   />
                   {editMode && editCompany ? (
-                    <div className="bg-edenGreen-600 text-edenPink-300 font-Moret mb-1 mr-2 inline-block rounded-xl px-3 py-0.5 font-bold">
+                    <div className="mb-1 mr-2 inline-block text-white">
                       <select
                         {...register("generalDetails.officePolicy")}
                         disabled={!(editMode && editCompany)}
@@ -610,7 +515,7 @@ const PositionPage: NextPageWithLayout = ({
                     </div>
                   ) : (
                     getValues("generalDetails.officePolicy") && (
-                      <div className="bg-edenGreen-600 text-edenPink-300 font-Moret mb-1 mr-2 inline-block rounded-xl px-3 py-0.5 font-bold">
+                      <div className="mb-1 mr-2 inline-block text-white">
                         {parseOfficePolicy(
                           getValues("generalDetails.officePolicy")
                         )}
@@ -618,7 +523,7 @@ const PositionPage: NextPageWithLayout = ({
                     )
                   )}
                   {editMode && editCompany ? (
-                    <div className="bg-edenGreen-600 text-edenPink-300 font-Moret mr-2 inline-block rounded-xl px-3 py-0.5 font-bold">
+                    <div className="mb-1 mr-2 inline-block text-white">
                       <input
                         {...register("generalDetails.officeLocation")}
                         placeholder="Office location"
@@ -627,171 +532,111 @@ const PositionPage: NextPageWithLayout = ({
                     </div>
                   ) : (
                     getValues("generalDetails.officeLocation") && (
-                      <div className="bg-edenGreen-600 text-edenPink-300 font-Moret mr-2 inline-block rounded-xl px-3 py-0.5 font-bold">
+                      <div className="mb-1 mr-2 inline-block text-white">
                         {getValues("generalDetails.officeLocation")}
                       </div>
                     )
                   )}
                 </div>
               )}
+            </section>
 
-              <div
-                className={classNames(
-                  "border-edenGreen-600 hover:bg-edenGreen-100 relative mt-12 flex h-[calc(2.5rem+4px)] w-[calc(100%-1.5rem)] cursor-pointer items-center justify-between overflow-hidden rounded-full border-2 bg-white pl-4 drop-shadow-sm transition-all ease-in-out"
-                )}
-                onClick={() => setOpenAskEden(true)}
-              >
-                <span className="text-edenGreen-600 font-Moret mr-4">
-                  {"Ask Eden about this opportunity"}
-                </span>
-                <div
-                  className={classNames(
-                    "bg-edenPink-400 absolute right-0 float-right flex h-10 w-10 transform cursor-pointer items-center justify-center rounded-full transition-all ease-in-out"
-                  )}
-                >
-                  <EdenIconExclamationAndQuestion className="h-6 w-6" />
-                </div>
-              </div>
-            </div>
-            <div className="border-edenGreen-300 col-span-7 border-l-2 pl-4">
-              {editMode && editCompany ? (
-                <label
-                  htmlFor="file-upload"
-                  className={classNames(
-                    "relative block w-fit cursor-pointer rounded-md hover:bg-black hover:bg-opacity-20",
-                    editMode
-                      ? "border-utilityOrange -my-[2px] mb-1 border-2"
-                      : ""
-                  )}
-                >
-                  {uploadingCompanyImage && (
-                    <div className="pointer-events-none absolute left-0 top-0 h-full w-full">
-                      <Loading title="" />
+            <div className="mb-4 flex max-w-sm items-center rounded-md bg-[rgba(255,255,255,0.39)] p-1">
+              <div className="text-edenGray-600 ml-1 mr-3 flex items-center justify-center rounded-md border bg-[#F7F8F7] px-4 py-1.5">
+                {submitted ? (
+                  typeof matchstimate === "number" ? (
+                    <h4
+                      className={classNames(
+                        "text-lg",
+                        getGrade(matchstimate).color
+                      )}
+                    >
+                      {getGrade(matchstimate).letter}
+                    </h4>
+                  ) : (
+                    <div
+                      className="h-8 w-8"
+                      style={{ animation: "spin 2s ease-in-out infinite" }}
+                    >
+                      <EdenIconExclamationAndQuestion className="h-full w-full" />
                     </div>
-                  )}
-                  <img
-                    src={getValues("company.imageUrl") || ""}
-                    className="mb-2 h-20"
-                    alt={position?.company?.name || ""}
-                  />
-                  <HiPencil
-                    size={20}
-                    className="text-utilityOrange absolute bottom-1 right-1 opacity-60"
-                  />
-                  <input
-                    id="file-upload"
-                    className="hidden"
-                    onChange={handleFileChange}
-                    ref={fileInput}
-                    type="file"
-                    accept=".png"
-                  ></input>
-                </label>
-              ) : (
-                // <img
-                //   src={getValues("company.imageUrl") || ""}
-                //   className="mb-2 h-20"
-                //   alt={position?.company?.name || ""}
-                // />
-                <Image
-                  width="180"
-                  height="180"
-                  className="mb-6"
-                  src={`${
-                    position?.company?.imageUrl
-                      ? position?.company?.imageUrl
-                      : "/default-company-image.svg"
-                  }`}
-                  alt={`${position?.company?.name} company image`}
-                />
-              )}
-              <p className="text-edenGray-900 mb-2 text-sm">
-                {editMode && editCompany ? (
-                  <>
-                    <textarea
-                      rows={2}
-                      {...register("company.description")}
-                      className={classNames(editInputClasses, "w-full")}
-                    />
-                  </>
+                  )
                 ) : (
-                  `${getValues("company.description")}`
+                  <h4 className="text-lg">?</h4>
                 )}
-              </p>
+              </div>
+              <div className="flex items-center">
+                <div className="flex flex-col flex-nowrap justify-center pr-4">
+                  <h3 className="text-white">Matchstimate{"  "}</h3>
 
-              {(getValues("company.employeesNumber") ||
-                getValues("company.employeesNumber") === 0 ||
-                (editMode && editCompany)) && (
-                <p className="text-edenGray-900 mb-2 text-sm">
-                  <HiOutlineUsers
-                    size={20}
-                    className="text-edenGreen-600 mr-2 inline-block"
-                  />
-                  {editMode && editCompany ? (
-                    <>
-                      <input
-                        type="number"
-                        {...register("company.employeesNumber", {
-                          valueAsNumber: true,
-                        })}
-                        className={classNames(editInputClasses, "w-20")}
-                      />
-                      {` employees`}
-                    </>
-                  ) : (
-                    `${getValues("company.employeesNumber")} employees`
-                  )}
-                </p>
-              )}
-              {(editMode || !!position?.company?.tags?.length) && (
-                <p className="mb-2 text-sm">
-                  <GoTag
-                    size={24}
-                    className="text-edenGreen-600 mr-2 inline-block"
-                  />
-                  <CompanyTagsField
-                    control={control}
-                    getValues={getValues}
-                    register={register}
-                    editMode={editMode && editCompany}
-                  />
-                </p>
-              )}
-
-              <div className="bg-edenPink-100 rounded-md p-4 text-sm">
-                <div className="mb-2 flex">
-                  <div className="bg-edenGreen-300 mr-2 flex h-6 w-6 items-center justify-center rounded-full">
-                    <HiOutlineHeart size={16} className="text-edenGreen-600" />
-                  </div>
-                  <h3 className="text-edenGreen-600">What&apos;s to love?</h3>
+                  <p className="text-xs !text-white">
+                    {!submitted ? (
+                      <>
+                        <a
+                          href="#"
+                          onClick={() => handleInterviewNav()}
+                          className="cursor-pointer underline"
+                        >
+                          Upload your resume
+                        </a>{" "}
+                        to unlock
+                      </>
+                    ) : typeof matchstimate !== "number" ? (
+                      <>Your score is being processed</>
+                    ) : null}
+                  </p>
                 </div>
-                <p className="text-edenGray-700 text-xs">
-                  {editMode && editCompany ? (
-                    <textarea
-                      {...register("company.whatsToLove")}
-                      className={classNames(editInputClasses, "w-full")}
-                    />
-                  ) : (
-                    getValues("company.whatsToLove")
-                  )}
-                </p>
+                <Tooltip className="!text-edenGray-500 ml-auto mr-1 inline">
+                  This helps candidates understand if this opportunity is a
+                  match for them.
+                </Tooltip>
               </div>
             </div>
           </div>
+
+          <div className="relative mx-auto -mt-8 mb-12 flex w-[90%] items-center rounded-md bg-[#F7F8F7] p-2 lg:w-[70%]">
+            {!submitted ? (
+              <>
+                <div className="bg-edenGray-100 mr-4 flex items-center justify-center rounded-lg p-4">
+                  <EdenIconExclamationAndQuestion className="h-8 w-8" />
+                </div>
+                <div className="mr-4">
+                  <h4>Kickoff your AI -interview right now!</h4>
+                  <p className="text-edenGray-500 text-sm">
+                    Our AI interview helps you hit on everything the hiring
+                    manager wants to know + we’ll re-use your interview to help
+                    skip the fist interview for other opportunities
+                  </p>
+                </div>
+                <Link
+                  href={`/interview/${position?._id}`}
+                  className="ml-auto flex items-center whitespace-nowrap rounded-md bg-black px-8 py-4 text-white hover:bg-white hover:text-black"
+                  onClick={() => {
+                    handleInterviewNav();
+                  }}
+                >
+                  Interview now
+                </Link>
+              </>
+            ) : (
+              <p className="text-edenGray-600 w-full py-2 text-center">
+                You have applied to this position
+              </p>
+            )}
+          </div>
         </section>
-        <div className="mx-auto grid w-4/5 max-w-4xl grid-cols-12 gap-x-8 px-4 py-16">
+
+        <div className="mx-auto grid w-full max-w-screen-xl grid-cols-12 gap-x-6 px-4 pb-16">
           {/* ---- POSITION DETAILS ---- */}
-          <div className="col-span-12 md:col-span-6">
-            <section className="bg-edenPink-100 mb-8 overflow-hidden rounded-md">
-              <div className="bg-edenPink-300 px-6 py-4">
-                <h2 className="text-edenGreen-600">Role</h2>
+          <div className="col-span-12 md:col-span-7">
+            <section className="mb-8 overflow-hidden rounded-3xl bg-[#F7F8F7]">
+              <div className="bg-black px-4 py-3">
+                <h2 className="text-white">Role</h2>
               </div>
-              <div className="border-edenGreen-300 px-6 py-4">
-                <div className="border-edenGreen-300 mb-4 border-b-2">
-                  <h3 className="text-edenGreen-600 mb-2 font-semibold">
-                    Who you are
-                  </h3>
-                  <p className="mb-4 text-xs">
+              <div className="px-4 py-4">
+                <div className="border-edenGray-300 mb-4 border-b-2">
+                  <h3 className=" mb-2 font-semibold">Who you are</h3>
+                  <div className="mb-4 text-xs">
                     {editMode ? (
                       <>
                         <textarea
@@ -813,13 +658,11 @@ const PositionPage: NextPageWithLayout = ({
                             ))}
                       </ul>
                     )}
-                  </p>
+                  </div>
                 </div>
                 <div className="">
-                  <h3 className="text-edenGreen-600 mb-2 font-semibold">
-                    What the job involves
-                  </h3>
-                  <p className="text-xs">
+                  <h3 className=" mb-2 font-semibold">What the job involves</h3>
+                  <div className="text-xs">
                     {editMode ? (
                       <>
                         <textarea
@@ -841,13 +684,13 @@ const PositionPage: NextPageWithLayout = ({
                             ))}
                       </ul>
                     )}
-                  </p>
+                  </div>
                 </div>
               </div>
             </section>
 
             {/* ---- SHARE & REPORT ---- */}
-            <section className="bg-edenPink-100 mb-8 grid grid-cols-2 gap-4 overflow-hidden rounded-md px-4 py-4">
+            <section className="mb-8 grid grid-cols-2 gap-4 overflow-hidden rounded-md bg-[#F7F8F7] px-4 py-4">
               <div
                 className="group col-span-1 flex w-fit cursor-pointer items-center"
                 onClick={() => {
@@ -859,7 +702,7 @@ const PositionPage: NextPageWithLayout = ({
               >
                 <HiOutlineShare
                   size={20}
-                  className="text-edenGreen-600 group-hover:text-edenGreen-400 mr-2 inline"
+                  className=" group-hover:text-edenGreen-400 mr-2 inline"
                 />
                 <span className="group-hover:text-edenGray-500 whitespace-nowrap text-xs group-hover:underline">
                   Share this job
@@ -868,7 +711,7 @@ const PositionPage: NextPageWithLayout = ({
               <div className="group col-span-1 flex w-fit cursor-pointer items-center">
                 <HiFlag
                   size={20}
-                  className="text-edenGreen-600 group-hover:text-edenGreen-400 mr-2 inline"
+                  className=" group-hover:text-edenGreen-400 mr-2 inline"
                 />
                 <span className="group-hover:text-edenGray-500 whitespace-nowrap text-xs group-hover:underline">
                   <a href="mailto:tom@joineden.xyz">
@@ -879,7 +722,7 @@ const PositionPage: NextPageWithLayout = ({
               <div className="group col-span-1 flex w-fit cursor-pointer items-center">
                 <AiOutlineUserAdd
                   size={20}
-                  className="text-edenGreen-600 group-hover:text-edenGreen-400 mr-2 inline"
+                  className=" group-hover:text-edenGreen-400 mr-2 inline"
                 />
                 <span className="group-hover:text-edenGray-500 whitespace-nowrap text-xs group-hover:underline">
                   <a href="mailto:tom@joineden.xyz">Refer someone & get paid</a>
@@ -888,57 +731,178 @@ const PositionPage: NextPageWithLayout = ({
             </section>
           </div>
 
-          <div className="col-span-12 md:col-span-6">
+          <div className="col-span-12 md:col-span-5">
             {/* ---- YOU & THE ROLE ---- */}
             {!submitted && (
-              <section className="bg-edenPink-100 mb-8 overflow-hidden rounded-md">
-                <div className="bg-edenPink-300 px-6 py-4">
-                  <h2 className="text-edenGreen-600">You & the role</h2>
+              <section className="mb-8 overflow-hidden rounded-3xl bg-[#F7F8F7]">
+                <div className="bg-black px-4 py-3">
+                  <h2 className="text-white">You & the role</h2>
                 </div>
-                <div className="px-6 py-4">
-                  <div className="bg-edenPink-300 mx-auto flex h-8 w-8 items-center justify-center rounded-md">
+                <div className="px-4 py-4">
+                  <div className="bg-edenGray-100 mx-auto mb-2 flex h-8 w-8 items-center justify-center rounded-md">
                     <AiOutlineEyeInvisible size={"1.4rem"} />
                   </div>
-                  <h3 className="text-edenGreen-600 mb-4 text-center font-semibold">
-                    Upload your resume to unlock:
+                  <h3 className="mb-4 text-center font-semibold">
+                    Section Locked!
                   </h3>
-                  <ul className="text-edenGray-900 list-disc pl-4 text-sm">
-                    <li className="mb-2"> If you’d be a good fit</li>
-                    <li className="mb-2">
+                  <p className="mb-2 text-center font-semibold">
+                    Upload your resume to unlock:
+                  </p>
+                  <ul className="text-edenGray-900 list-none pl-4 text-center text-sm">
+                    <li className="mb-1"> If you’d be a good fit</li>
+                    <li className="mb-1">
                       What your strengths are for this opportunity
                     </li>
-                    <li className="mb-2">
+                    <li className="mb-1">
                       What your weaknesses are for this opportunity
                     </li>
                   </ul>
 
                   <div className="mt-4 flex justify-center">
-                    <Button
-                      variant="secondary"
-                      // onClick={() => {
-                      //   router.push(`/interview/${position._id}`);
-                      // }}
+                    <Link
+                      href={`/interview/${position?._id}`}
+                      className="flex items-center whitespace-nowrap rounded-md bg-black px-12 py-4 text-white hover:bg-white hover:text-black"
                       onClick={() => {
                         handleInterviewNav();
                       }}
                     >
-                      Upload Your Resume
-                    </Button>
+                      Interview now
+                    </Link>
                   </div>
                 </div>
               </section>
             )}
 
             {/* ---- COMPANY DETAILS ---- */}
-            <section className="bg-edenPink-100 mb-8 overflow-hidden rounded-md">
-              <div className="bg-edenPink-300 px-6 py-4">
-                <h2 className="text-edenGreen-600">Company</h2>
+            <section className="mb-8 overflow-hidden rounded-3xl bg-[#F7F8F7]">
+              <div className="bg-black px-4 py-3">
+                <h2 className="text-white">Company</h2>
+              </div>
+
+              <div className="px-4 pt-4">
+                {editMode && editCompany ? (
+                  <label
+                    htmlFor="file-upload"
+                    className={classNames(
+                      "relative block w-fit cursor-pointer rounded-md hover:bg-black hover:bg-opacity-20",
+                      editMode
+                        ? "border-utilityOrange -my-[2px] mb-1 border-2"
+                        : ""
+                    )}
+                  >
+                    {uploadingCompanyImage && (
+                      <div className="pointer-events-none absolute left-0 top-0 h-full w-full">
+                        <Loading title="" />
+                      </div>
+                    )}
+                    <img
+                      src={getValues("company.imageUrl") || ""}
+                      className="mb-2 h-20"
+                      alt={position?.company?.name || ""}
+                    />
+                    <HiPencil
+                      size={20}
+                      className="text-utilityOrange absolute bottom-1 right-1 opacity-60"
+                    />
+                    <input
+                      id="file-upload"
+                      className="hidden"
+                      onChange={handleFileChange}
+                      ref={fileInput}
+                      type="file"
+                      accept=".png"
+                    ></input>
+                  </label>
+                ) : (
+                  // <img
+                  //   src={getValues("company.imageUrl") || ""}
+                  //   className="mb-2 h-20"
+                  //   alt={position?.company?.name || ""}
+                  // />
+                  <div className="relative mb-2 flex h-[80px] max-w-[180px] items-start">
+                    <img
+                      className="h-[80px]"
+                      src={`${
+                        position?.company?.imageUrl
+                          ? position?.company?.imageUrl
+                          : "/default-company-image.svg"
+                      }`}
+                      alt={`${position?.company?.name} company image`}
+                    />
+                  </div>
+                )}
+                <p className="text-edenGray-900 mb-4 text-sm">
+                  {editMode && editCompany ? (
+                    <>
+                      <textarea
+                        rows={3}
+                        {...register("company.description")}
+                        className={classNames(editInputClasses, "w-full")}
+                      />
+                    </>
+                  ) : (
+                    `${getValues("company.description")}`
+                  )}
+                </p>
+
+                {(getValues("company.employeesNumber") ||
+                  getValues("company.employeesNumber") === 0 ||
+                  (editMode && editCompany)) && (
+                  <p className="text-edenGray-900 mb-2 text-sm">
+                    <HiOutlineUsers size={20} className=" mr-2 inline-block" />
+                    {editMode && editCompany ? (
+                      <>
+                        <input
+                          type="number"
+                          {...register("company.employeesNumber", {
+                            valueAsNumber: true,
+                          })}
+                          className={classNames(editInputClasses, "w-20")}
+                        />
+                        {` employees`}
+                      </>
+                    ) : (
+                      `${getValues("company.employeesNumber")} employees`
+                    )}
+                  </p>
+                )}
+                {(editMode || !!position?.company?.tags?.length) && (
+                  <div className="mb-2 text-sm">
+                    <GoTag size={24} className=" mr-2 inline-block" />
+                    <CompanyTagsField
+                      control={control}
+                      getValues={getValues}
+                      register={register}
+                      editMode={editMode && editCompany}
+                    />
+                  </div>
+                )}
+
+                <div className="bg-edenGreen-200 rounded-md p-4 text-sm">
+                  <div className="mb-2 flex">
+                    <div className="bg-edenGreen-300 mr-2 flex h-6 w-6 items-center justify-center rounded-full">
+                      <HiOutlineHeart size={16} className="" />
+                    </div>
+                    <h3 className="">What&apos;s to love?</h3>
+                  </div>
+                  <p className="text-edenGray-700 text-xs">
+                    {editMode && editCompany ? (
+                      <textarea
+                        {...register("company.whatsToLove")}
+                        rows={4}
+                        className={classNames(editInputClasses, "w-full")}
+                      />
+                    ) : (
+                      getValues("company.whatsToLove")
+                    )}
+                  </p>
+                </div>
               </div>
               <div className="px-6">
                 {/* ---- MISSION ---- */}
                 {(position?.company?.mission || editMode) && (
-                  <div className="border-edenGreen-300 border-b-2 py-4 last:!border-0">
-                    <h3 className="text-edenGreen-600">About the company</h3>
+                  <div className="border-edenGray-300 border-b-2 py-4 last:!border-0">
+                    <h3 className="">About the company</h3>
                     <p className="text-xs">
                       {editMode ? (
                         <>
@@ -958,15 +922,15 @@ const PositionPage: NextPageWithLayout = ({
                 {/* ---- INSIGHTS ---- */}
                 {position?.company?.insights &&
                   position?.company?.insights.length > 0 && (
-                    <div className="border-edenGreen-300 border-b-2 py-4 last:!border-0">
-                      <h3 className="text-edenGreen-600">Insights</h3>
+                    <div className="border-edenGray-300 border-b-2 py-4 last:!border-0">
+                      <h3 className="">Insights</h3>
                       <div className="relative flex w-full flex-wrap">
                         {position?.company?.insights?.map((insight, index) => (
                           <div
                             key={index}
                             className="mt-2 flex min-w-[50%] items-center"
                           >
-                            <div className="bg-edenPink-300 mr-2 flex h-6 w-8 items-center justify-center rounded-md pb-px">
+                            <div className="mr-2 flex h-6 w-8 items-center justify-center rounded-md bg-black pb-px">
                               <span
                                 className={classNames(
                                   // getGrade(_category!.score! * 100).color,
@@ -987,8 +951,8 @@ const PositionPage: NextPageWithLayout = ({
 
                 {/* ---- EDEN'S TAKE ---- */}
                 {position?.company?.edenTake && (
-                  <div className="border-edenGreen-300 border-b-2 py-4 last:!border-0">
-                    <h3 className="text-edenGreen-600">Eden&apos;s Take</h3>
+                  <div className="border-edenGray-300 border-b-2 py-4 last:!border-0">
+                    <h3 className="">Eden&apos;s Take</h3>
                     <p className="text-xs">{position.company.edenTake}</p>
                   </div>
                 )}
@@ -997,8 +961,8 @@ const PositionPage: NextPageWithLayout = ({
                 {(editMode ||
                   (position?.company?.funding &&
                     position?.company?.funding?.length > 0)) && (
-                  <div className="border-edenGreen-300 border-b-2 py-4 last:!border-0">
-                    {/* <h3 className="text-edenGreen-600 mb-4">Widgets</h3> */}
+                  <div className="border-edenGray-300 border-b-2 py-4 last:!border-0">
+                    {/* <h3 className=" mb-4">Widgets</h3> */}
 
                     {/* ---- FUNDING ---- */}
                     <FundingWidget
@@ -1010,7 +974,7 @@ const PositionPage: NextPageWithLayout = ({
                     {/* ---- CULTURE ---- */}
                     {/* {position?.company?.culture && (
                     <div className="mb-4 last:mb-0">
-                    <h3 className="text-edenGreen-600 mb-2">
+                    <h3 className=" mb-2">
                     AI culture summary
                     </h3>
                     <div className="bg-edenGreen-300 rounded-md p-4">
@@ -1040,9 +1004,9 @@ const PositionPage: NextPageWithLayout = ({
                 {(editMode ||
                   (position?.company?.benefits &&
                     getValues("company.benefits") != "N/A")) && (
-                  <div className="border-edenGreen-300 border-b-2 py-4 last:!border-0">
-                    <h3 className="text-edenGreen-600">Benefits & perks</h3>
-                    <p className="text-xs">
+                  <div className="border-edenGray-300 border-b-2 py-4 last:!border-0">
+                    <h3 className="">Benefits & perks</h3>
+                    <div className="text-xs">
                       {editMode ? (
                         <>
                           <textarea
@@ -1063,7 +1027,7 @@ const PositionPage: NextPageWithLayout = ({
                             ))}
                         </ul>
                       )}
-                    </p>
+                    </div>
                   </div>
                 )}
 
@@ -1071,9 +1035,9 @@ const PositionPage: NextPageWithLayout = ({
                 {(editMode ||
                   (position?.company?.values &&
                     getValues("company.values") != "N/A")) && (
-                  <div className="border-edenGreen-300 border-b-2 py-4 last:!border-0">
-                    <h3 className="text-edenGreen-600">Company Values</h3>
-                    <p className="text-xs">
+                  <div className="border-edenGray-300 border-b-2 py-4 last:!border-0">
+                    <h3 className="">Company Values</h3>
+                    <div className="text-xs">
                       {editMode ? (
                         <>
                           <textarea
@@ -1094,7 +1058,7 @@ const PositionPage: NextPageWithLayout = ({
                             ))}
                         </ul>
                       )}
-                    </p>
+                    </div>
                   </div>
                 )}
 
@@ -1102,8 +1066,8 @@ const PositionPage: NextPageWithLayout = ({
                 {(editMode ||
                   (position?.company?.founders &&
                     getValues("company.founders") != "N/A")) && (
-                  <div className="border-edenGreen-300 border-b-2 py-4 last:!border-0">
-                    <h3 className="text-edenGreen-600">Founders</h3>
+                  <div className="border-edenGray-300 border-b-2 py-4 last:!border-0">
+                    <h3 className="">Founders</h3>
                     <p className="text-xs">
                       {editMode ? (
                         <>
@@ -1125,157 +1089,140 @@ const PositionPage: NextPageWithLayout = ({
         </div>
 
         {/* ---- FOOTER APPLY ---- */}
-        <footer className="bg-edenGreen-600 fixed bottom-0 left-0 flex h-16 w-full items-center justify-center">
-          {!editMode ? (
-            <>
-              {!submitted ? (
-                <Button
-                  className={classNames(
-                    "border-edenPink-400 !text-edenPink-400"
-                  )}
-                  onClick={() => {
-                    handleInterviewNav();
-                  }}
-                >
-                  Apply with AI
-                </Button>
-              ) : (
-                <div className="bg-edenGreen-300 text-edenGreen-600 font-Moret cursor-not-allowed rounded-md px-4 py-2 text-lg font-bold">
-                  You applied to this position
-                </div>
-              )}
-              {currentUser?._id && (
-                <AskEdenPopUp
-                  memberID={currentUser?._id}
-                  service={
-                    AI_INTERVIEW_SERVICES.ASK_EDEN_USER_POSITION_AFTER_INTERVIEW
-                  }
-                  title="Ask Eden about this opportunity"
-                  className="!bottom-[0.35rem] !right-2"
-                  forceOpen={openAskEden}
-                  onClose={() => {
-                    setOpenAskEden(false);
-                  }}
-                />
-              )}
-            </>
-          ) : (
-            <>
-              <Button
-                onClick={handleSubmit((data) =>
-                  onSubmit({ ...data, status: PositionStatus.Unpublished })
-                )}
-                className="border-edenPink-400 !text-edenPink-400 mr-4"
-              >
-                Save as draft
-              </Button>
-              <Button
-                onClick={() => {
-                  setPublishModalOpen(true);
+
+        {!editMode ? (
+          <>
+            {currentUser?._id && (
+              <AskEdenPopUp
+                memberID={currentUser?._id}
+                service={
+                  AI_INTERVIEW_SERVICES.ASK_EDEN_USER_POSITION_AFTER_INTERVIEW
+                }
+                title="Ask Eden about this opportunity"
+                className="!bottom-[0.35rem] !right-2"
+                forceOpen={openAskEden}
+                onClose={() => {
+                  setOpenAskEden(false);
                 }}
-                className="border-edenPink-400 !text-edenPink-400"
-              >
-                Publish
-              </Button>
+              />
+            )}
+          </>
+        ) : (
+          <footer className="fixed bottom-0 left-0 flex h-16 w-full items-center justify-center bg-black">
+            <Button
+              onClick={handleSubmit((data) =>
+                onSubmit({ ...data, status: PositionStatus.Unpublished })
+              )}
+              className="hover:!bg-edenGreen-300 mr-4 border-white text-white hover:!border-white hover:!text-black"
+            >
+              Save as draft
+            </Button>
+            <Button
+              onClick={() => {
+                setPublishModalOpen(true);
+              }}
+              variant="secondary"
+              className="!border-2 border-white bg-white !text-black"
+            >
+              Publish
+            </Button>
 
-              <Modal open={bulkUpdateLoading} closeOnEsc={false}>
-                <div className="h-80">
-                  <Loading title={"Updating position"} />
-                </div>
-              </Modal>
-
-              <div
-                className={`pointer-events-none fixed left-0 top-0 z-50 h-screen w-screen	`}
-                ref={ref}
-              >
-                <Confetti
-                  width={width}
-                  height={height}
-                  numberOfPieces={confettiRun ? 250 : 0}
-                  colors={["#F0F4F2", "#19563F", "#FCEEF5", "#F5C7DE"]}
-                />
+            <Modal open={bulkUpdateLoading} closeOnEsc={false}>
+              <div className="h-80">
+                <Loading title={"Updating position"} />
               </div>
-              <Modal open={publishModalOpen} closeOnEsc={false}>
-                <div className="flex flex-col items-center justify-center px-28 py-8 text-center">
-                  <EdenIconExclamationAndQuestion className="mb-2 h-16" />
-                  <h2 className="text-edenGreen-600 mb-4">Ready to publish?</h2>
-                  <p className="mb-12">
-                    Soon after you publish Eden will start recruiting in the
-                    community & put the magic into magic job-post.
-                  </p>
-                  <div className="flex justify-center gap-8">
-                    <Button
-                      onClick={() => {
-                        setPublishModalOpen(false);
-                        // handleSubmit((data) =>
-                        //   onSubmit({
-                        //     ...data,
-                        //     status: PositionStatus.Unpublished,
-                        //   })
-                        // );
-                      }}
-                    >
-                      Not done yet
-                    </Button>
-                    <Button
-                      variant="secondary"
-                      onClick={handleSubmit((data) =>
-                        onSubmit({ ...data, status: PositionStatus.Active })
-                      )}
-                    >
-                      Let&apos;s do it!
-                    </Button>
-                  </div>
-                </div>
-              </Modal>
+            </Modal>
 
-              <Modal open={trainAiModalOpen} closeOnEsc={false}>
-                <div className="flex flex-col items-center justify-center px-8 py-8 pt-2 text-center">
-                  <div
-                    className={
-                      "text-edenGreen-600 bg-edenPink-100 mx-auto mb-4 flex h-20 w-20 items-center justify-center rounded-full"
-                    }
+            <div
+              className={`pointer-events-none fixed left-0 top-0 z-50 h-screen w-screen	`}
+              ref={ref}
+            >
+              <Confetti
+                width={width}
+                height={height}
+                numberOfPieces={confettiRun ? 250 : 0}
+                colors={["#F0F4F2", "#19563F", "#FCEEF5", "#F5C7DE"]}
+              />
+            </div>
+            <Modal open={publishModalOpen} closeOnEsc={false}>
+              <div className="flex flex-col items-center justify-center px-28 py-8 text-center">
+                <EdenIconExclamationAndQuestion className="mb-2 h-16" />
+                <h2 className=" mb-4">Ready to publish?</h2>
+                <p className="mb-12">
+                  Soon after you publish Eden will start recruiting in the
+                  community & put the magic into magic job-post.
+                </p>
+                <div className="flex justify-center gap-8">
+                  <Button
+                    onClick={() => {
+                      setPublishModalOpen(false);
+                      // handleSubmit((data) =>
+                      //   onSubmit({
+                      //     ...data,
+                      //     status: PositionStatus.Unpublished,
+                      //   })
+                      // );
+                    }}
                   >
-                    <BsLightningFill size={"2rem"} />
-                  </div>
-                  <h2 className="text-edenGreen-600 mb-4">
-                    One last thing: should we configure the AI-interview for
-                    you?
-                  </h2>
-                  <p className="mb-4">
-                    The way talent applies to your opportunity is through an
-                    AI-powered interview.
-                  </p>
-                  <p className="mb-8">
-                    Think of this like the screening interview that a recruiter
-                    would do built into the job board.
-                  </p>
-                  <div className="flex justify-center gap-8">
-                    <Button
-                      onClick={() => {
-                        router.push(
-                          `/dashboard/${position.company?.slug}/${position._id}`
-                        );
-                      }}
-                    >
-                      Auto-configure the AI-interview for me
-                    </Button>
-                    <Button
-                      variant="secondary"
-                      onClick={() => {
-                        router.push(
-                          `/dashboard/${position.company?.slug}/${position._id}/train-eden-ai`
-                        );
-                      }}
-                    >
-                      Let me configure the AI-interview
-                    </Button>
-                  </div>
+                    Not done yet
+                  </Button>
+                  <Button
+                    variant="secondary"
+                    onClick={handleSubmit((data) =>
+                      onSubmit({ ...data, status: PositionStatus.Active })
+                    )}
+                  >
+                    Let&apos;s do it!
+                  </Button>
                 </div>
-              </Modal>
-            </>
-          )}
-        </footer>
+              </div>
+            </Modal>
+
+            <Modal open={trainAiModalOpen} closeOnEsc={false}>
+              <div className="flex flex-col items-center justify-center px-8 py-8 pt-2 text-center">
+                <div
+                  className={
+                    " mx-auto mb-4 flex h-20 w-20 items-center justify-center rounded-full bg-[#F7F8F7]"
+                  }
+                >
+                  <BsLightningFill size={"2rem"} />
+                </div>
+                <h2 className=" mb-4">
+                  One last thing: should we configure the AI-interview for you?
+                </h2>
+                <p className="mb-4">
+                  The way talent applies to your opportunity is through an
+                  AI-powered interview.
+                </p>
+                <p className="mb-8">
+                  Think of this like the screening interview that a recruiter
+                  would do built into the job board.
+                </p>
+                <div className="flex justify-center gap-8">
+                  <Button
+                    onClick={() => {
+                      router.push(
+                        `/dashboard/${position.company?.slug}/${position._id}`
+                      );
+                    }}
+                  >
+                    Auto-configure the AI-interview for me
+                  </Button>
+                  <Button
+                    variant="secondary"
+                    onClick={() => {
+                      router.push(
+                        `/dashboard/${position.company?.slug}/${position._id}/train-eden-ai`
+                      );
+                    }}
+                  >
+                    Let me configure the AI-interview
+                  </Button>
+                </div>
+              </div>
+            </Modal>
+          </footer>
+        )}
       </div>
       <EdenAiProcessingModal
         title="This will be exciting"
@@ -1291,14 +1238,12 @@ const client = new ApolloClient({
     uri: process.env.NEXT_PUBLIC_GRAPHQL_URL as string,
     credentials: "same-origin",
   }),
-  cache: new InMemoryCache(),
+  cache: new InMemoryCache({ resultCaching: false }),
 });
 
 export async function getServerSideProps(ctx: GetServerSidePropsContext) {
   const positionID = ctx.params?.positionID;
   const { edit } = ctx.query;
-
-  const _slug = ctx.params?.subdomain;
 
   const { data } = await client.query({
     query: gql`
@@ -1418,19 +1363,21 @@ export async function getServerSideProps(ctx: GetServerSidePropsContext) {
       method: "POST",
       body: JSON.stringify({
         userID: session?._id,
-        companySlug: _slug,
+        companySlug: data.findPosition.company.slug,
       }),
+      cache: "no-cache",
       headers: { "Content-Type": "application/json" },
     }
   );
 
-  console.log(res.status);
+  console.log("===>", res.status);
+  console.log(session?._id, session?.accessLevel, session?.email);
 
   // if not authorised, redirect to request-access
   if (res.status === 401) {
     return {
       redirect: {
-        destination: `/request-access?company=${_slug}`,
+        destination: `/request-access?company=${data.findPosition.company.slug}`,
         permanent: false,
       },
     };
@@ -1601,7 +1548,9 @@ export async function getServerSideProps(ctx: GetServerSidePropsContext) {
 //   }
 // }) satisfies GetStaticPaths;
 
-PositionPage.getLayout = (page) => <AppUserLayout>{page}</AppUserLayout>;
+PositionPage.getLayout = (page) => (
+  <BrandedAppUserLayout>{page}</BrandedAppUserLayout>
+);
 
 export default PositionPage;
 
@@ -1625,7 +1574,7 @@ const FundingWidget = ({
 
   return (
     <div className="mb-4 last:mb-0">
-      <h3 className="text-edenGreen-600 mb-2">Funding</h3>
+      <h3 className=" mb-2">Funding</h3>
       <div
         className={classNames(
           "bg-edenGreen-300 rounded-md p-4",
@@ -1745,7 +1694,7 @@ const CompanyTagsField = ({
       ))}
       {editMode && (
         <div
-          className="bg-edenGray-500 text-utilityOrange border-utilityOrange hover:text-edenGray-500 hover:bg-utilityOrange ml-2 inline-block h-6 w-6 cursor-pointer rounded-full border-2 pb-1 text-xl font-bold"
+          className="bg-edenGray-500 text-utilityOrange border-utilityOrange hover:text-edenGray-500 hover:bg-utilityOrange ml-2 inline-block h-6 w-6 cursor-pointer rounded-full border-2 text-xl font-bold"
           onClick={() => append("")}
         >
           <div className="flex h-full w-full items-center justify-center">
