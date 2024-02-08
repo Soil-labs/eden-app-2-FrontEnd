@@ -1293,7 +1293,7 @@ const client = new ApolloClient({
     uri: process.env.NEXT_PUBLIC_GRAPHQL_URL as string,
     credentials: "same-origin",
   }),
-  cache: new InMemoryCache(),
+  cache: new InMemoryCache({ resultCaching: false }),
 });
 
 export async function getServerSideProps(ctx: GetServerSidePropsContext) {
