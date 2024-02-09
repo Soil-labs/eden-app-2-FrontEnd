@@ -121,7 +121,7 @@ const PositionPage: NextPageWithLayout = ({
   const [trainAiModalOpen, setTrainAiModalOpen] = useState(false);
   const [openAskEden, setOpenAskEden] = useState(false);
 
-  console.log(position.company);
+  // console.log(position.company);
 
   const { control, register, handleSubmit, getValues, setValue } = useForm<any>(
     {
