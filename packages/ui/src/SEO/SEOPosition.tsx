@@ -16,6 +16,8 @@ export interface SEOPositionProps {
   salaryMin?: string | number;
   salaryMax?: string | number;
   officePolicy?: string;
+  company?: string;
+  contractType?: string;
   location?: string;
   redirectUrl?: string;
 }
@@ -27,6 +29,8 @@ export const SEOPosition: FC<SEOPositionProps> = ({
   image,
   salaryMin,
   salaryMax,
+  company,
+  contractType,
   officePolicy,
   location,
   redirectUrl,
@@ -55,6 +59,12 @@ export const SEOPosition: FC<SEOPositionProps> = ({
   }
   if (location) {
     apiUrl = apiUrl + `&location=${location}`;
+  }
+  if (company) {
+    apiUrl = apiUrl + `&company=${company}`;
+  }
+  if (contractType) {
+    apiUrl = apiUrl + `&contractType=${contractType}`;
   }
 
   // const ogImage = process.env.VERCEL_URL

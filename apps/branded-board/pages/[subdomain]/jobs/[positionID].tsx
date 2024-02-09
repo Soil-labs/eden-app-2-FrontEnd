@@ -339,6 +339,8 @@ const PositionPage: NextPageWithLayout = ({
     <>
       <SEOPosition
         title={`${position?.name} @ ${position.company?.name}`}
+        company={position.company?.name || ""}
+        contractType={position.generalDetails?.contractType || ""}
         description={position?.company?.description || ""}
         image={position?.company?.imageUrl || ""}
         position={position?.name!}
