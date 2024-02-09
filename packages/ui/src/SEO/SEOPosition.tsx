@@ -71,10 +71,10 @@ export const SEOPosition: FC<SEOPositionProps> = ({
   //   ? "https://" + process.env.VERCEL_URL + apiUrl
   //   : "" + apiUrl;
 
-  let ogImage = "https://edenprotocol.app" + apiUrl;
+  let ogImage = "https://developer-dao.joineden.ai" + apiUrl;
 
   if (process.env.NEXT_PUBLIC_ENV_BRANCH === "develop") {
-    ogImage = "https://eden-saas-staging.vercel.app" + apiUrl;
+    ogImage = "https://developer-dao.preview.joineden.ai" + apiUrl;
   } else if (process.env.NEXT_PUBLIC_ENV_BRANCH === "localhost") {
     ogImage = apiUrl;
   }
