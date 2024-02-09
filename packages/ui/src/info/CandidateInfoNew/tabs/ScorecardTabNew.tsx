@@ -136,7 +136,7 @@ export const ScorecardTabNew: FC<Props> = ({ candidate, scoreCardState }) => {
                 </div>
 
                 <ul className="list-none space-y-1">
-                  {_category?.scoreCardsPosition!.map(
+                  {_category?.scoreCardsPosition?.map(
                     (item: Maybe<ScoreCardsPositionType>, index: number) => {
                       const score =
                         item!.score || item!.score === 0
@@ -177,7 +177,7 @@ export const ScorecardTabNew: FC<Props> = ({ candidate, scoreCardState }) => {
                             </div>
                             <div className="flex">
                               <p className="w-full pr-4 text-sm">
-                                {item?.card?.content!.trim()}
+                                {item?.card?.content?.trim()}
                               </p>
                               {item &&
                                 item?.card &&

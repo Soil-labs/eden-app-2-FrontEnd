@@ -161,7 +161,7 @@ export const ScorecardSearchAlgoTab: FC<Props> = ({
                         </div>
                         <div className="flex">
                           <p className="w-full pr-4 text-sm">
-                            {item?.cardMemory?.content!.trim()}
+                            {item?.cardMemory?.content?.trim()}
                           </p>
                           {item &&
                             item?.card &&

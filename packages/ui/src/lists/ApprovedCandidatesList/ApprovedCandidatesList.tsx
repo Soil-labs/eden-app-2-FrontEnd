@@ -108,7 +108,7 @@ export const ApprovedCandidatesList = ({
             <Avatar
               size="sm"
               src={candidate.user?.discordAvatar!}
-              alt={`${candidate.user?.discordName!.trim()}-avatar`}
+              alt={`${candidate.user?.discordName?.trim()}-avatar`}
             />
           </ColumnStyled>
           <span className="w-32 max-w-[200px]">
