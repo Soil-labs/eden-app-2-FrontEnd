@@ -774,7 +774,7 @@ const PositionCRM: NextPageWithLayout = () => {
             for (let j = 0; j < editedTalentList?.talent?.length!; j++) {
               if (
                 candidatesOriginalList[i].user?._id ===
-                editedTalentList?.talent![j]!.user!._id
+                editedTalentList?.talent![j]?.user?._id
               ) {
                 candidatesOnTalentListSelected.push(candidatesOriginalList[i]);
               }

@@ -100,9 +100,9 @@ export const CreateProjectContainer = ({
             fields: {
               nodesID:
                 state?.role && state?.role[i]?.nodes
-                  ? state?.role[i]?.nodes!.map((_node) => _node?.nodeData?._id)
+                  ? state?.role[i]?.nodes?.map((_node) => _node?.nodeData?._id)
                   : [],
-              projectRoleID: createProject?.role && createProject?.role[i]!._id,
+              projectRoleID: createProject?.role && createProject?.role[i]?._id,
               nodeType: `sub_expertise`,
             },
           },
@@ -133,9 +133,9 @@ export const CreateProjectContainer = ({
             fields: {
               nodesID:
                 state?.role && state?.role[i]?.nodes
-                  ? state?.role[i]?.nodes!.map((_node) => _node?.nodeData?._id)
+                  ? state?.role[i]?.nodes?.map((_node) => _node?.nodeData?._id)
                   : [],
-              projectRoleID: updateProject?.role && updateProject?.role[i]!._id,
+              projectRoleID: updateProject?.role && updateProject?.role[i]?._id,
               nodeType: `sub_expertise`,
             },
           },

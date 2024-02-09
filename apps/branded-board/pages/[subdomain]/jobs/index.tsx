@@ -33,7 +33,7 @@ const JobsPage: NextPageWithLayout = ({
       ? positions.reverse()
       : positions?.reverse().map((item: any) => {
           //this map avoids having to fetch company again inside each position in backend
-          item!.company = {
+          item.company = {
             _id: company?._id,
             name: company?.name,
             slug: company?.slug,
@@ -257,7 +257,7 @@ export const getStaticProps = async (context: {
       positions = company?.positions;
       positions?.map((item: any) => {
         //this map avoids having to fetch company again inside each position in backend
-        item!.company = {
+        item.company = {
           _id: company?._id,
           name: company?.name,
           slug: company?.slug,

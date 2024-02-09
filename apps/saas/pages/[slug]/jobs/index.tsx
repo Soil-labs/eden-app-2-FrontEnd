@@ -43,7 +43,7 @@ const JobsPage: NextPageWithLayout = ({ company, positions }) => {
       ? positions
       : positions?.map((item: any) => {
           //this map avoids having to fetch company again inside each position in backend
-          item!.company = {
+          item.company = {
             _id: company?._id,
             name: company?.name,
             slug: company?.slug,

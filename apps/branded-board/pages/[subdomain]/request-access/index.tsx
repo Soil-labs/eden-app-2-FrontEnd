@@ -77,7 +77,7 @@ const RequestAccess: NextPageWithLayout = () => {
         fields: {
           companyID: findCompanyData.findCompanyFromSlug._id,
           employees: [
-            { typeT: "EMPLOYEE", status: "PENDING", userID: currentUser!._id },
+            { typeT: "EMPLOYEE", status: "PENDING", userID: currentUser?._id },
           ] as EmployeeTypeInput[],
         },
       },

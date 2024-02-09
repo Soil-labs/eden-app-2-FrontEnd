@@ -774,7 +774,7 @@ const PositionCRM: NextPageWithLayout = () => {
             for (let j = 0; j < editedTalentList?.talent?.length!; j++) {
               if (
                 candidatesOriginalList[i].user?._id ===
-                editedTalentList?.talent![j]!.user!._id
+                editedTalentList?.talent![j]?.user?._id
               ) {
                 candidatesOnTalentListSelected.push(candidatesOriginalList[i]);
               }
@@ -898,7 +898,7 @@ const PositionCRM: NextPageWithLayout = () => {
       for (let i = 0; i < candidatesOriginalList.length; i++) {
         for (let j = 0; j < list.talent!.length; j++) {
           if (
-            candidatesOriginalList[i].user?._id === list.talent![j]!.user!._id
+            candidatesOriginalList[i].user?._id === list.talent![j]!.user?._id
           ) {
             candidatesOnTalentListSelected.push(candidatesOriginalList[i]);
           }

@@ -365,13 +365,13 @@ export const CandidateInfoTestSearchAlgo = ({
           }}
           onSubmit={() => {
             handleAddCandidatesToList!(
-              (letterType === "rejection"
-                ? talentListsAvailables!.find(
+              letterType === "rejection"
+                ? talentListsAvailables?.find(
                     (list) => list.name === "Rejected"
-                  )!._id
-                : talentListsAvailables!.find(
+                  )?._id
+                : talentListsAvailables?.find(
                     (list) => list.name === "Accepted"
-                  )!._id)!
+                  )?._id
             );
           }}
         />

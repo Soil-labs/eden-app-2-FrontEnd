@@ -74,11 +74,11 @@ export const SkillSelector = ({
     >
       <motion.div
         style={{ background: "rgba(137, 213, 255, 0.1)" }}
-        className="group flex w-full cursor-pointer items-center justify-between py-3 px-5"
+        className="group flex w-full cursor-pointer items-center justify-between px-5 py-3"
         onClick={() => {
           if (
             !levels &&
-            skills!.filter((s: any) => s?.skillInfo?.subSubNodeID === item._id)
+            skills?.filter((s: any) => s?.skillInfo?.subSubNodeID === item._id)
               .length === 0
           ) {
             setSkills([
@@ -120,13 +120,13 @@ export const SkillSelector = ({
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           style={{ background: "rgba(137, 213, 255, 0.1)" }}
-          className="user-select-none ml-2 px-4 pt-1 pb-2"
+          className="user-select-none ml-2 px-4 pb-2 pt-1"
         >
           <motion.p className="mb-1 text-xs font-medium text-slate-500">
             SKILL LEVEL
           </motion.p>
           <motion.div className="-ml-1 flex gap-2">
-            {levels!.map((level, index) => (
+            {levels?.map((level, index) => (
               <Button
                 key={index}
                 className="text-xs transition-all duration-200 ease-out hover:scale-110 hover:border-blue-500 hover:font-bold hover:text-blue-800"
@@ -135,7 +135,7 @@ export const SkillSelector = ({
                 onClick={(e) => {
                   e.preventDefault();
                   if (
-                    skills!.filter(
+                    skills?.filter(
                       (s: any) => s?.skillInfo?.subSubNodeID === item._id
                     ).length === 0
                   ) {

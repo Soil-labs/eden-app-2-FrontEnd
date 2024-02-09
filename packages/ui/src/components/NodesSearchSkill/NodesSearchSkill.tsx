@@ -120,10 +120,10 @@ export const NodesSearchSkill = ({
         }
       }}
     >
-      <div className="relative mt-1 mb-4 w-full">
+      <div className="relative mb-4 mt-1 w-full">
         <div className="relative z-30">
           <SearchIcon
-            className="pointer-events-none absolute top-2.5 left-3 h-5 w-5 text-gray-400"
+            className="pointer-events-none absolute left-3 top-2.5 h-5 w-5 text-gray-400"
             aria-hidden="true"
           />
           <Combobox.Input
@@ -141,7 +141,7 @@ export const NodesSearchSkill = ({
         </div>
         {filteredItems.length >= 0 && debouncedQuery.length >= 0 && isOpen && (
           <div
-            className="fixed top-0 left-0 z-20 h-screen w-screen"
+            className="fixed left-0 top-0 z-20 h-screen w-screen"
             onClick={() => {
               setIsOpen(false);
               setInFocus(false);
@@ -150,7 +150,7 @@ export const NodesSearchSkill = ({
         )}
 
         {skillLoading && isOpen && (
-          <div className="absolute top-12 z-40 border-t border-gray-100 bg-white py-14 px-6 text-center text-sm sm:px-14">
+          <div className="absolute top-12 z-40 border-t border-gray-100 bg-white px-6 py-14 text-center text-sm sm:px-14">
             <Loading />
           </div>
         )}
@@ -158,7 +158,7 @@ export const NodesSearchSkill = ({
         {filteredItems.length >= 0 && debouncedQuery.length >= 0 && isOpen && (
           <Combobox.Options
             static
-            className="scrollbar-hide absolute top-12 z-30 h-80 w-full scroll-pt-11 scroll-pb-2 space-y-2 overflow-y-auto rounded-md border bg-white pb-2 shadow-lg"
+            className="scrollbar-hide absolute top-12 z-30 h-80 w-full scroll-pb-2 scroll-pt-11 space-y-2 overflow-y-auto rounded-md border bg-white pb-2 shadow-lg"
           >
             {Object.entries(
               debouncedQuery === "" && inFocus ? allSkillGroup : groups!
@@ -187,9 +187,9 @@ export const NodesSearchSkill = ({
 
         {dataSkills?.nodes_autocomplete.length <= 0 &&
           debouncedQuery !== "" &&
-          filteredItems!.length === 0 &&
+          filteredItems?.length === 0 &&
           isOpen && (
-            <div className="absolute top-12 z-30 border-t border-gray-100 py-14 px-6 text-center text-sm sm:px-14">
+            <div className="absolute top-12 z-30 border-t border-gray-100 px-6 py-14 text-center text-sm sm:px-14">
               <EmojiSadIcon
                 className="mx-auto h-6 w-6 text-gray-400"
                 aria-hidden="true"
