@@ -52,7 +52,7 @@ export interface ICandidateInfoTestSearchAlgoProps {
   handleCreateNewList?: () => void;
   talentListsAvailables?: TalentListType[];
   // eslint-disable-next-line no-unused-vars
-  handleAddCandidatesToList: (listID: string) => Promise<void>;
+  handleAddCandidatesToList?: (listID: string) => Promise<void>;
   // eslint-disable-next-line no-unused-vars
   handleChkSelection?: (candidate: any) => void;
   listMode?: ListModeEnum;
