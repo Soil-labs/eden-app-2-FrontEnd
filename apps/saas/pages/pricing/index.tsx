@@ -467,7 +467,7 @@ const CreateCompany = ({ onSubmit }: ICreateCompany) => {
           fields: {
             companyID: updateCompanyData.updateCompany._id,
             employees: [
-              { typeT: "ADMIN", status: "ACTIVE", userID: currentUser!._id },
+              { typeT: "ADMIN", status: "ACTIVE", userID: currentUser?._id },
             ] as EmployeeTypeInput[],
           },
         },

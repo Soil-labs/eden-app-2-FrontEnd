@@ -103,29 +103,29 @@ export const ScorecardSearchAlgoTab: FC<Props> = ({
             <div className="mb-10" key={index}>
               <div className="border-edenGreen-300 flex justify-between border-b px-4">
                 <h3 className="text-edenGreen-500 mb-3">
-                  {card!.nodeInput?.name}
+                  {card?.nodeInput?.name}
                 </h3>
                 <div className="text-edenGray-700 flex items-center text-sm">
                   Score || Normalized - Real:
                   <div className="bg-edenPink-300 -mr-2 ml-2 flex  items-center justify-center rounded-md pb-px">
                     <span
                       className={classNames(
-                        getGrade(card!.score! * 100).color,
+                        getGrade(card?.score * 100).color,
                         "text-md"
                       )}
                     >
-                      {/* {getGrade(card!.score! * 100).letter} */}
-                      {card!.score} - {card!.scoreReal.toFixed(1)}
+                      {/* {getGrade(card?.score! * 100).letter} */}
+                      {card?.score} - {card?.scoreReal.toFixed(1)}
                     </span>
                   </div>
                 </div>
               </div>
 
               <ul className="list-none space-y-1">
-                {card?.cardMemoryOutput!.map((item: any, index: number) => {
+                {card?.cardMemoryOutput?.map((item: any, index: number) => {
                   const scoreTotal =
-                    item!.scoreCardTotal || item!.scoreCardTotal === 0
-                      ? item!.scoreCardTotal * 100
+                    item?.scoreCardTotal || item?.scoreCardTotal === 0
+                      ? item?.scoreCardTotal * 100
                       : null;
 
                   const { letter, color } = getGrade(scoreTotal);
@@ -138,7 +138,7 @@ export const ScorecardSearchAlgoTab: FC<Props> = ({
                       <div className="relative flex w-full columns-2 items-center justify-between py-4">
                         <div className="absolute -left-6 top-5 cursor-pointer">
                           {expandID ===
-                          card!.nodeInput?.name.replace("_", " ")! + index ? (
+                          card?.nodeInput?.name.replace("_", " ")! + index ? (
                             <ChevronUpIcon
                               width={16}
                               className=""
@@ -152,7 +152,7 @@ export const ScorecardSearchAlgoTab: FC<Props> = ({
                               className=""
                               onClick={() => {
                                 setExpandID(
-                                  card!.nodeInput?.name.replace("_", " ")! +
+                                  card?.nodeInput?.name.replace("_", " ")! +
                                     index
                                 );
                               }}
@@ -189,12 +189,12 @@ export const ScorecardSearchAlgoTab: FC<Props> = ({
                         <div className="border-edenGray-100 relative -my-4 flex h-8 w-12 items-center justify-center rounded-[0.25rem] border">
                           {/* <span className={color}>{letter}</span> */}
                           <span className={color}>
-                            {item!.scoreCardTotal.toFixed(1)}
+                            {item?.scoreCardTotal.toFixed(1)}
                           </span>
                         </div>
                       </div>
                       {expandID ==
-                        card!.nodeInput?.name.replace("_", " ")! + index && (
+                        card?.nodeInput?.name.replace("_", " ")! + index && (
                         <div>
                           {item?.nodeOutput?.map(
                             (output: any, outputIndex: number) => {

@@ -55,7 +55,7 @@ const ConfirmEmailContainer = ({
     console.log("send email", _email);
     updateMember({
       variables: {
-        fields: { _id: currentUser!._id, conduct: { email: value } },
+        fields: { _id: currentUser?._id, conduct: { email: value } },
       },
     });
   };

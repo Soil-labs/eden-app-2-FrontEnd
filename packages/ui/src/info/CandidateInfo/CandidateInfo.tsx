@@ -13,13 +13,9 @@ import {
   CandidateTypeSkillMatch,
   EdenAiLetter,
   EdenChatTab,
-  GraphTab,
   InfoTab,
   ListModeEnum,
   LongText,
-  MatchTab,
-  MeetingNotes,
-  ReportNotes,
 } from "@eden/package-ui";
 import { Tab } from "@headlessui/react";
 import { useState } from "react";
@@ -68,7 +64,7 @@ function classNames(...classes: any[]) {
 
 export const CandidateInfo = ({
   memberID,
-  summaryQuestions,
+  // summaryQuestions,
   mostRelevantMemberNode,
   candidate,
   onClose,
@@ -357,15 +353,16 @@ export const CandidateInfo = ({
             setIsOpen(false);
           }}
           onSubmit={() => {
-            handleAddCandidatesToList!(
-              (letterType === "rejection"
-                ? talentListsAvailables!.find(
-                    (list) => list.name === "Rejected"
-                  )!._id
-                : talentListsAvailables!.find(
-                    (list) => list.name === "Accepted"
-                  )!._id)!
-            );
+            if (handleAddCandidatesToList)
+              handleAddCandidatesToList!(
+                (letterType === "rejection"
+                  ? talentListsAvailables?.find(
+                      (list) => list.name === "Rejected"
+                    )?._id
+                  : talentListsAvailables?.find(
+                      (list) => list.name === "Accepted"
+                    )?._id) || ""
+              );
           }}
         />
       )}

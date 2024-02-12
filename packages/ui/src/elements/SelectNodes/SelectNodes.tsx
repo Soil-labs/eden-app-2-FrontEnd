@@ -57,7 +57,7 @@ export const SelectNodes = ({
       {nodesData?.findNodes ? (
         !isEmpty(nodesData) &&
         nodesData?.findNodes?.map((item: Node, index: number) => {
-          const _selectedNodes = nodes!.filter((node) =>
+          const _selectedNodes = nodes?.filter((node) =>
             node!?.aboveNodes?.some((aboveNode) => aboveNode?._id === item._id)
           );
 
@@ -74,7 +74,7 @@ export const SelectNodes = ({
                     ...nodes.filter((node) => {
                       return !(
                         node?.node?.includes(nodeType) &&
-                        node.aboveNodes!.some(
+                        node.aboveNodes?.some(
                           (_node) => _node?._id === item._id
                         )
                       );

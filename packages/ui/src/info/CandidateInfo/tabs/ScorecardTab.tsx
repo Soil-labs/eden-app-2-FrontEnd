@@ -97,18 +97,18 @@ export const ScorecardTab: FC<Props> = ({ candidate }) => {
               <div className="mb-10" key={index}>
                 <div className="border-edenGreen-300 flex justify-between border-b px-4">
                   <h3 className="text-edenGreen-500 mb-3">
-                    {_category!.category?.replace("_", " ")}
+                    {_category?.category?.replace("_", " ")}
                   </h3>
                   <div className="text-edenGray-700 flex items-center text-sm">
                     Average:
                     <div className="bg-edenPink-300 -mr-2 ml-2 flex h-6 w-8 items-center justify-center rounded-md pb-px">
                       <span
                         className={classNames(
-                          getGrade(_category!.score! * 100).color,
+                          getGrade(_category?.score! * 100).color,
                           "text-md"
                         )}
                       >
-                        {getGrade(_category!.score! * 100).letter}
+                        {getGrade(_category?.score! * 100).letter}
                       </span>
                     </div>
                   </div>
@@ -118,8 +118,8 @@ export const ScorecardTab: FC<Props> = ({ candidate }) => {
                   {_category?.scoreCardsPosition?.map(
                     (item: Maybe<ScoreCardsPositionType>, index: number) => {
                       const score =
-                        item!.score || item!.score === 0
-                          ? item!.score * 100
+                        item?.score || item?.score === 0
+                          ? item?.score * 100
                           : null;
 
                       const { letter, color } = getGrade(score);
@@ -132,7 +132,7 @@ export const ScorecardTab: FC<Props> = ({ candidate }) => {
                           <div className="relative flex w-full columns-2 items-center justify-between py-4">
                             <div className="absolute -left-6 top-5 cursor-pointer">
                               {expandID ===
-                              _category!.category?.replace("_", " ")! +
+                              _category?.category?.replace("_", " ")! +
                                 index ? (
                                 <ChevronUpIcon
                                   width={16}
@@ -147,7 +147,7 @@ export const ScorecardTab: FC<Props> = ({ candidate }) => {
                                   className=""
                                   onClick={() => {
                                     setExpandID(
-                                      _category!.category?.replace("_", " ")! +
+                                      _category?.category?.replace("_", " ")! +
                                         index
                                     );
                                   }}
@@ -207,7 +207,7 @@ export const ScorecardTab: FC<Props> = ({ candidate }) => {
                               <span className={color}>{letter}</span>
                               <EdenTooltip
                                 id={
-                                  _category!.category?.replace("_", " ")! +
+                                  _category?.category?.replace("_", " ")! +
                                   index
                                 }
                                 innerTsx={
@@ -241,7 +241,7 @@ export const ScorecardTab: FC<Props> = ({ candidate }) => {
                             </div>
                           </div>
                           {expandID ===
-                            _category!.category?.replace("_", " ")! + index && (
+                            _category?.category?.replace("_", " ")! + index && (
                             <div>
                               {item?.scoreCardsCandidate?.map(
                                 (_card, _index) => {
