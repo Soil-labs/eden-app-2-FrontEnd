@@ -1367,6 +1367,7 @@ export async function getServerSideProps(ctx: GetServerSidePropsContext) {
         _id: positionID,
       },
       ssr: true,
+      cache: "no-cache",
     },
   });
 
