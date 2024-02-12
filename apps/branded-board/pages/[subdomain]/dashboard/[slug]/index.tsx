@@ -148,6 +148,7 @@ const HomePage: NextPageWithLayout = () => {
 
   const { company, getCompanyFunc } = useContext(CompanyContext);
   const [companyLoading, setCompanyLoading] = useState(true);
+  // eslint-disable-next-line no-unused-vars
   const [updatePositionLoading, setUpdatePositionLoading] =
     useState<boolean>(false);
 
@@ -293,7 +294,9 @@ const HomePage: NextPageWithLayout = () => {
                 +
               </span>
               <div className="bg-edenGreen-200 relative mb-2 flex h-56 w-full items-center rounded-md p-2">
-                <h2>Add Opportunity</h2>
+                <h2 className="font-clash-display font-medium">
+                  Add Opportunity
+                </h2>
               </div>
               <Button
                 onClick={handleCreatePosition}
@@ -443,7 +446,7 @@ const PositionCard = ({ position, companySlug }: PositionCardProps) => {
               : ""}
           </span>
         )}
-        <h2>{position?.name}</h2>
+        <h2 className="font-clash-display font-medium">{position?.name}</h2>
       </div>
       <Button className="w-[90%] rounded-b-md" variant="secondary">
         See opportunity

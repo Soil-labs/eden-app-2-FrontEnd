@@ -86,7 +86,7 @@ const JobsPage: NextPageWithLayout = ({
             />
           </div>
           <div className="flex w-full flex-col justify-center py-4 md:h-[calc(100%-72px)] md:max-w-[60%]">
-            <h1 className="mb-2 text-white">
+            <h1 className="font-clash-display mb-2 font-medium text-white">
               {"The "}
               {company?.name}
               {" Talent Collective"}
@@ -124,7 +124,9 @@ const JobsPage: NextPageWithLayout = ({
         </section>
         {/* -------- Jobs Section -------- */}
         <section className="col-span-12 pt-2 md:col-span-9 md:px-6">
-          <h3 className="mb-2">Open opportunities</h3>
+          <h3 className="font-clash-display mb-2 font-medium">
+            Open opportunities
+          </h3>
           <div className="grid w-full grid-cols-1 gap-x-6 gap-y-4 md:gap-y-8 lg:grid-cols-3">
             {_filteredPositions.map(
               (position: Maybe<Position>, index: number) => {
@@ -358,7 +360,7 @@ const PositionCard = ({ position, setLoadingSpinner }: PositionCardProps) => {
               : ""}
           </p>
         )}
-        <h2>{position?.name}</h2>
+        <h2 className="font-clash-display font-medium">{position?.name}</h2>
       </div>
       <div className="flex w-full flex-row p-2">
         <Image
@@ -431,7 +433,7 @@ const FilterOpportunities = ({ onChange }: FilterOpportunitiesProps) => {
   return (
     <section className="rounded-md bg-[#F7F8F7] p-4">
       <div className="mb-4 flex items-center">
-        <h3>Filter opportunities</h3>
+        <h3 className="font-clash-display font-medium">Filter opportunities</h3>
         <div
           className="hover:bg-edenGray-100 ml-auto flex h-5 w-5 cursor-pointer items-center justify-center rounded-full"
           onClick={() => {

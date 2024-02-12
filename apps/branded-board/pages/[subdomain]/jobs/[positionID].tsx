@@ -397,7 +397,7 @@ const PositionPage: NextPageWithLayout = ({
 
         <section className="mx-auto max-w-screen-xl px-2 md:px-8">
           <div className="relative flex w-full flex-col items-center justify-center rounded-lg bg-black bg-[url('/banner-job-board-mobile.png')] bg-cover bg-center px-4 pb-36 pt-8 md:h-96 md:bg-[url('/banner-job-board.png')] md:px-12 md:pb-2 md:pt-4">
-            <h1 className="mb-2 text-center text-white">
+            <h1 className="font-clash-display mb-2 text-center font-medium text-white">
               {editMode && editCompany ? (
                 <>
                   <input
@@ -633,7 +633,9 @@ const PositionPage: NextPageWithLayout = ({
           <div className="col-span-12 md:col-span-7">
             <section className="mb-8 overflow-hidden rounded-3xl bg-[#F7F8F7]">
               <div className="bg-black px-4 py-3">
-                <h2 className="text-white">Role</h2>
+                <h2 className="font-clash-display font-medium text-white">
+                  Role
+                </h2>
               </div>
               <div className="px-4 py-4">
                 <div className="border-edenGray-300 mb-4 border-b-2">
@@ -738,7 +740,9 @@ const PositionPage: NextPageWithLayout = ({
             {!submitted && (
               <section className="mb-8 overflow-hidden rounded-3xl bg-[#F7F8F7]">
                 <div className="bg-black px-4 py-3">
-                  <h2 className="text-white">You & the role</h2>
+                  <h2 className="font-clash-display font-medium text-white">
+                    You + This role
+                  </h2>
                 </div>
                 <div className="px-4 py-4">
                   <div className="bg-edenGray-100 mx-auto mb-2 flex h-8 w-8 items-center justify-center rounded-md">
@@ -778,7 +782,9 @@ const PositionPage: NextPageWithLayout = ({
             {/* ---- COMPANY DETAILS ---- */}
             <section className="mb-8 overflow-hidden rounded-3xl bg-[#F7F8F7]">
               <div className="bg-black px-4 py-3">
-                <h2 className="text-white">Company</h2>
+                <h2 className="font-clash-display font-medium text-white">
+                  Company
+                </h2>
               </div>
 
               <div className="px-4 pt-4">

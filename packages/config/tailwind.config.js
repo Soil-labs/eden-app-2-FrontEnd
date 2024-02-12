@@ -73,6 +73,7 @@ module.exports = {
       fontFamily: {
         Unica: ["neue-haas-unica", "sans-serif"],
         Moret: ["Moret", "Unica", "sans-serif"],
+        ClashDisplay: ["Clash Display", "sans-serif"],
       },
       boxShadow: {
         headerShadow: "0px 1px 15px 0px rgba(0, 0, 0, 0.15)",
