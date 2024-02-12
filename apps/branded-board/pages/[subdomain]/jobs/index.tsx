@@ -104,7 +104,7 @@ const JobsPage: NextPageWithLayout = ({
                 </BrandedButton>
               </Link>
               <span className="mr-3 text-white">or</span>
-              <Link href={`/signup`}>
+              <Link href={`/pricing?community=${company?._id}`}>
                 <BrandedButton color="#000000">Post a Job</BrandedButton>
               </Link>
             </div>

@@ -1,21 +1,16 @@
 import { gql, useMutation, useQuery } from "@apollo/client";
 import { CompanyContext } from "@eden/package-context";
 import { Position } from "@eden/package-graphql/generated";
-import {
-  BrandedSaasUserLayout,
-  Button,
-  EdenAiProcessingModal,
-  Modal,
-} from "@eden/package-ui";
+import { BrandedSaasUserLayout, Button, Modal } from "@eden/package-ui";
 import useAuthGate from "@eden/package-ui/src/hooks/useAuthGate/useAuthGate";
 import { getCookieFromContext } from "@eden/package-ui/utils";
 // import axios from "axios";
 import { IncomingMessage, ServerResponse } from "http";
 import Head from "next/head";
+import Link from "next/link";
 import { useRouter } from "next/router";
 import { useContext, useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
-import { BiPlus } from "react-icons/bi";
 import { v4 as uuidv4 } from "uuid";
 
 import type { NextPageWithLayout } from "../../../_app";
@@ -217,24 +212,7 @@ const HomePage: NextPageWithLayout = () => {
   };
 
   useMemo(() => {
-    if (
-      companyLoading &&
-      findCompanyData?.findCompanyFromSlug?.positions &&
-      findCompanyData?.findCompanyFromSlug?.positions?.filter(
-        (_position: Position) =>
-          _position?.status !== "ARCHIVED" && _position?.status !== "DELETED"
-      ).length > 0
-    ) {
-      router.push(
-        `/dashboard/${findCompanyData?.findCompanyFromSlug?.slug}/${
-          findCompanyData?.findCompanyFromSlug?.positions.filter(
-            (_position: Position) =>
-              _position?.status !== "ARCHIVED" &&
-              _position?.status !== "DELETED"
-          )[0]?._id
-        }`
-      );
-    } else if (companyLoading && findCompanyData?.findCompanyFromSlug) {
+    if (companyLoading && findCompanyData?.findCompanyFromSlug) {
       setCompanyLoading(false);
     }
   }, [findCompanyData?.findCompanyFromSlug?.positions]);
@@ -309,6 +287,41 @@ const HomePage: NextPageWithLayout = () => {
             <br />
             Start creating your first opportunity here:
           </p>
+          <div className="grid w-full grid-cols-1 gap-x-6 gap-y-4 md:gap-y-8 lg:grid-cols-3">
+            <div className="transition-ease-in-out group relative col-span-1 w-full cursor-pointer rounded-md bg-[#F7F8F7] p-1 shadow-sm transition-all hover:scale-[101%] hover:shadow-md">
+              <span className="text-edenGray-500 absolute left-4 top-4 z-10 text-lg">
+                +
+              </span>
+              <div className="bg-edenGreen-200 relative mb-2 flex h-56 w-full items-center rounded-md p-2">
+                <h2>Add Opportunity</h2>
+              </div>
+              <Button
+                onClick={handleCreatePosition}
+                className="w-[90%] rounded-b-md"
+                variant="primary"
+              >
+                Add New
+              </Button>
+            </div>
+
+            {company?.positions?.map((position) => (
+              <PositionCard
+                key={position?._id}
+                position={position as Position}
+                companySlug={company.slug || ""}
+              />
+            ))}
+          </div>
+        </div>
+      )}
+      {/* {!companyLoading && (
+        <div className="mx-auto max-w-4xl pt-20 text-center">
+          <h1 className="text-edenGreen-500 mb-4">Welcome to Eden</h1>
+          <p className="mb-8">
+            You have no open opportunities yet!
+            <br />
+            Start creating your first opportunity here:
+          </p>
           <Button
             className={"mx-auto flex items-center whitespace-nowrap"}
             onClick={handleCreatePosition}
@@ -322,7 +335,7 @@ const HomePage: NextPageWithLayout = () => {
             open={updatePositionLoading}
           ></EdenAiProcessingModal>
         </div>
-      )}
+      )} */}
     </>
   );
 };
@@ -381,7 +394,7 @@ export async function getServerSideProps(ctx: {
   if (res.status === 404) {
     return {
       redirect: {
-        destination: `/create-company`,
+        destination: `/`,
         permanent: false,
       },
     };
@@ -408,3 +421,33 @@ export async function getServerSideProps(ctx: {
     props: { key: url },
   };
 }
+
+type PositionCardProps = {
+  companySlug: String;
+  position: Position;
+};
+
+const PositionCard = ({ position, companySlug }: PositionCardProps) => {
+  return (
+    <Link
+      className="transition-ease-in-out group relative col-span-1 w-full cursor-pointer rounded-md bg-[#F7F8F7] p-1 shadow-sm transition-all hover:scale-[101%] hover:shadow-md"
+      href={`/dashboard/${companySlug}/${position._id}`}
+    >
+      <div className="bg-edenGreen-200 relative mb-2 flex h-56 w-full items-center rounded-md p-2">
+        {(!!position?.generalDetails?.yearlySalary?.min ||
+          position?.generalDetails?.yearlySalary?.min === 0) && (
+          <span className="text-edenGray-500 absolute left-2 top-4 text-sm">
+            ${position?.generalDetails?.yearlySalary.min / 1000 + "k"}
+            {position?.generalDetails?.yearlySalary.max
+              ? " - $" + position?.generalDetails.yearlySalary.max / 1000 + "k"
+              : ""}
+          </span>
+        )}
+        <h2>{position?.name}</h2>
+      </div>
+      <Button className="w-[90%] rounded-b-md" variant="secondary">
+        See opportunity
+      </Button>
+    </Link>
+  );
+};

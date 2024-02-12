@@ -1,81 +1,27 @@
-// import { UserContext } from "@eden/package-context";
-import { gql, useMutation } from "@apollo/client";
-import { UserContext } from "@eden/package-context";
-import { EmployeeTypeInput } from "@eden/package-graphql/generated";
-import {
-  BrandedSaasUserLayout,
-  Button,
-  EdenAiProcessingModal,
-  Modal,
-} from "@eden/package-ui";
-import { classNames, getCookieFromContext } from "@eden/package-ui/utils";
-import axios from "axios";
+import { classNames } from "@dynamic-labs/sdk-react-core";
+import { BrandedAppUserLayout, Button } from "@eden/package-ui";
 import { IncomingMessage, ServerResponse } from "http";
+import Link from "next/link";
 import { useRouter } from "next/router";
-import { useContext, useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
-// import { useContext } from "react";
-import { BiCheck, BiInfinite } from "react-icons/bi";
-import { BsCreditCard } from "react-icons/bs";
-import {
-  HiOutlineBuildingOffice,
-  HiOutlineBuildingOffice2,
-  HiOutlineBuildingStorefront,
-} from "react-icons/hi2";
-import { MdClose } from "react-icons/md";
-import { toast } from "react-toastify";
+import { useState } from "react";
+import { IoCheckmarkSharp } from "react-icons/io5";
 
 import { IS_PRODUCTION } from "../../../constants";
 import type { NextPageWithLayout } from "../../_app";
 
-const UPDATE_COMPANY = gql`
-  mutation ($fields: updateCompanyInput!) {
-    updateCompany(fields: $fields) {
-      _id
-      name
-      type
-      slug
-      description
-    }
-  }
-`;
-const ADD_EMPLOYEES_COMPANY = gql`
-  mutation ($fields: addEmployeesCompanyInput!) {
-    addEmployeesCompany(fields: $fields) {
-      _id
-      name
-      slug
-      employees {
-        typeT
-        user {
-          _id
-          discordName
-        }
-      }
-    }
-  }
-`;
-
 type PRODUCTS_TYPE = {
   name: string;
+  id: string;
   description: string;
-  icon: any;
   monthlyPrice: number;
   priceID: string;
   featured: boolean;
-  features: {
-    [key: string]: {
-      [key: string]: {
-        value: string | number | boolean;
-        text: string;
-      };
-    };
-  };
 }[];
 
 const PRODUCTS: PRODUCTS_TYPE = [
   {
-    name: "Startup",
+    name: "1 post",
+    id: "1post",
     description:
       "For those looking to build the future with likeminded people.",
     monthlyPrice: 249,
@@ -83,44 +29,10 @@ const PRODUCTS: PRODUCTS_TYPE = [
       ? "price_1NxUDfBxX85c6z0CTCpGb31x"
       : "price_1NnKzqBxX85c6z0CuUKA0uku",
     featured: false,
-    icon: <HiOutlineBuildingStorefront />,
-    features: {
-      access: {
-        magicJobPosts: { value: 2, text: "Magic job posts" },
-        outreachCredits: { value: 5, text: "Outreach credits" },
-        talentMatches: {
-          value: 10,
-          text: "AI-assisted high-precision talent matches",
-        },
-      },
-      curation: {
-        continuousLearning: {
-          value: false,
-          text: "Continuous learning from your talent preferences",
-        },
-        weeklyTalentPlaylists: {
-          value: false,
-          text: "Weekly talent discovery playlists curated for you by Eden & D_D talent stewards",
-        },
-        reputationGating: {
-          value: false,
-          text: "Reputation gating (coming soon) ",
-        },
-      },
-      exposure: {
-        jobBoard: {
-          value: false,
-          text: "A top-spot on our job board that gets 20.000 hits/month",
-        },
-        socials: {
-          value: false,
-          text: "Bi-weekly shoutouts on our socials w aggregated audience of 100.000 web3 enthusiasts & professionals",
-        },
-      },
-    },
   },
   {
-    name: "Scaleup",
+    name: "3 posts",
+    id: "3posts",
     description:
       "For those looking to build the future with likeminded people.",
     monthlyPrice: 499,
@@ -128,44 +40,10 @@ const PRODUCTS: PRODUCTS_TYPE = [
       ? "price_1NxUBRBxX85c6z0CgmukMjft"
       : "price_1NnKzqBxX85c6z0CuUKA0uku",
     featured: true,
-    icon: <HiOutlineBuildingOffice />,
-    features: {
-      access: {
-        magicJobPosts: { value: 5, text: "Magic job posts" },
-        outreachCredits: { value: 25, text: "Outreach credits" },
-        talentMatches: {
-          value: 100,
-          text: "AI-assisted high-precision talent matches",
-        },
-      },
-      curation: {
-        continuousLearning: {
-          value: true,
-          text: "Continuous learning from your talent preferences",
-        },
-        weeklyTalentPlaylists: {
-          value: true,
-          text: "Weekly talent discovery playlists curated for you by Eden & D_D talent stewards",
-        },
-        reputationGating: {
-          value: true,
-          text: "Reputation gating (coming soon) ",
-        },
-      },
-      exposure: {
-        jobBoard: {
-          value: true,
-          text: "A top-spot on our job board that gets 20.000 hits/month",
-        },
-        socials: {
-          value: true,
-          text: "Bi-weekly shoutouts on our socials w aggregated audience of 100.000 web3 enthusiasts & professionals",
-        },
-      },
-    },
   },
   {
-    name: "Head of platform @ VC",
+    name: "5 posts",
+    id: "5posts",
     description:
       "For those looking to build the future with likeminded people.",
     monthlyPrice: 999,
@@ -173,220 +51,285 @@ const PRODUCTS: PRODUCTS_TYPE = [
       ? "price_1NxUAHBxX85c6z0CwonUgMF5"
       : "price_1NnKzqBxX85c6z0CuUKA0uku",
     featured: false,
-    icon: <HiOutlineBuildingOffice2 />,
-    features: {
-      access: {
-        magicJobPosts: { value: 9999, text: "Magic job posts" },
-        outreachCredits: { value: 9999, text: "Outreach credits" },
-        talentMatches: {
-          value: 9999,
-          text: "AI-assisted high-precision talent matches",
-        },
+  },
+];
+
+const DDBenefits = [
+  {
+    title: "Bi-weekly Spotlight",
+    subtitle: "We'll spotlight your job on all our channels",
+    features: [
+      {
+        icon: null,
+        text: (
+          <span>
+            <b>20k+</b> discord members
+          </span>
+        ),
       },
-      curation: {
-        continuousLearning: {
-          value: true,
-          text: "Continuous learning from your talent preferences",
-        },
-        weeklyTalentPlaylists: {
-          value: true,
-          text: "Weekly talent discovery playlists curated for you by Eden & D_D talent stewards",
-        },
-        reputationGating: {
-          value: true,
-          text: "Reputation gating (coming soon) ",
-        },
+      {
+        icon: null,
+        text: (
+          <span>
+            <b>80k+</b> followers on X
+          </span>
+        ),
       },
-      exposure: {
-        jobBoard: {
-          value: true,
-          text: "A top-spot on our job board that gets 20.000 hits/month",
-        },
-        socials: {
-          value: true,
-          text: "Bi-weekly shoutouts on our socials w aggregated audience of 100.000 web3 enthusiasts & professionals",
-        },
+      {
+        icon: null,
+        text: (
+          <span>
+            <b>3k+</b> engaged newsletter readers
+          </span>
+        ),
       },
-    },
+    ],
+  },
+  {
+    title: "Intelligent Intro's",
+    subtitle: "Get relevant intros to our talent collective",
+    features: [
+      {
+        icon: null,
+        text: (
+          <span>
+            Members have previously worked at companies such as Members have
+            previously worked at companies such as <b>Polygon</b>, <b>Meta</b>&{" "}
+            <b>Google</b>
+          </span>
+        ),
+      },
+      {
+        icon: null,
+        text: (
+          <span>
+            Collective includes everyone from <b>solidity</b>,{" "}
+            <b>full-stack devs</b> & <b>data scientists</b> to{" "}
+            <b>product designers</b> & <b>managers</b>
+          </span>
+        ),
+      },
+    ],
+  },
+  {
+    title: "AI-powered vetting",
+    subtitle: "Get relevant intros to our talent collective",
+    features: [
+      {
+        icon: null,
+        text: (
+          <span>
+            Instantly see <b>relevant info per score topic</b>
+          </span>
+        ),
+      },
+      {
+        icon: null,
+        text: (
+          <span>
+            Dig into the <b>AI-interview transcripts</b> of applications for
+            similar roles
+          </span>
+        ),
+      },
+      {
+        icon: null,
+        text: (
+          <span>
+            Leverage our <b>dynamic scoring</b> algo with <b>bias aware</b>{" "}
+            tooling
+          </span>
+        ),
+      },
+    ],
+  },
+  {
+    title: "Farcaster Frames",
+    subtitle: "Use our intelligent frame & brand to grow reach",
+    features: [
+      {
+        icon: null,
+        text: (
+          <span>
+            Leverage our <b>instant interview frame</b>
+          </span>
+        ),
+      },
+      {
+        icon: null,
+        text: (
+          <span>
+            Tap into the network of the network with our{" "}
+            <b>talent vouching frame</b>
+          </span>
+        ),
+      },
+      {
+        icon: null,
+        text: (
+          <span>
+            Engage passive talent with <b>nominate frame</b>
+          </span>
+        ),
+      },
+    ],
+  },
+  {
+    title: "Community referrals",
+    subtitle: "Tap into the network of our network",
+    features: [
+      {
+        icon: null,
+        text: (
+          <span>
+            Leverage our <b>multi-player referral mechanism</b> to activate the
+            network of our network to help you find the right talent.
+          </span>
+        ),
+      },
+    ],
   },
 ];
 
 const SubscribePage: NextPageWithLayout = () => {
-  // const router = useRouter();
+  const router = useRouter();
+  const communityID = router.query.community;
+  const [selectedPrice, setSelectedPrice] = useState<string | null>(null);
 
-  // const { currentUser } = useContext(UserContext);
-  const [openCreateCompanyId, setOpenCreateCompanyId] = useState<String | null>(
-    null
-  );
+  const getLink = (): string => {
+    let url = `/hm-signup?product=${
+      PRODUCTS.find((_product) => _product.id === selectedPrice)?.priceID
+    }`;
 
-  // eslint-disable-next-line no-unused-vars
-  const handleSubscribeClick = async (slug: String) => {
-    const origin =
-      typeof window !== "undefined" && window.location.origin
-        ? window.location.origin
-        : "";
+    if (communityID) {
+      const communityIDs = router.query.community
+        ? [router?.query.community].flat(1)
+        : [];
 
-    const redirect = await axios.post(
-      `${process.env.NEXT_PUBLIC_AUTH_URL}/stripe/create-checkout-session` as string,
-      {
-        // eslint-disable-next-line camelcase
-        price_id: openCreateCompanyId,
-        // eslint-disable-next-line camelcase
-        success_url: `${origin}/dashboard/${slug}`,
-        // eslint-disable-next-line camelcase
-        cancel_url: `${origin}/dashboard/${slug}/subscription`,
-        companySlug: slug,
-      },
-      {
-        headers: {
-          "Access-Control-Allow-Origin": `*`,
-        },
-      }
-    );
+      url = url + `&community=${communityIDs.join(",")}`;
+    }
 
-    if (origin && redirect.data) window.location.assign(redirect.data);
+    return url;
   };
 
   return (
     <>
-      <div className="flex h-screen items-center justify-center">
-        <div className="grid max-w-6xl grid-cols-3 gap-4">
-          {PRODUCTS.map((product, index) => (
-            <div
-              key={index}
-              className={classNames(
-                "relative col-span-1 rounded-md p-4 transition-all hover:scale-[1.01]",
-                product.featured ? "bg-edenPink-300" : "bg-edenPink-100"
-              )}
-            >
-              <div
-                className={classNames(
-                  "text-edenGreen-600 mx-auto mb-1 flex h-8 w-8 items-center justify-center rounded-md text-xl",
-                  product.featured ? "bg-edenPink-100" : "bg-edenPink-300"
-                )}
-              >
-                {product.icon}
-              </div>
-              <h1 className="text-edenGreen-600 text-center">{product.name}</h1>
-              <p className="mb-4 text-center text-sm">{product.description}</p>
-              <div
-                className={classNames(
-                  "-mx-4 mb-4 w-[calc(100%+2rem)] py-1",
-                  product.featured ? "bg-edenGreen-500" : "bg-edenPink-300"
-                )}
-              >
-                <p className="text-center text-xs">
-                  <span
-                    className={classNames(
-                      "font-Moret inline text-2xl font-semibold",
-                      product.featured ? "text-white" : "text-edenGreen-600"
-                    )}
-                  >
-                    ${product.monthlyPrice}
-                  </span>{" "}
-                  <span
-                    className={classNames(
-                      product.featured ? "text-white" : "text-edenGray-700"
-                    )}
-                  >
-                    /month
-                  </span>
-                </p>
-              </div>
-              <section className="mb-4">
-                <h3 className="text-edenGreen-600 mb-2">Access</h3>
-                <ul>
-                  {Object.keys(product.features.access).map(
-                    (featName: string, index) => (
-                      <li
-                        key={index}
-                        className="relative mb-2 pl-6 pr-10 text-xs"
-                      >
-                        <div className="bg-edenGreen-500 text-edenPink-300 absolute left-0 top-px flex h-4 w-4 items-center justify-center rounded-full pr-px">
-                          <BiCheck className="" size={"1.4rem"} />
-                        </div>
-                        {product.features.access[featName].text}
-                        <span className="absolute right-0 top-0">
-                          {product.features.access[featName].value === 9999 ? (
-                            <BiInfinite />
-                          ) : (
-                            product.features.access[featName].value
-                          )}
-                        </span>
-                      </li>
-                    )
+      <div className="mx-auto w-full max-w-screen-md pb-16">
+        <h1 className="mb-4 text-center">Find pioneering web3 talent, fast.</h1>
+        <h4 className="text-edenGray-700 mb-8 text-center font-normal">
+          Gain exposure to a network of 100.000+ professionals interested in
+          building in web3 - ranging from senior web3 developers to battle
+          tested product designers.
+        </h4>
+
+        <section className="mx-auto mb-8 w-full max-w-screen-sm">
+          <div className="mb-8">
+            {PRODUCTS.map((_product, index) => {
+              const _selected = selectedPrice === _product.id;
+
+              return (
+                <div
+                  className={classNames(
+                    _selected
+                      ? "border-edenGreen-500 border-2"
+                      : "border-edenPink-400",
+                    "bg-edenPink-100 custom-radio border first:rounded-t-2xl last:rounded-b-2xl"
                   )}
-                </ul>
-              </section>
-              <section className="mb-4">
-                <h3 className="text-edenGreen-600 mb-2">Curation</h3>
-                <ul>
-                  {Object.keys(product.features.curation).map(
-                    (featName: string, index) => (
-                      <li
-                        key={index}
-                        className="relative mb-2 pl-6 pr-10 text-xs"
-                      >
-                        {product.features.curation[featName].value ? (
-                          <div className="bg-edenGreen-500 text-edenPink-300 absolute left-0 top-px flex h-4 w-4 items-center justify-center rounded-full pr-px">
-                            <BiCheck className="" size={"1.4rem"} />
-                          </div>
-                        ) : (
-                          <MdClose className="absolute left-0 top-1" />
-                        )}
-                        {product.features.curation[featName].text}
-                      </li>
-                    )
-                  )}
-                </ul>
-              </section>
-              <section className="mb-4">
-                <h3 className="text-edenGreen-600 mb-2">Exposure</h3>
-                <ul>
-                  {Object.keys(product.features.exposure).map(
-                    (featName: string, index) => (
-                      <li
-                        key={index}
-                        className="relative mb-2 pl-6 pr-10 text-xs"
-                      >
-                        {product.features.exposure[featName].value ? (
-                          <div className="bg-edenGreen-500 text-edenPink-300 absolute left-0 top-px flex h-4 w-4 items-center justify-center rounded-full pr-px">
-                            <BiCheck className="" size={"1.4rem"} />
-                          </div>
-                        ) : (
-                          <MdClose className="absolute left-0 top-1" />
-                        )}
-                        {product.features.exposure[featName].text}
-                      </li>
-                    )
-                  )}
-                </ul>
-              </section>
-              <div className="w-full pt-2">
-                <Button
-                  className="mx-auto block"
-                  variant="secondary"
-                  onClick={() => setOpenCreateCompanyId(product.priceID)}
+                  key={index}
                 >
-                  Subscribe
-                </Button>
+                  <input
+                    type="radio"
+                    id={_product.id}
+                    name="product"
+                    value={_product.name}
+                    className="peer hidden"
+                    onChange={(e) => {
+                      if (e.currentTarget.checked) {
+                        setSelectedPrice(_product.id);
+                      }
+                    }}
+                  />
+
+                  <label
+                    htmlFor={_product.id}
+                    className="flex w-full cursor-pointer items-center px-5 py-4"
+                  >
+                    {_selected ? (
+                      <div className="bg-edenGreen-600 mr-4 flex h-8 w-8 items-center justify-center rounded-full">
+                        <IoCheckmarkSharp
+                          color="#FFFFFF"
+                          size={20}
+                          className="block"
+                        />
+                      </div>
+                    ) : (
+                      <div className="bg-edenGray-500 mr-4 block h-8 w-8 rounded-full"></div>
+                    )}
+                    <h3 className="font-Moret text-edenGreen-600">
+                      {_product.name}
+                    </h3>
+                    <div className="ml-auto flex flex-col items-center">
+                      <span className="font-Moret text-edenGreen-600 text-lg font-bold">
+                        ${_product.monthlyPrice}
+                      </span>
+                      <span className="text-edenGray-500">per post/month</span>
+                    </div>
+                  </label>
+                </div>
+              );
+            })}
+          </div>
+          <div className="text-center">
+            <Link href={getLink()} aria-disabled={!selectedPrice}>
+              <Button className="mx-auto px-8" disabled={!selectedPrice}>
+                Post Now
+              </Button>
+            </Link>
+          </div>
+        </section>
+
+        <h2 className="mb-4 text-center">
+          {"What's included in your Developer DAO magic job-post?"}
+        </h2>
+        <section className="scrollbar-hide mb-8 w-full overflow-x-scroll px-2">
+          <div className="w-fit overflow-x-scroll whitespace-nowrap pb-1">
+            {DDBenefits.map((_benefit, index) => (
+              <div
+                key={index}
+                className="bg-edenGreen-200 relative mr-4 inline-block w-80 whitespace-normal rounded-lg p-3 pl-4 align-top shadow-md"
+              >
+                <h3>{_benefit.title}</h3>
+                <p className="text-edenGray-700 mb-4">{_benefit.subtitle}</p>
+                <ul className="text-edenGray-700 list-disc pl-2 text-sm">
+                  {_benefit.features.map((_feat, index) => (
+                    <li className="mb-2" key={"li-" + index}>
+                      {_feat.text}
+                    </li>
+                  ))}
+                </ul>
               </div>
-            </div>
-          ))}
-        </div>
+            ))}
+          </div>
+        </section>
+
+        <section className="flex items-center justify-center">
+          <p>Got questions? Schedule a call!</p>
+          <Link
+            href={"https://calendly.com/tomhusson/eden-user-feedback"}
+            target="_blank"
+          >
+            <Button className="ml-4" size="sm">
+              Schedule a call
+            </Button>
+          </Link>
+        </section>
       </div>
-      <Modal
-        open={!!openCreateCompanyId}
-        onClose={() => setOpenCreateCompanyId(null)}
-      >
-        <CreateCompany onSubmit={handleSubscribeClick} />
-      </Modal>
     </>
   );
 };
 
 SubscribePage.getLayout = (page) => (
-  <BrandedSaasUserLayout>{page}</BrandedSaasUserLayout>
+  <BrandedAppUserLayout>{page}</BrandedAppUserLayout>
 );
 
 export async function getServerSideProps(ctx: {
@@ -394,24 +337,7 @@ export async function getServerSideProps(ctx: {
   res: ServerResponse;
   query: { slug: string };
 }) {
-  const session = getCookieFromContext(ctx);
-
   const url = ctx.req.url;
-
-  if (!session) {
-    return {
-      redirect: {
-        destination: `/?redirect=${url}`,
-        permanent: false,
-      },
-    };
-  }
-
-  if (session.accessLevel === 5 && session._id !== "113589215262737174259") {
-    return {
-      props: { key: url },
-    };
-  }
 
   return {
     props: { key: url },
@@ -419,165 +345,3 @@ export async function getServerSideProps(ctx: {
 }
 
 export default SubscribePage;
-
-interface ICreateCompany {
-  // eslint-disable-next-line no-unused-vars
-  onSubmit: (slug: String) => {};
-}
-
-const CreateCompany = ({ onSubmit }: ICreateCompany) => {
-  const router = useRouter();
-  const communityIDs = router.query.community
-    ? [router.query.community].flat(1)
-    : [];
-
-  // eslint-disable-next-line no-unused-vars
-  const [formData, setFormData] = useState<FormData | null>(null);
-  const [submitting, setSubmitting] = useState<boolean>(false);
-  const { register, handleSubmit } = useForm();
-  const { currentUser } = useContext(UserContext);
-
-  const [addEmployeesCompany] = useMutation(ADD_EMPLOYEES_COMPANY, {
-    onCompleted(data) {
-      if (data.addEmployeesCompany) {
-        onSubmit(data.addEmployeesCompany.slug);
-      }
-    },
-    onError() {
-      setSubmitting(false);
-    },
-  });
-
-  const [updateCompany, { data: updateCompanyData }] = useMutation(
-    UPDATE_COMPANY,
-    {
-      // eslint-disable-next-line no-unused-vars
-      onCompleted({ data }) {
-        console.log("completed add company");
-      },
-      onError(err) {
-        toast.error(`An error occurred while submitting.\n${err.message}`);
-        setSubmitting(false);
-      },
-    }
-  );
-
-  useEffect(() => {
-    if (updateCompanyData)
-      addEmployeesCompany({
-        variables: {
-          fields: {
-            companyID: updateCompanyData.updateCompany._id,
-            employees: [
-              { typeT: "ADMIN", status: "ACTIVE", userID: currentUser?._id },
-            ] as EmployeeTypeInput[],
-          },
-        },
-      });
-  }, [updateCompanyData]);
-
-  const submitHandler = (data: any) => {
-    setFormData(data);
-    // console.log("data from handler:", data);
-    setSubmitting(true);
-    updateCompany({
-      variables: {
-        fields: {
-          name: data.companyName,
-          slug: toKebabCase(data.companyName),
-          type: "COMPANY",
-          description: data.companyDescription,
-          communitiesSubscribedID: communityIDs,
-        },
-      },
-    });
-  };
-
-  return (
-    <>
-      <div className="flex w-full items-center justify-center">
-        <form
-          className="w-full max-w-2xl"
-          onSubmit={handleSubmit(submitHandler)}
-        >
-          <section className="mb-4 inline-block w-full space-y-6 p-4 pr-12">
-            <h2 className="text-edenGreen-600">
-              {"Let's get your company profile set up!"}
-            </h2>
-            <p>
-              {
-                "This will give you access to your magic job-board's dashboard, where all your candidates will show up."
-              }
-            </p>
-            <div className="space-y-1">
-              <p className="text-xs">Company Name</p>
-              <div className="border-EdenGray-100 flex w-full items-center rounded-md border bg-white text-xs">
-                <input
-                  type="text"
-                  id="Name"
-                  className="h-[34px] w-full bg-transparent p-2"
-                  required
-                  {...register("companyName")}
-                />
-              </div>
-            </div>
-
-            {/* <div className="space-y-1">
-              <p className=" text-xs">Company Abbreviation</p>
-              <div>
-                <div className="flex flex-col">
-                  <input
-                    type="text"
-                    id="Abbreviation"
-                    className="border-EdenGray-100 flex h-[34px] w-full items-center rounded-md  border bg-transparent bg-white p-2 text-xs"
-                    required
-                    {...register("companyAbbreviation", {
-                      pattern: /^[a-z0-9-]+$/,
-                    })}
-                  />
-                  {errors.companyAbbreviation && (
-                    <span className="ml-1 text-sm font-bold text-red-400">
-                      Invalid Input: Please ensure your input contains only
-                      lowercase letters (a-z), numbers (0-9), and the hyphen (-)
-                      character.
-                    </span>
-                  )}
-                </div>
-              </div>
-            </div> */}
-
-            <div className="space-y-1">
-              <p className="text-xs">Description of the Company</p>
-              <div>
-                <textarea
-                  className="border-EdenGray-100 w-full border p-2 text-xs"
-                  rows={6}
-                  id="Description"
-                  required
-                  {...register("companyDescription")}
-                />
-              </div>
-            </div>
-
-            <Button type="submit" variant="secondary" className="mx-auto block">
-              Checkout
-              <BsCreditCard size={16} className="mb-px ml-2 inline" />
-            </Button>
-          </section>
-        </form>
-        <EdenAiProcessingModal
-          title="Creating your company"
-          open={submitting}
-        />
-      </div>
-    </>
-  );
-};
-
-function toKebabCase(inputString: string): string {
-  // Replace all non-alphanumeric characters with hyphens
-  const kebabCaseString = inputString.replace(/[^a-zA-Z0-9]/g, "-");
-
-  // Convert the string to lowercase
-  return kebabCaseString.toLowerCase();
-}
