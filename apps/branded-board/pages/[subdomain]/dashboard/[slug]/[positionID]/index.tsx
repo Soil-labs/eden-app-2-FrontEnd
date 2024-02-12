@@ -7,6 +7,7 @@ import {
 } from "@eden/package-graphql";
 import {
   CandidateType,
+  Maybe,
   PositionStatus,
   PrioritiesType,
   TalentListType,
@@ -944,7 +945,9 @@ const PositionCRM: NextPageWithLayout = () => {
     // handleSaveNewTalentList();
   };
 
-  const handleAddCandidatesToList = async (listID: string) => {
+  const handleAddCandidatesToList = async (
+    listID: Maybe<string> | undefined
+  ) => {
     setAddToListOpen(false);
 
     const _prevTalent = findPositionData?.findPosition?.talentList

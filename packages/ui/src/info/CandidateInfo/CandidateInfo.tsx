@@ -13,13 +13,9 @@ import {
   CandidateTypeSkillMatch,
   EdenAiLetter,
   EdenChatTab,
-  GraphTab,
   InfoTab,
   ListModeEnum,
   LongText,
-  MatchTab,
-  MeetingNotes,
-  ReportNotes,
 } from "@eden/package-ui";
 import { Tab } from "@headlessui/react";
 import { useState } from "react";
@@ -55,7 +51,7 @@ export interface ICandidateInfoProps {
   handleCreateNewList?: () => void;
   talentListsAvailables?: TalentListType[];
   // eslint-disable-next-line no-unused-vars
-  handleAddCandidatesToList?: (listID: string) => Promise<void>;
+  handleAddCandidatesToList: (listID: string) => Promise<void>;
   // eslint-disable-next-line no-unused-vars
   handleChkSelection?: (candidate: any) => void;
   listMode?: ListModeEnum;
@@ -68,7 +64,7 @@ function classNames(...classes: any[]) {
 
 export const CandidateInfo = ({
   memberID,
-  summaryQuestions,
+  // summaryQuestions,
   mostRelevantMemberNode,
   candidate,
   onClose,
@@ -358,13 +354,13 @@ export const CandidateInfo = ({
           }}
           onSubmit={() => {
             handleAddCandidatesToList(
-              letterType === "rejection"
+              (letterType === "rejection"
                 ? talentListsAvailables?.find(
                     (list) => list.name === "Rejected"
                   )?._id
                 : talentListsAvailables?.find(
                     (list) => list.name === "Accepted"
-                  )?._id
+                  )?._id) || ""
             );
           }}
         />

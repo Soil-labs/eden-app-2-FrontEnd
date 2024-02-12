@@ -5,7 +5,11 @@ import {
   MATCH_NODES_MEMBERS_AI4,
   UPDATE_TALENT_LIST_WITH_TALENT,
 } from "@eden/package-graphql";
-import { CandidateType, TalentListType } from "@eden/package-graphql/generated";
+import {
+  CandidateType,
+  Maybe,
+  TalentListType,
+} from "@eden/package-graphql/generated";
 import {
   ApprovedCandidatesList,
   AppUserLayoutNew,
@@ -753,7 +757,9 @@ const PositionCRM: NextPageWithLayout = () => {
     setAddToListOpen(false);
   };
 
-  const handleAddCandidatesToList = async (listID: string) => {
+  const handleAddCandidatesToList = async (
+    listID: Maybe<string> | undefined
+  ) => {
     setAddToListOpen(false);
 
     const _prevTalent = findPositionData?.findPosition?.talentList
