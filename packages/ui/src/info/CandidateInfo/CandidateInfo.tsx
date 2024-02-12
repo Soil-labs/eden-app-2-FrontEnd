@@ -51,7 +51,7 @@ export interface ICandidateInfoProps {
   handleCreateNewList?: () => void;
   talentListsAvailables?: TalentListType[];
   // eslint-disable-next-line no-unused-vars
-  handleAddCandidatesToList: (listID: string) => Promise<void>;
+  handleAddCandidatesToList?: (listID: string) => Promise<void>;
   // eslint-disable-next-line no-unused-vars
   handleChkSelection?: (candidate: any) => void;
   listMode?: ListModeEnum;
@@ -353,15 +353,16 @@ export const CandidateInfo = ({
             setIsOpen(false);
           }}
           onSubmit={() => {
-            handleAddCandidatesToList(
-              (letterType === "rejection"
-                ? talentListsAvailables?.find(
-                    (list) => list.name === "Rejected"
-                  )?._id
-                : talentListsAvailables?.find(
-                    (list) => list.name === "Accepted"
-                  )?._id) || ""
-            );
+            if (handleAddCandidatesToList)
+              handleAddCandidatesToList!(
+                (letterType === "rejection"
+                  ? talentListsAvailables?.find(
+                      (list) => list.name === "Rejected"
+                    )?._id
+                  : talentListsAvailables?.find(
+                      (list) => list.name === "Accepted"
+                    )?._id) || ""
+              );
           }}
         />
       )}

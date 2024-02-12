@@ -1410,15 +1410,16 @@ const PositionCRM: NextPageWithLayout = () => {
             setIsOpen(false);
           }}
           onSubmit={() => {
-            handleAddCandidatesToList!(
-              (letterType === "rejection"
-                ? talentListsAvailables?.find(
-                    (list) => list.name === "Rejected"
-                  )?._id
-                : talentListsAvailables?.find(
-                    (list) => list.name === "Accepted"
-                  )?._id)!
-            );
+            if (handleAddCandidatesToList)
+              handleAddCandidatesToList!(
+                (letterType === "rejection"
+                  ? talentListsAvailables?.find(
+                      (list) => list.name === "Rejected"
+                    )?._id
+                  : talentListsAvailables?.find(
+                      (list) => list.name === "Accepted"
+                    )?._id)!
+              );
           }}
         />
       )}
