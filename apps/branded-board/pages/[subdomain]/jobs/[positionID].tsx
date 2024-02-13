@@ -574,13 +574,13 @@ const PositionPage: NextPageWithLayout = ({
                   <p className="text-xs !text-white">
                     {!submitted ? (
                       <>
-                        <a
-                          href="#"
+                        <Link
+                          href={`/interview/${position?._id}`}
                           onClick={() => handleInterviewNav()}
                           className="cursor-pointer underline"
                         >
                           Upload your resume
-                        </a>{" "}
+                        </Link>{" "}
                         to unlock
                       </>
                     ) : typeof matchstimate !== "number" ? (
