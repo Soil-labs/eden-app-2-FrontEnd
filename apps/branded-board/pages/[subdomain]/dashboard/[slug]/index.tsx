@@ -282,12 +282,16 @@ const HomePage: NextPageWithLayout = () => {
       />
       {!companyLoading && (
         <div className="mx-auto max-w-4xl pt-20 text-center">
-          <h1 className="text-edenGreen-500 mb-4">Welcome to Eden</h1>
-          <p className="mb-8">
-            You have no open opportunities yet!
-            <br />
-            Start creating your first opportunity here:
-          </p>
+          <h1 className="text-edenGreen-500 font-clash-display mb-4 font-medium">
+            Welcome to Eden
+          </h1>
+          {company?.positions && company?.positions.length === 0 ? (
+            <p className="mb-8">
+              You have no open opportunities yet!
+              <br />
+              Start creating your first opportunity here:
+            </p>
+          ) : null}
           <div className="grid w-full grid-cols-1 gap-x-6 gap-y-4 md:gap-y-8 lg:grid-cols-3">
             <div className="transition-ease-in-out group relative col-span-1 w-full cursor-pointer rounded-md bg-[#F7F8F7] p-1 shadow-sm transition-all hover:scale-[101%] hover:shadow-md">
               <span className="text-edenGray-500 absolute left-4 top-4 z-10 text-lg">

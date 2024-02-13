@@ -53,9 +53,9 @@ export default async function handler(
   res: NextApiResponse
 ) {
   try {
+    const host = req.headers.host;
     const subdomain =
-      process.env.NEXT_PUBLIC_FORCE_SLUG_LOCALHOST ||
-      (req.query.subdomain as string);
+      process.env.NEXT_PUBLIC_FORCE_SLUG_LOCALHOST || host?.split(".")[0];
 
     if (!subdomain) {
       return res.status(400).json({ error: "Subdomain is required" });
