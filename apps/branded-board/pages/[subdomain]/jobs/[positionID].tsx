@@ -1330,8 +1330,6 @@ export async function getServerSideProps(ctx: GetServerSidePropsContext) {
     },
   });
 
-  console.log("======", data.findPosition.generalDetails.officePolicy);
-
   const session = getCookieFromContext(ctx);
   const userApplied = data.findPosition.candidates.find(
     (_cand: CandidateType) => _cand.user?._id === session?._id
@@ -1405,12 +1403,7 @@ export async function getServerSideProps(ctx: GetServerSidePropsContext) {
   // if company does not exist, redirect to create-company
   //@TODO maybe we need a 404 page for this
   if (res.status === 404) {
-    return {
-      redirect: {
-        destination: `/create-company`,
-        permanent: false,
-      },
-    };
+    return { notFound: true };
   }
 
   const _companyAuth = await res.json();

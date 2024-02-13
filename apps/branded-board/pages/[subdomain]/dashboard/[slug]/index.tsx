@@ -399,12 +399,7 @@ export async function getServerSideProps(ctx: {
   }
 
   if (res.status === 404) {
-    return {
-      redirect: {
-        destination: `/`,
-        permanent: false,
-      },
-    };
+    return { notFound: true };
   }
 
   const _companyAuth = await res.json();

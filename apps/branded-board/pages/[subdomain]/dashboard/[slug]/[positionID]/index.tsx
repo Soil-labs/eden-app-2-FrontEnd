@@ -2135,12 +2135,7 @@ export async function getServerSideProps(ctx: {
   }
 
   if (res.status === 404) {
-    return {
-      redirect: {
-        destination: `/create-company`,
-        permanent: false,
-      },
-    };
+    return { notFound: true };
   }
 
   const _companyAuth = await res.json();

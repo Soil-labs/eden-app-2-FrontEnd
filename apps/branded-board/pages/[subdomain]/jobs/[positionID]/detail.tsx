@@ -704,12 +704,7 @@ export async function getServerSideProps(ctx: GetServerSidePropsContext) {
   // if company does not exist, redirect to create-company
   //@TODO maybe we need a 404 page for this
   if (res.status === 404) {
-    return {
-      redirect: {
-        destination: `/create-company`,
-        permanent: false,
-      },
-    };
+    return { notFound: true };
   }
 
   const _companyAuth = await res.json();
