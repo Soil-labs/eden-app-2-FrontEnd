@@ -137,8 +137,8 @@ const CompanySetup: NextPageWithLayout = () => {
         },
       });
     },
-    onError() {
-      toast.error("An error occurred while submitting");
+    onError(error) {
+      toast.error("An error occurred while submitting. " + error?.message);
       setSubmitting(false);
     },
   });
@@ -223,7 +223,7 @@ const CompanySetup: NextPageWithLayout = () => {
         // eslint-disable-next-line camelcase
         success_url: `${origin}/dashboard/${slug}`,
         // eslint-disable-next-line camelcase
-        cancel_url: `${origin}/dashboard/subscription/${slug}`,
+        cancel_url: origin,
         companySlug: slug,
       },
       {
