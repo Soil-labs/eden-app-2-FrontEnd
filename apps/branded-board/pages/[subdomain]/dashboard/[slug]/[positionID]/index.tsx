@@ -1011,7 +1011,7 @@ const PositionCRM: NextPageWithLayout = () => {
 
   const handleCopyJobLink = () => {
     // const url = window.location.href;
-    const url = `${window.location.origin}/${company?.slug}/jobs/${positionID}`;
+    const url = `${window.location.origin}/jobs/${positionID}`;
 
     navigator.clipboard.writeText(url);
     toast.success("Job link copied!");
@@ -1317,7 +1317,7 @@ const PositionCRM: NextPageWithLayout = () => {
                 <li
                   className="text-edenGray-700 hover:bg-edenGreen-100 border-edenGray-100 cursor-pointer border-b px-4 py-1 text-sm"
                   onClick={() => {
-                    router.push(`/${slug}/jobs/${positionID}?edit=true`);
+                    router.push(`/jobs/${positionID}?edit=true`);
                   }}
                 >
                   <BsFillGearFill size={16} className="mb-1 mr-1 inline" />
@@ -1327,7 +1327,7 @@ const PositionCRM: NextPageWithLayout = () => {
                   className="text-edenGray-700 hover:bg-edenGreen-100 border-edenGray-100 cursor-pointer border-b px-4 py-1 text-sm"
                   onClick={() => {
                     router.push(
-                      `/${slug}/dashboard/${positionID}/train-eden-ai`
+                      `/dashboard/${slug}/${positionID}/train-eden-ai`
                     );
                   }}
                 >

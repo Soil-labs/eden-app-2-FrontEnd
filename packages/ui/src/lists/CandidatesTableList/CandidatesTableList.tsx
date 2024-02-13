@@ -150,7 +150,7 @@ export const CandidatesTableList: FC<CandidatesTableListProps> = ({
     return grade;
   };
 
-  const interviewLink = `https://www.edenprotocol.app/interview/${positionID}`;
+  const interviewLink = `${window?.location?.origin}/interview/${positionID}`;
 
   return (
     <section className="bg-bgColor w-full overflow-hidden rounded-tl-md rounded-tr-md">
