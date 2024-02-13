@@ -151,7 +151,7 @@ const HomePage: NextPageWithLayout = () => {
 
   useAuthGate();
 
-  const { company, getCompanyFunc } = useContext(CompanyContext);
+  const { getCompanyFunc } = useContext(CompanyContext);
   const [companyLoading, setCompanyLoading] = useState(true);
   const [updatePositionLoading, setUpdatePositionLoading] =
     useState<boolean>(false);
@@ -176,7 +176,7 @@ const HomePage: NextPageWithLayout = () => {
     onCompleted(autoUpdatePositionData) {
       getCompanyFunc();
       router.push(
-        `/${company?.slug}/jobs/${autoUpdatePositionData.autoUpdatePositionCompInformation_V2._id}?edit=true`
+        `/jobs/${autoUpdatePositionData.autoUpdatePositionCompInformation_V2._id}?edit=true`
       );
     },
     onError() {

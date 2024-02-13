@@ -69,18 +69,14 @@ const JobsPage: NextPageWithLayout = ({
 
       {/* -------- Banner -------- */}
       <section className="mx-auto mb-8 max-w-screen-xl px-2 md:px-8">
-        <div className="relative mb-4 w-full rounded-lg bg-black bg-[url('/banner-job-board-mobile.png')] bg-cover bg-center px-4 pb-36 pt-8 md:h-96 md:bg-[url('/banner-job-board.png')] md:px-12 md:pb-2 md:pt-4">
+        <div className="relative mb-4 w-full rounded-xl bg-black bg-[url('/banner-job-board-mobile.png')] bg-cover bg-center px-4 pb-36 pt-8 md:h-96 md:bg-[url('/banner-job-board.png')] md:px-12 md:pb-2 md:pt-4">
           {/* company image */}
           <div className="">
             <Image
               width="72"
               height="72"
-              className="mx-auto mx-auto rounded-lg"
-              src={`${
-                company?.imageUrl
-                  ? company?.imageUrl
-                  : "/default-company-image.svg"
-              }`}
+              className="mr-auto rounded-lg md:mx-auto"
+              src={"/banner-job-board-logo.png"}
               alt={`${company?.name} company image`}
             />
           </div>

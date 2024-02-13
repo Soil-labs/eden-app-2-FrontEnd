@@ -20,7 +20,6 @@ import {
   Avatar,
   Button,
   // CandidateInfo,
-  CandidatesTableList,
   EdenIconExclamation,
   EdenTooltip,
   ListModeEnum,
@@ -44,6 +43,13 @@ import { IoMdAddCircle, IoMdRemoveCircle } from "react-icons/io";
 import { MdCompare } from "react-icons/md";
 import { toast } from "react-toastify";
 import ReactTooltip from "react-tooltip";
+
+const CandidatesTableList = dynamic(
+  () => import(`@eden/package-ui`).then((module) => module.CandidatesTableList),
+  {
+    ssr: false,
+  }
+);
 
 const CandidateInfo = dynamic(
   () =>

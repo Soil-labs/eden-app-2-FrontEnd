@@ -1,16 +1,19 @@
 import { useQuery } from "@apollo/client";
 import { FIND_POSITION_LIGHT, FIND_TALENT_LIST } from "@eden/package-graphql";
 import { CandidateType, TalentListType } from "@eden/package-graphql/generated";
-import {
-  CandidateInfo,
-  CandidatesTableList,
-  ListModeEnum,
-  Question,
-} from "@eden/package-ui";
+import { CandidateInfo, ListModeEnum, Question } from "@eden/package-ui";
+import dynamic from "next/dynamic";
 import { useRouter } from "next/router";
 import React, { useState } from "react";
 
 import { NextPageWithLayout } from "../_app";
+
+const CandidatesTableList = dynamic(
+  () => import(`@eden/package-ui`).then((module) => module.CandidatesTableList),
+  {
+    ssr: false,
+  }
+);
 
 function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(" ");
@@ -55,8 +58,9 @@ const TalentListPublicPage: NextPageWithLayout = () => {
   // const [nodeIDsPosition, setNodeIDsPosition] = useState<string[]>([]);
 
   const [selectedUserId, setSelectedUserId] = useState<string | null>(null);
-  const [selectedUserScore, setSelectedUserScore] =
-    useState<number | null>(null);
+  const [selectedUserScore, setSelectedUserScore] = useState<number | null>(
+    null
+  );
   const [selectedUserSummaryQuestions, setSelectedUserSummaryQuestions] =
     useState<any[]>([]);
 
