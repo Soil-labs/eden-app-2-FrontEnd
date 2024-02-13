@@ -44,6 +44,11 @@ const getSubdomainUrls = async (subdomain: string) => {
 
   return [
     { url: "/jobs", changefreq: "daily", priority: 1 },
+    {
+      url: "/pricing?community=64da1c72e48f083ff46500fd",
+      changefreq: "daily",
+      priority: 0.5,
+    },
     ...positionRoutes,
   ];
 };

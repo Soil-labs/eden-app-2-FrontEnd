@@ -81,6 +81,9 @@ export const SEOPosition: FC<SEOPositionProps> = ({
 
   return (
     <Head>
+      <title>{appTitle}</title>
+      <meta name="description" content={appDescription} />
+
       <meta property="og:site_name" content={`Eden protocol`} />
       <meta property="og:title" content={appTitle} />
       <meta property="og:description" content={appDescription} />
