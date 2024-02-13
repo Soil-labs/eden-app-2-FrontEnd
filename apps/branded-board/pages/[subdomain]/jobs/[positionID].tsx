@@ -1247,6 +1247,14 @@ const client = new ApolloClient({
     credentials: "same-origin",
   }),
   cache: new InMemoryCache({ resultCaching: false }),
+  defaultOptions: {
+    watchQuery: {
+      fetchPolicy: "no-cache",
+    },
+    query: {
+      fetchPolicy: "no-cache",
+    },
+  },
 });
 
 export async function getServerSideProps(ctx: GetServerSidePropsContext) {
@@ -1318,9 +1326,11 @@ export async function getServerSideProps(ctx: GetServerSidePropsContext) {
         _id: positionID,
       },
       ssr: true,
-      cache: "no-cache",
+      fetchPolicy: "no-cache",
     },
   });
+
+  console.log("======", data.findPosition.generalDetails.officePolicy);
 
   const session = getCookieFromContext(ctx);
   const userApplied = data.findPosition.candidates.find(
