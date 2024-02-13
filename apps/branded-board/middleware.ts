@@ -26,7 +26,7 @@ export async function middleware(req: NextRequest) {
   // Clone the URL
   const url = req.nextUrl.clone();
 
-  console.log("middleware.ts", url.pathname, req.nextUrl.pathname);
+  // console.log("middleware.ts", url.pathname, req.nextUrl.pathname);
 
   // Skip public files
   if (PUBLIC_FILE.test(url.pathname) || url.pathname.includes("_next")) return;
@@ -36,7 +36,7 @@ export async function middleware(req: NextRequest) {
   }
 
   if (url.pathname.includes("robots.txt")) {
-    console.log("robots.txt", url.pathname);
+    // console.log("robots.txt", url.pathname);
     return;
   }
 

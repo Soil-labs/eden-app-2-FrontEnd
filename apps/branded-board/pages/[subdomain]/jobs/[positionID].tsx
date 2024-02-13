@@ -574,13 +574,13 @@ const PositionPage: NextPageWithLayout = ({
                   <p className="text-xs !text-white">
                     {!submitted ? (
                       <>
-                        <a
-                          href="#"
+                        <Link
+                          href={`/interview/${position?._id}`}
                           onClick={() => handleInterviewNav()}
                           className="cursor-pointer underline"
                         >
                           Upload your resume
-                        </a>{" "}
+                        </Link>{" "}
                         to unlock
                       </>
                     ) : typeof matchstimate !== "number" ? (
@@ -1247,6 +1247,14 @@ const client = new ApolloClient({
     credentials: "same-origin",
   }),
   cache: new InMemoryCache({ resultCaching: false }),
+  defaultOptions: {
+    watchQuery: {
+      fetchPolicy: "no-cache",
+    },
+    query: {
+      fetchPolicy: "no-cache",
+    },
+  },
 });
 
 export async function getServerSideProps(ctx: GetServerSidePropsContext) {
@@ -1318,7 +1326,7 @@ export async function getServerSideProps(ctx: GetServerSidePropsContext) {
         _id: positionID,
       },
       ssr: true,
-      cache: "no-cache",
+      fetchPolicy: "no-cache",
     },
   });
 
@@ -1395,12 +1403,7 @@ export async function getServerSideProps(ctx: GetServerSidePropsContext) {
   // if company does not exist, redirect to create-company
   //@TODO maybe we need a 404 page for this
   if (res.status === 404) {
-    return {
-      redirect: {
-        destination: `/create-company`,
-        permanent: false,
-      },
-    };
+    return { notFound: true };
   }
 
   const _companyAuth = await res.json();

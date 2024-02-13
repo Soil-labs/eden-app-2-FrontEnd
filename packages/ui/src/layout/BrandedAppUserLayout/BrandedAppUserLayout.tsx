@@ -27,7 +27,7 @@ export const BrandedAppUserLayout = ({
             }}
           />
           <div className="ml-auto">
-            <UserButton />
+            <UserButton branded />
           </div>
         </div>
       </nav>
