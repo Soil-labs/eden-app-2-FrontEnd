@@ -603,7 +603,7 @@ const PositionPage: NextPageWithLayout = ({
                   <EdenIconExclamationAndQuestion className="h-8 w-8" />
                 </div>
                 <div className="mr-4">
-                  <h4>Kickoff your AI -interview right now!</h4>
+                  <h4>Kickoff your AI - interview right now!</h4>
                   <p className="text-edenGray-500 text-sm">
                     Our AI interview helps you hit on everything the hiring
                     manager wants to know + we’ll re-use your interview to help
