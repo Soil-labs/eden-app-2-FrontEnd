@@ -25,7 +25,7 @@ const PRODUCTS: PRODUCTS_TYPE = [
       "For those looking to build the future with likeminded people.",
     monthlyPrice: 249,
     priceID: IS_PRODUCTION
-      ? "price_1NxUDfBxX85c6z0CTCpGb31x"
+      ? "price_1OjMZUBxX85c6z0C0rX2LRmF"
       : "price_1NnKzqBxX85c6z0CuUKA0uku",
     featured: false,
   },
@@ -36,7 +36,7 @@ const PRODUCTS: PRODUCTS_TYPE = [
       "For those looking to build the future with likeminded people.",
     monthlyPrice: 149,
     priceID: IS_PRODUCTION
-      ? "price_1NxUBRBxX85c6z0CgmukMjft"
+      ? "price_1OjMcPBxX85c6z0CrdC48xXf"
       : "price_1NnKzqBxX85c6z0CuUKA0uku",
     featured: true,
   },
@@ -47,7 +47,7 @@ const PRODUCTS: PRODUCTS_TYPE = [
       "For those looking to build the future with likeminded people.",
     monthlyPrice: 99,
     priceID: IS_PRODUCTION
-      ? "price_1NxUAHBxX85c6z0CwonUgMF5"
+      ? "price_1OjMdYBxX85c6z0C6qRH6XFX"
       : "price_1NnKzqBxX85c6z0CuUKA0uku",
     featured: false,
   },
