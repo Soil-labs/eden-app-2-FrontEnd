@@ -235,7 +235,7 @@ const SubscribePage: NextPageWithLayout = () => {
           tested product designers.
         </h4>
 
-        <section className="mx-auto mb-12 w-full max-w-screen-sm px-8">
+        <section className="mx-auto mb-12 w-full max-w-screen-sm px-4">
           <div className="mb-8">
             {PRODUCTS.map((_product, index) => {
               const _selected = selectedPrice === _product.id;
