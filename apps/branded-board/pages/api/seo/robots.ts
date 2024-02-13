@@ -2,8 +2,10 @@ import { NextApiRequest, NextApiResponse } from "next";
 
 export default function handler(req: NextApiRequest, res: NextApiResponse) {
   // Extract any necessary information from the request
+  const host = req.headers.host;
+
   const subdomain =
-    process.env.NEXT_PUBLIC_FORCE_SLUG_LOCALHOST || req.query.subdomain;
+    process.env.NEXT_PUBLIC_FORCE_SLUG_LOCALHOST || host?.split(".")[0];
 
   // Define rules based on the subdomain or any other logic you require
   const allow = "/";
