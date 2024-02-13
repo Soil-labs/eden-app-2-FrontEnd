@@ -269,7 +269,7 @@ const PositionPage: NextPageWithLayout = ({
     }
   };
 
-  console.log("publishModalOpen", publishModalOpen);
+  // console.log("publishModalOpen", publishModalOpen);
 
   const parseOfficePolicy = (_officePolicy: string) => {
     if (_officePolicy === "on-site") return "On site";
@@ -410,6 +410,7 @@ const PositionPage: NextPageWithLayout = ({
                 `${getValues("name")}, ${position?.company?.name}`
               )}
             </h1>
+
             <section className="flex justify-center">
               {editMode && editCompany ? (
                 <div className="border-edenGray-50 mb-4 mr-3 border-r pr-4">
@@ -543,6 +544,28 @@ const PositionPage: NextPageWithLayout = ({
               )}
             </section>
 
+            <div className="bg-edenGreen-200 mb-6 max-w-xl rounded-xl p-4">
+              <div className="mb-2 flex items-center">
+                <div className="mr-2 flex h-6 w-6 items-center justify-center rounded-full bg-black">
+                  <HiOutlineHeart size={16} color="#FFFFFF" className="" />
+                </div>
+                <h3 className="text-edenGray-700 text-xs font-normal">
+                  What&apos;s to love?
+                </h3>
+              </div>
+              <p className="text-edenGray-900 text-xs">
+                {editMode && editCompany ? (
+                  <textarea
+                    {...register("company.whatsToLove")}
+                    rows={4}
+                    className={classNames(editInputClasses, "w-full")}
+                  />
+                ) : (
+                  getValues("company.whatsToLove")
+                )}
+              </p>
+            </div>
+
             <div className="mb-4 flex max-w-sm items-center rounded-md bg-[rgba(255,255,255,0.39)] p-1">
               <div className="text-edenGray-600 ml-1 mr-3 flex items-center justify-center rounded-md border bg-[#F7F8F7] px-4 py-1.5">
                 {submitted ? (
@@ -596,15 +619,15 @@ const PositionPage: NextPageWithLayout = ({
             </div>
           </div>
 
-          <div className="relative mx-auto -mt-8 mb-12 flex w-[90%] items-center rounded-md bg-[#F7F8F7] p-2 lg:w-[70%]">
+          <div className="relative mx-auto -mt-8 mb-12 flex w-[90%] flex-col rounded-md bg-[#F7F8F7] p-2 md:flex-row md:items-center lg:w-[70%]">
             {!submitted ? (
               <>
-                <div className="bg-edenGray-100 mr-4 flex items-center justify-center rounded-lg p-4">
+                <div className="bg-edenGray-100 mx-auto mb-4 flex w-fit items-center justify-center rounded-lg p-4 md:mb-0 md:mr-4">
                   <EdenIconExclamationAndQuestion className="h-8 w-8" />
                 </div>
                 <div className="mr-4">
-                  <h4>Kickoff your AI -interview right now!</h4>
-                  <p className="text-edenGray-500 text-sm">
+                  <h4>Kickoff your AI - interview right now!</h4>
+                  <p className="text-edenGray-500 mb-4 text-sm md:mb-0">
                     Our AI interview helps you hit on everything the hiring
                     manager wants to know + we’ll re-use your interview to help
                     skip the fist interview for other opportunities
@@ -612,12 +635,12 @@ const PositionPage: NextPageWithLayout = ({
                 </div>
                 <Link
                   href={`/interview/${position?._id}`}
-                  className="ml-auto flex items-center whitespace-nowrap rounded-md bg-black px-8 py-4 text-white hover:bg-white hover:text-black"
+                  className="mx-auto flex w-40 items-center justify-center whitespace-nowrap rounded-md bg-black px-8 py-4 text-white hover:bg-white hover:text-black md:ml-auto"
                   onClick={() => {
                     handleInterviewNav();
                   }}
                 >
-                  Interview now
+                  Apply
                 </Link>
               </>
             ) : (
@@ -767,12 +790,12 @@ const PositionPage: NextPageWithLayout = ({
                   <div className="mt-4 flex justify-center">
                     <Link
                       href={`/interview/${position?._id}`}
-                      className="flex items-center whitespace-nowrap rounded-md bg-black px-12 py-4 text-white hover:bg-white hover:text-black"
+                      className="flex w-48 items-center justify-center whitespace-nowrap rounded-md bg-black px-12 py-4 text-white hover:bg-white hover:text-black"
                       onClick={() => {
                         handleInterviewNav();
                       }}
                     >
-                      Interview now
+                      Apply
                     </Link>
                   </div>
                 </div>
@@ -885,26 +908,6 @@ const PositionPage: NextPageWithLayout = ({
                     />
                   </div>
                 )}
-
-                <div className="bg-edenGreen-200 rounded-md p-4 text-sm">
-                  <div className="mb-2 flex">
-                    <div className="bg-edenGreen-300 mr-2 flex h-6 w-6 items-center justify-center rounded-full">
-                      <HiOutlineHeart size={16} className="" />
-                    </div>
-                    <h3 className="">What&apos;s to love?</h3>
-                  </div>
-                  <p className="text-edenGray-700 text-xs">
-                    {editMode && editCompany ? (
-                      <textarea
-                        {...register("company.whatsToLove")}
-                        rows={4}
-                        className={classNames(editInputClasses, "w-full")}
-                      />
-                    ) : (
-                      getValues("company.whatsToLove")
-                    )}
-                  </p>
-                </div>
               </div>
               <div className="px-6">
                 {/* ---- MISSION ---- */}

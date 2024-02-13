@@ -1,5 +1,3 @@
-// eslint-disable-next-line no-unused-vars
-import { CheckIcon } from "@dynamic-labs/sdk-react-core";
 import { Maybe, Position } from "@eden/package-graphql/generated";
 import {
   BrandedAppUserLayout,
@@ -8,6 +6,7 @@ import {
   EdenTooltip,
 } from "@eden/package-ui";
 import SEOBrandedJobBoard from "@eden/package-ui/src/SEO/SEOBrandedJobBoard";
+import { classNames } from "@eden/package-ui/utils";
 import axios from "axios";
 import { InferGetStaticPropsType } from "next";
 import Image from "next/image";
@@ -30,8 +29,8 @@ const JobsPage: NextPageWithLayout = ({
 
   const _positions: Position[] =
     (company?.type === "COMMUNITY"
-      ? positions.reverse()
-      : positions?.reverse().map((item: any) => {
+      ? positions
+      : positions?.map((item: any) => {
           //this map avoids having to fetch company again inside each position in backend
           item.company = {
             _id: company?._id,
@@ -91,7 +90,7 @@ const JobsPage: NextPageWithLayout = ({
               {company?.name}
               {" Talent Collective"}
             </h1>
-            <p className="mb-8 text-white">
+            <p className="mb-8 font-light text-[#BDBDC0]">
               {
                 "Developer DAO is a decentralized autonomous organization nurturing collaboration, learning, and value creation in the web3 developer community. It's a hub for beginners and professionals to build and mentor."
               }
@@ -105,8 +104,34 @@ const JobsPage: NextPageWithLayout = ({
               </Link>
               <span className="mr-3 text-white">or</span>
               <Link href={`/pricing?community=${company?._id}`}>
-                <BrandedButton color="#000000">Post a Job</BrandedButton>
+                <BrandedButton variant="secondary" color="#FFFFFF">
+                  Post a Job
+                </BrandedButton>
               </Link>
+            </div>
+          </div>
+        </div>
+        <div className="relative mx-auto -mt-8 mb-12 flex w-full max-w-xl items-center justify-between rounded-md bg-[#F7F8F7] p-2 lg:w-[70%]">
+          <div className="flex w-full justify-start px-4">
+            <div className="flex flex-col">
+              <span className="text-edenGray-500 text-sm">
+                Pre-vetted Candidates
+              </span>
+              <span>273</span>
+            </div>
+          </div>
+          <div className="border-edenGray-300 mx-2 h-12 border-r"></div>
+          <div className="flex w-full justify-start px-4">
+            <div className="flex flex-col">
+              <span className="text-edenGray-500 text-sm">Combined Skills</span>
+              <span>982</span>
+            </div>
+          </div>
+          <div className="border-edenGray-300 mx-2 h-12 border-r"></div>
+          <div className="flex w-full justify-start px-4">
+            <div className="flex flex-col">
+              <span className="text-edenGray-500 text-sm">Total live jobs</span>
+              <span>{_filteredPositions.length}</span>
             </div>
           </div>
         </div>
@@ -124,9 +149,7 @@ const JobsPage: NextPageWithLayout = ({
         </section>
         {/* -------- Jobs Section -------- */}
         <section className="col-span-12 pt-2 md:col-span-9 md:px-6">
-          <h3 className="font-clash-display mb-2 font-medium">
-            Open opportunities
-          </h3>
+          <h3 className="font-clash-display mb-2 font-medium">Opportunities</h3>
           <div className="grid w-full grid-cols-1 gap-x-6 gap-y-4 md:gap-y-8 lg:grid-cols-3">
             {_filteredPositions.map(
               (position: Maybe<Position>, index: number) => {
@@ -279,7 +302,7 @@ export const getStaticProps = async (context: {
     return {
       props: {
         company,
-        positions: filteredPositions,
+        positions: filteredPositions.reverse(),
       },
       // 10 min to rebuild all paths
       // (this means new data will show up after 10 min of being added)
@@ -360,7 +383,9 @@ const PositionCard = ({ position, setLoadingSpinner }: PositionCardProps) => {
               : ""}
           </p>
         )}
-        <h2 className="font-clash-display font-medium">{position?.name}</h2>
+        <h2 className="font-clash-display text-3xl font-normal">
+          {position?.name}
+        </h2>
       </div>
       <div className="flex w-full flex-row p-2">
         <Image
@@ -535,15 +560,25 @@ type BrandedButtonProps = {
   children: React.ReactNode;
   color?: string;
   onClick?: () => void;
+  variant?: "primary" | "secondary";
 };
 
-const BrandedButton = ({ children, color }: BrandedButtonProps) => {
+const BrandedButton = ({
+  children,
+  color,
+  variant = "primary",
+}: BrandedButtonProps) => {
   return (
     <button
       style={{
         backgroundColor: color,
       }}
-      className="whitespace-no-wrap inline-block rounded-md border border-white px-4 py-2 text-white hover:!bg-white hover:text-black"
+      className={classNames(
+        "whitespace-no-wrap inline-block rounded-md border border-white px-4 py-2 text-white hover:!bg-white hover:text-black",
+        variant === "secondary"
+          ? "!text-black hover:!bg-black hover:!text-white"
+          : "text-white"
+      )}
     >
       {children}
     </button>
