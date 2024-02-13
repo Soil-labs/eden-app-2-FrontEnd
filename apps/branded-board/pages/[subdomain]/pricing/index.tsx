@@ -15,6 +15,7 @@ type PRODUCTS_TYPE = {
   monthlyPrice: number;
   priceID: string;
   featured: boolean;
+  saves: number | null;
 }[];
 
 const PRODUCTS: PRODUCTS_TYPE = [
@@ -28,6 +29,7 @@ const PRODUCTS: PRODUCTS_TYPE = [
       ? "price_1OjMZUBxX85c6z0C0rX2LRmF"
       : "price_1NnKzqBxX85c6z0CuUKA0uku",
     featured: false,
+    saves: null,
   },
   {
     name: "3 posts",
@@ -39,6 +41,7 @@ const PRODUCTS: PRODUCTS_TYPE = [
       ? "price_1OjMcPBxX85c6z0CrdC48xXf"
       : "price_1NnKzqBxX85c6z0CuUKA0uku",
     featured: true,
+    saves: 40,
   },
   {
     name: "5 posts",
@@ -50,6 +53,7 @@ const PRODUCTS: PRODUCTS_TYPE = [
       ? "price_1OjMdYBxX85c6z0C6qRH6XFX"
       : "price_1NnKzqBxX85c6z0CuUKA0uku",
     featured: false,
+    saves: 60,
   },
 ];
 
@@ -214,14 +218,24 @@ const SubscribePage: NextPageWithLayout = () => {
   return (
     <>
       <div className="mx-auto w-full max-w-screen-md pb-16">
-        <h1 className="mb-4 text-center">Find pioneering web3 talent, fast.</h1>
+        <div className="font-clash-display mb-12 flex w-full flex-nowrap items-center justify-center text-3xl font-medium">
+          <img
+            src="/d_d-logo-and-text.png"
+            width={320}
+            className="max-w-[70%]"
+          />
+          <span className="mb-1">talent</span>
+        </div>
+        <h1 className="font-clash-display mb-4 text-center font-medium">
+          Find pioneering web3 talent, fast.
+        </h1>
         <h4 className="text-edenGray-700 mb-8 text-center font-normal">
           Gain exposure to a network of 100.000+ professionals interested in
           building in web3 - ranging from senior web3 developers to battle
           tested product designers.
         </h4>
 
-        <section className="mx-auto mb-8 w-full max-w-screen-sm">
+        <section className="mx-auto mb-12 w-full max-w-screen-sm px-8">
           <div className="mb-8">
             {PRODUCTS.map((_product, index) => {
               const _selected = selectedPrice === _product.id;
@@ -229,10 +243,10 @@ const SubscribePage: NextPageWithLayout = () => {
               return (
                 <div
                   className={classNames(
+                    "bg-edenPink-100 custom-radio border-2 first:rounded-t-2xl last:rounded-b-2xl",
                     _selected
-                      ? "border-edenGreen-500 border-2"
-                      : "border-edenPink-400",
-                    "bg-edenPink-100 custom-radio border first:rounded-t-2xl last:rounded-b-2xl"
+                      ? "border-edenGreen-500 border-b-2"
+                      : "border-edenPink-500 border-b-0 last:border-b-2"
                   )}
                   key={index}
                 >
@@ -251,7 +265,7 @@ const SubscribePage: NextPageWithLayout = () => {
 
                   <label
                     htmlFor={_product.id}
-                    className="flex w-full cursor-pointer items-center px-5 py-4"
+                    className="flex w-full cursor-pointer items-center justify-between px-5 py-4"
                   >
                     {_selected ? (
                       <div className="bg-edenGreen-600 mr-4 flex h-8 w-8 items-center justify-center rounded-full">
@@ -264,9 +278,16 @@ const SubscribePage: NextPageWithLayout = () => {
                     ) : (
                       <div className="bg-edenGray-500 mr-4 block h-8 w-8 rounded-full"></div>
                     )}
-                    <h3 className="font-Moret text-edenGreen-600">
+                    <h3 className="font-Moret text-edenGreen-600 mr-auto">
                       {_product.name}
                     </h3>
+
+                    {_product.saves && (
+                      <div className="bg-edenGreen-600 rounded-md px-4 py-1 text-white">
+                        Saves {_product.saves}%
+                      </div>
+                    )}
+
                     <div className="ml-auto flex flex-col items-center">
                       <span className="font-Moret text-edenGreen-600 text-lg font-bold">
                         ${_product.monthlyPrice}
@@ -289,28 +310,30 @@ const SubscribePage: NextPageWithLayout = () => {
           </div>
         </section>
 
-        <h2 className="mb-4 text-center">
+        <h2 className="font-clash-display mb-6 text-center text-2xl font-medium">
           {"What's included in your Developer DAO magic job-post?"}
         </h2>
-        <section className="scrollbar-hide mb-8 w-full overflow-x-scroll px-2">
-          <div className="w-fit overflow-x-scroll whitespace-nowrap pb-1">
-            {DDBenefits.map((_benefit, index) => (
-              <div
-                key={index}
-                className="bg-edenGreen-200 relative mr-4 inline-block w-80 whitespace-normal rounded-lg p-3 pl-4 align-top shadow-md"
-              >
-                <h3>{_benefit.title}</h3>
-                <p className="text-edenGray-700 mb-4">{_benefit.subtitle}</p>
-                <ul className="text-edenGray-700 list-disc pl-2 text-sm">
-                  {_benefit.features.map((_feat, index) => (
-                    <li className="mb-2" key={"li-" + index}>
-                      {_feat.text}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
-          </div>
+        <section className="mb-8 grid w-full grid-cols-12 gap-y-6 px-8 md:gap-x-10">
+          {DDBenefits.map((_benefit, index) => (
+            <div
+              key={index}
+              className="bg-edenGreen-200 relative col-span-12 whitespace-normal rounded-lg p-3 pl-4 align-top shadow-md md:col-span-6"
+            >
+              <h3 className="font-clash-display mb-4 text-xl font-medium">
+                {_benefit.title}
+              </h3>
+              <p className="text-edenGray-700 mb-4 text-sm">
+                {_benefit.subtitle}
+              </p>
+              <ul className="text-edenGray-700 list-disc pl-2 text-sm">
+                {_benefit.features.map((_feat, index) => (
+                  <li className="mb-2" key={"li-" + index}>
+                    {_feat.text}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
         </section>
 
         <section className="flex items-center justify-center">
