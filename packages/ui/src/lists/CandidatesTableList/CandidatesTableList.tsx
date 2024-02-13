@@ -1,3 +1,5 @@
+"use client";
+
 import { CandidateType } from "@eden/package-graphql/generated";
 import {
   Avatar,
@@ -150,7 +152,9 @@ export const CandidatesTableList: FC<CandidatesTableListProps> = ({
     return grade;
   };
 
-  const interviewLink = `${window?.location?.origin}/interview/${positionID}`;
+  const interviewLink = window
+    ? `${window?.location?.origin}/interview/${positionID}`
+    : "";
 
   return (
     <section className="bg-bgColor w-full overflow-hidden rounded-tl-md rounded-tr-md">
