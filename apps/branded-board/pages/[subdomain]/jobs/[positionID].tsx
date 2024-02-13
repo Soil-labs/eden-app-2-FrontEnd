@@ -269,7 +269,7 @@ const PositionPage: NextPageWithLayout = ({
     }
   };
 
-  console.log("publishModalOpen", publishModalOpen);
+  // console.log("publishModalOpen", publishModalOpen);
 
   const parseOfficePolicy = (_officePolicy: string) => {
     if (_officePolicy === "on-site") return "On site";
@@ -617,7 +617,7 @@ const PositionPage: NextPageWithLayout = ({
                     handleInterviewNav();
                   }}
                 >
-                  Interview now
+                  Apply
                 </Link>
               </>
             ) : (
@@ -772,7 +772,7 @@ const PositionPage: NextPageWithLayout = ({
                         handleInterviewNav();
                       }}
                     >
-                      Interview now
+                      Apply
                     </Link>
                   </div>
                 </div>
