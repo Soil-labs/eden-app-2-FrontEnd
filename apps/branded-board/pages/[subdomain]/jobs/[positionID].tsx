@@ -397,17 +397,31 @@ const PositionPage: NextPageWithLayout = ({
 
         <section className="mx-auto max-w-screen-xl px-2 md:px-8">
           <div className="relative flex w-full flex-col items-center justify-center rounded-xl bg-black bg-[url('/banner-job-board-mobile.png')] bg-cover bg-center px-4 pb-36 pt-8 md:h-96 md:bg-[url('/banner-job-board.png')] md:px-12 md:pb-2 md:pt-4">
-            <h1 className="font-clash-display mb-2 text-center font-medium text-white">
+            <h1
+              className="font-clash-display mb-4 bg-clip-border !bg-clip-text text-center text-3xl font-medium text-transparent"
+              style={{
+                background:
+                  "linear-gradient(90deg, rgba(255, 255, 255, 0.85) 75.78%, #A7A7A9 99.97%)",
+              }}
+            >
               {editMode && editCompany ? (
                 <>
                   <input
                     {...register("name")}
                     className={classNames(editInputClasses, "")}
                   />
-                  {`, ${position?.company?.name}`}
+                  {`, `}
+                  <span className="border-b-2 border-[#A7A7A9]">
+                    {position?.company?.name}
+                  </span>
                 </>
               ) : (
-                `${getValues("name")}, ${position?.company?.name}`
+                <>
+                  {`${getValues("name")}, `}
+                  <span className="border-b-2 border-[#A7A7A9]">
+                    {position?.company?.name}
+                  </span>
+                </>
               )}
             </h1>
 
@@ -566,7 +580,13 @@ const PositionPage: NextPageWithLayout = ({
               </p>
             </div>
 
-            <div className="mb-4 flex max-w-sm items-center rounded-md bg-[rgba(255,255,255,0.39)] p-1">
+            <div
+              className="mb-4 flex max-w-sm items-center rounded-md p-1"
+              style={{
+                background:
+                  "linear-gradient(107deg, rgba(255,255,255,0.39) 1.06%,rgba(255,255,255,0.17) 99.48%)",
+              }}
+            >
               <div className="text-edenGray-600 ml-1 mr-3 flex items-center justify-center rounded-md border bg-[#F7F8F7] px-4 py-1.5">
                 {submitted ? (
                   typeof matchstimate === "number" ? (
