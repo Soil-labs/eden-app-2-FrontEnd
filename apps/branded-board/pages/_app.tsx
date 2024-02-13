@@ -6,6 +6,7 @@ import type { AppProps } from "next/app";
 // import dynamic from "next/dynamic";
 import type { ReactElement, ReactNode } from "react";
 import * as React from "react";
+import { ToastContainer } from "react-toastify";
 
 import { AppProviders } from "@/components/config/AppProviders";
 
@@ -43,6 +44,7 @@ const App = ({
       <>
         {/* <AppMaintainanceLayout /> */}
         {/* <AppDeviceLayout /> */}
+        <ToastContainer />
         {getLayout(<Component {...pageProps} />)}
       </>
     </AppProviders>

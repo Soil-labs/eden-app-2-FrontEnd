@@ -137,8 +137,8 @@ const CompanySetup: NextPageWithLayout = () => {
         },
       });
     },
-    onError() {
-      toast.error("An error occurred while submitting");
+    onError(error) {
+      toast.error("An error occurred while submitting. " + error?.message);
       setSubmitting(false);
     },
   });
