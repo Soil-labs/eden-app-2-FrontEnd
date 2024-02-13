@@ -396,7 +396,7 @@ const PositionPage: NextPageWithLayout = ({
         )}
 
         <section className="mx-auto max-w-screen-xl px-2 md:px-8">
-          <div className="relative flex w-full flex-col items-center justify-center rounded-lg bg-black bg-[url('/banner-job-board-mobile.png')] bg-cover bg-center px-4 pb-36 pt-8 md:h-96 md:bg-[url('/banner-job-board.png')] md:px-12 md:pb-2 md:pt-4">
+          <div className="relative flex w-full flex-col items-center justify-center rounded-xl bg-black bg-[url('/banner-job-board-mobile.png')] bg-cover bg-center px-4 pb-36 pt-8 md:h-96 md:bg-[url('/banner-job-board.png')] md:px-12 md:pb-2 md:pt-4">
             <h1 className="font-clash-display mb-2 text-center font-medium text-white">
               {editMode && editCompany ? (
                 <>

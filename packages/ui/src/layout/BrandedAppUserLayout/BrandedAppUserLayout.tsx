@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { useRouter } from "next/router";
 
 import UserButton from "./UserButton";
@@ -17,15 +18,17 @@ export const BrandedAppUserLayout = ({
     <div className="min-h-screen bg-[#EFEFEF]">
       <nav className="fixed left-0 top-0 z-40 h-16 w-screen bg-[#EFEFEF]">
         <div className="mx-auto flex h-16 w-full max-w-6xl items-center px-4">
-          <img
-            src="/eden-imagotype.png"
-            alt="Eden Protocol"
-            width={68}
-            className="mr-2 cursor-pointer pb-2"
-            onClick={() => {
-              router.push(logoLink);
-            }}
-          />
+          <Link href="/">
+            <img
+              src="/eden-imagotype.png"
+              alt="Eden Protocol"
+              width={68}
+              className="mr-2 cursor-pointer pb-2"
+              onClick={() => {
+                router.push(logoLink);
+              }}
+            />
+          </Link>
           <div className="ml-auto">
             <UserButton branded />
           </div>
