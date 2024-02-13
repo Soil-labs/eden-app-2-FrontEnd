@@ -1,6 +1,5 @@
 import { classNames } from "@dynamic-labs/sdk-react-core";
 import { BrandedAppUserLayout, Button } from "@eden/package-ui";
-import { IncomingMessage, ServerResponse } from "http";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useState } from "react";
@@ -35,7 +34,7 @@ const PRODUCTS: PRODUCTS_TYPE = [
     id: "3posts",
     description:
       "For those looking to build the future with likeminded people.",
-    monthlyPrice: 499,
+    monthlyPrice: 149,
     priceID: IS_PRODUCTION
       ? "price_1NxUBRBxX85c6z0CgmukMjft"
       : "price_1NnKzqBxX85c6z0CuUKA0uku",
@@ -46,7 +45,7 @@ const PRODUCTS: PRODUCTS_TYPE = [
     id: "5posts",
     description:
       "For those looking to build the future with likeminded people.",
-    monthlyPrice: 999,
+    monthlyPrice: 99,
     priceID: IS_PRODUCTION
       ? "price_1NxUAHBxX85c6z0CwonUgMF5"
       : "price_1NnKzqBxX85c6z0CuUKA0uku",
@@ -272,7 +271,9 @@ const SubscribePage: NextPageWithLayout = () => {
                       <span className="font-Moret text-edenGreen-600 text-lg font-bold">
                         ${_product.monthlyPrice}
                       </span>
-                      <span className="text-edenGray-500">per post/month</span>
+                      <span className="text-edenGray-700 text-sm">
+                        per job-slot
+                      </span>
                     </div>
                   </label>
                 </div>
@@ -331,17 +332,5 @@ const SubscribePage: NextPageWithLayout = () => {
 SubscribePage.getLayout = (page) => (
   <BrandedAppUserLayout>{page}</BrandedAppUserLayout>
 );
-
-export async function getServerSideProps(ctx: {
-  req: IncomingMessage;
-  res: ServerResponse;
-  query: { slug: string };
-}) {
-  const url = ctx.req.url;
-
-  return {
-    props: { key: url },
-  };
-}
 
 export default SubscribePage;
