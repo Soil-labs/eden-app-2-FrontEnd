@@ -1,5 +1,3 @@
-"use client";
-
 import { CandidateType } from "@eden/package-graphql/generated";
 import {
   Avatar,
