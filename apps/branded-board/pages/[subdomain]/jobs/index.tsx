@@ -27,6 +27,8 @@ const JobsPage: NextPageWithLayout = ({
   const [loadingSpinner, setLoadingSpinner] = useState(false);
   const [officePolicyFilter, setOfficePolicyFilter] = useState<string[]>([]);
 
+  console.log("positions", positions);
+
   const _positions: Position[] =
     (company?.type === "COMMUNITY"
       ? positions
@@ -45,6 +47,8 @@ const JobsPage: NextPageWithLayout = ({
     officePolicyFilter.length === 0
       ? []
       : _positions.filter((_position: Position) => {
+          if (officePolicyFilter.length === 3) return true;
+
           const _isHybrid =
             _position?.generalDetails?.officePolicy === "hybrid-1-day-office" ||
             _position?.generalDetails?.officePolicy === "hybrid-2-day-office" ||

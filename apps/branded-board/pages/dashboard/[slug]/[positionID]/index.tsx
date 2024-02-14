@@ -1251,7 +1251,7 @@ const PositionCRM: NextPageWithLayout = () => {
           <div className="mb-4 flex items-center">
             <div>
               <div className="mr-6 flex items-center">
-                <h1 className="text-edenGreen-600">
+                <h1 className="text-edenGreen-600 font-Moret">
                   {findPositionData && findPositionData?.findPosition?.name
                     ? findPositionData?.findPosition?.name
                         .charAt(0)
