@@ -201,6 +201,8 @@ export const BrandedLeftToggleNav = ({
     router.pathname.includes("/train-eden-ai") ||
     router.pathname.includes("/redirect-page");
 
+  const _link = company?.slug ? `/dashboard/${company?.slug}` : logoLink;
+
   return (
     <nav
       className={classNames(
@@ -210,28 +212,24 @@ export const BrandedLeftToggleNav = ({
     >
       {/* ---- Eden logo section ---- */}
       <section className="border-edenPink-500 relative flex h-[4.5rem] items-center border-b p-4">
-        {unwrapped ? (
-          <img
-            src="/eden-imagotype.png"
-            alt="Eden Protocol"
-            width={68}
-            className="cursor-pointer"
-            onClick={() => {
-              router.push(logoLink);
-            }}
-          />
-        ) : (
-          <Image
-            src="/eden-logo.png"
-            alt=""
-            width={30}
-            height={30}
-            className="cursor-pointer"
-            onClick={() => {
-              router.push(logoLink);
-            }}
-          />
-        )}
+        <Link href={_link}>
+          {unwrapped ? (
+            <img
+              src="/eden-imagotype.png"
+              alt="Eden Protocol"
+              width={68}
+              className="cursor-pointer"
+            />
+          ) : (
+            <Image
+              src="/eden-logo.png"
+              alt=""
+              width={30}
+              height={30}
+              className="cursor-pointer"
+            />
+          )}
+        </Link>
         <div
           className="color-edenGreen-600 bg-edenPink-500 absolute -bottom-3 -right-2 z-10 -mb-px flex h-12 h-6 w-5 w-6 cursor-pointer items-center justify-center rounded-md"
           onClick={onToggleNav}
