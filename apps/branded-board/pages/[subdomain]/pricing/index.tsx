@@ -227,7 +227,31 @@ const SubscribePage: NextPageWithLayout = () => {
           <span className="mb-1">talent</span>
         </div>
         <h1 className="font-clash-display mb-4 text-center font-medium">
-          Find pioneering web3 talent, fast.
+          {"Find pioneering web3 talent, "}
+          <span className="whitespace-nowrap">
+            fast.
+            <div className="relative inline-block w-[16px]">
+              {"‎"}
+
+              <svg
+                className="absolute -top-3 left-0 w-[16px]"
+                width="27"
+                height="34"
+                viewBox="0 0 27 34"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M21.1393 20.3421C17.0711 20.8279 14.7338 21.2747 13.2988 22.7513C11.6124 24.4804 11.2129 27.6473 10.7691 33.981C10.3105 27.4142 9.89632 24.2667 8.04714 22.5764C6.61218 21.2553 4.2896 20.8279 0.398926 20.3616C4.45233 19.8758 6.80449 19.429 8.22466 17.9718C9.92591 16.2233 10.3253 13.0758 10.7691 6.72266C11.1834 12.5707 11.5532 15.6987 12.929 17.5056C14.3048 19.3124 16.7013 19.8176 21.1393 20.3421Z"
+                  fill="#000000"
+                />
+                <path
+                  d="M26.1105 7.42507C24.1607 7.65787 23.0404 7.87204 22.3526 8.57974C21.5444 9.4085 21.3529 10.9263 21.1402 13.962C20.9204 10.8146 20.7219 9.30607 19.8356 8.49594C19.1478 7.86273 18.0347 7.65787 16.1699 7.43438C18.1127 7.20159 19.24 6.98742 19.9207 6.28903C20.7361 5.45096 20.9275 3.94244 21.1402 0.897461C21.3387 3.70033 21.516 5.19954 22.1754 6.06554C22.8348 6.93154 23.9834 7.17365 26.1105 7.42507Z"
+                  fill="#000000"
+                />
+              </svg>
+            </div>
+          </span>
         </h1>
         <h4 className="text-edenGray-700 mb-8 text-center font-normal">
           Gain exposure to a network of 100.000+ professionals interested in
