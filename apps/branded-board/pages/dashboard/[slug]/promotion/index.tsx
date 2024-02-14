@@ -9,8 +9,8 @@ import { BiCheck, BiInfinite } from "react-icons/bi";
 import { HiOutlineBuildingStorefront } from "react-icons/hi2";
 import { MdClose } from "react-icons/md";
 
-import { IS_PRODUCTION } from "../../../../../constants";
-import type { NextPageWithLayout } from "../../../../_app";
+import { IS_PRODUCTION } from "../../../../constants";
+import type { NextPageWithLayout } from "../../../_app";
 
 type PRODUCTS_TYPE = {
   name: string;

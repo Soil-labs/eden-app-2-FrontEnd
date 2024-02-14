@@ -61,7 +61,7 @@ const CandidateInfo = dynamic(
   }
 );
 
-import { NextPageWithLayout } from "../../../../_app";
+import { NextPageWithLayout } from "../../../_app";
 
 const CREATE_FAKE_USER_CV = gql`
   mutation CreateFakeUserCVnew($fields: createFakeUserCVnewInput) {
