@@ -6,7 +6,7 @@ import { NextApiRequest, NextApiResponse } from "next";
 const baseUrl =
   process.env.NEXT_PUBLIC_ENV_BRANCH === "develop"
     ? `https://eden-saas-staging.vercel.app`
-    : `https://edenprotocol.app`;
+    : `https://developer-dao.joineden.ai`;
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
   if (req.method === "POST") {
