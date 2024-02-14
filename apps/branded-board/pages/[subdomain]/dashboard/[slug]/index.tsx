@@ -85,12 +85,14 @@ export interface CreatePositionModalProps {
   onClose: () => void;
   // eslint-disable-next-line no-unused-vars
   onSubmit: (data: any) => void;
+  submitting?: boolean;
 }
 
 const CreatePositionModal = ({
   open,
   onClose,
   onSubmit,
+  submitting,
 }: CreatePositionModalProps) => {
   const { register, handleSubmit } = useForm<any>({
     defaultValues: {
@@ -133,6 +135,8 @@ const CreatePositionModal = ({
           onClick={handleSubmit((data) => onSubmit(data))}
           variant="secondary"
           className="mx-auto block"
+          disabled={submitting}
+          loading={submitting}
         >
           Submit
         </Button>
@@ -148,7 +152,6 @@ const HomePage: NextPageWithLayout = () => {
 
   const { company, getCompanyFunc } = useContext(CompanyContext);
   const [companyLoading, setCompanyLoading] = useState(true);
-  // eslint-disable-next-line no-unused-vars
   const [updatePositionLoading, setUpdatePositionLoading] =
     useState<boolean>(false);
 
@@ -279,6 +282,7 @@ const HomePage: NextPageWithLayout = () => {
         onClose={() => setCreatePositionOpen(false)}
         open={createPositionOpen}
         onSubmit={handleSubmitCreatePosition}
+        submitting={updatePositionLoading}
       />
       {!companyLoading && (
         <div className="mx-auto max-w-4xl pt-20 text-center">
