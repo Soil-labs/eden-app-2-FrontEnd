@@ -44,6 +44,14 @@ export async function middleware(req: NextRequest) {
   const subdomain =
     process.env.NEXT_PUBLIC_FORCE_SLUG_LOCALHOST || getValidSubdomain(host);
 
+  if (url.pathname === "/") {
+    if (subdomain && !url.searchParams.get("redirect")) {
+      url.pathname = `/jobs`;
+
+      return NextResponse.redirect(url);
+    }
+  }
+
   if (subdomain) {
     // Subdomain available, rewriting
     // console.log(
