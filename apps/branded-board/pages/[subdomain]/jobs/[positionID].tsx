@@ -178,6 +178,14 @@ const PositionPage: NextPageWithLayout = ({
 
         setPublishModalOpen(false);
         if (data.updatePosition.status === "ACTIVE") {
+          fetch("/api/revalidate/revalidate-path", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ path: "/developer-dao/jobs" }),
+          });
+
           setTrainAiModalOpen(true);
         }
         if (data.updatePosition.status === "UNPUBLISHED") {
@@ -187,7 +195,9 @@ const PositionPage: NextPageWithLayout = ({
         //   `/dashboard/${position.company?.name}/${position._id}/train-eden-ai`
         // );
       },
-      onError() {
+      onError(error) {
+        console.log(error);
+
         toast.error("An error occurred while submitting");
       },
     }

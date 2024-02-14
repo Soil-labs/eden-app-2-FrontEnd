@@ -1035,6 +1035,13 @@ const PositionCRM: NextPageWithLayout = () => {
     UPDATE_POSITION,
     {
       onCompleted() {
+        fetch("/api/revalidate/revalidate-path", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ path: "/developer-dao/jobs" }),
+        });
         getCompanyFunc();
       },
     }
