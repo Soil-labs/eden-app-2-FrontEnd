@@ -600,10 +600,10 @@ const BrandedButton = ({
         backgroundColor: color,
       }}
       className={classNames(
-        "whitespace-no-wrap inline-block rounded-md border border-white px-4 py-2 text-white hover:!bg-white hover:text-black",
+        "whitespace-no-wrap inline-block rounded-md border border-white px-4 py-2 text-white",
         variant === "secondary"
           ? "!text-black hover:!bg-black hover:!text-white"
-          : "text-white"
+          : "text-white hover:bg-white hover:text-black"
       )}
     >
       {children}
