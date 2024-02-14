@@ -112,7 +112,7 @@ export const BrandedLeftToggleNav = ({
     onCompleted(autoUpdatePositionData) {
       getCompanyFunc();
       router.push(
-        `/${company?.slug}/jobs/${autoUpdatePositionData.autoUpdatePositionCompInformation_V2._id}?edit=true`
+        `/jobs/${autoUpdatePositionData.autoUpdatePositionCompInformation_V2._id}?edit=true`
       );
     },
     onError() {
