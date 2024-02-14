@@ -568,7 +568,7 @@ const PositionPage: NextPageWithLayout = ({
               )}
             </section>
 
-            <div className="bg-edenGreen-200 mb-6 max-w-xl rounded-xl p-4">
+            <div className="bg-edenGreen-200 mb-6 w-full max-w-xl rounded-xl p-4">
               <div className="mb-2 flex items-center">
                 <div className="mr-2 flex h-6 w-6 items-center justify-center rounded-full bg-black">
                   <HiOutlineHeart size={16} color="#FFFFFF" className="" />
