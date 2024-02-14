@@ -54,8 +54,19 @@ const LoginPage: NextPageWithLayout = ({
 };
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
-  const session = getCookieFromContext(ctx);
   const { redirect } = ctx.query;
+
+  if (!redirect) {
+    return {
+      redirect: {
+        destination: "/jobs",
+        permanent: false,
+      },
+      props: {},
+    };
+  }
+
+  const session = getCookieFromContext(ctx);
 
   // let redirectUrl = "/";
 
@@ -68,15 +79,6 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   // } else if (redirect && typeof redirect === "string") {
   //   redirectUrl = redirect;
   // }
-  if (!redirect) {
-    return {
-      redirect: {
-        destination: redirect || "/jobs",
-        permanent: false,
-      },
-      props: {},
-    };
-  }
 
   if (session) {
     return {
