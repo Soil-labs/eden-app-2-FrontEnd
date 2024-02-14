@@ -31,12 +31,12 @@ export async function middleware(req: NextRequest) {
   // Skip public files
   if (PUBLIC_FILE.test(url.pathname) || url.pathname.includes("_next")) return;
 
-  if (url.pathname.includes("/api/")) {
-    return;
-  }
-
-  if (url.pathname.includes("robots.txt")) {
-    // console.log("robots.txt", url.pathname);
+  if (
+    url.pathname.includes("/api/") ||
+    url.pathname.includes("robots.txt") ||
+    url.pathname.includes("sitemap.xml") ||
+    url.pathname.includes("/dashboard")
+  ) {
     return;
   }
 

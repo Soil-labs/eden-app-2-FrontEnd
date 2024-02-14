@@ -13,7 +13,7 @@ import { useContext, useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
 import { v4 as uuidv4 } from "uuid";
 
-import type { NextPageWithLayout } from "../../../_app";
+import type { NextPageWithLayout } from "../../_app";
 
 const UPDATE_POSITION = gql`
   mutation ($fields: updatePositionInput!) {

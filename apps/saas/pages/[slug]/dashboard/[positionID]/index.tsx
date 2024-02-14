@@ -1055,7 +1055,7 @@ const PositionCRM: NextPageWithLayout = () => {
       variables: {
         fields: {
           _id: positionID,
-          status: PositionStatus.Active,
+          status: PositionStatus.Unpublished,
         },
       },
     });

@@ -61,7 +61,7 @@ const CandidateInfo = dynamic(
   }
 );
 
-import { NextPageWithLayout } from "../../../../_app";
+import { NextPageWithLayout } from "../../../_app";
 
 const CREATE_FAKE_USER_CV = gql`
   mutation CreateFakeUserCVnew($fields: createFakeUserCVnewInput) {
@@ -2155,7 +2155,7 @@ export async function getServerSideProps(ctx: {
   ) {
     return {
       redirect: {
-        destination: `/${_companyAuth.company.slug}/dashboard/subscription`,
+        destination: `/dashboard/${_companyAuth.company.slug}/subscription`,
         permanent: false,
       },
     };

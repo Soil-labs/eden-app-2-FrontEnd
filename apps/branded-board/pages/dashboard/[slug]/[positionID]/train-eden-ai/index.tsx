@@ -35,7 +35,7 @@ import { InterviewEdenAIContainer } from "@/components/TrainEdenAiSteps/Intervie
 import { PrioritiesAndTradeOffsContainer } from "@/components/TrainEdenAiSteps/PrioritiesAndTradeOffsContainer";
 import { ProfileQuestionsContainer } from "@/components/TrainEdenAiSteps/ProfileQuestionsContainer";
 
-import type { NextPageWithLayout } from "../../../../../_app";
+import type { NextPageWithLayout } from "../../../../_app";
 
 export const WEBPAGE_TO_MEMORY = gql`
   mutation ($fields: websiteToMemoryCompanyInput!) {
