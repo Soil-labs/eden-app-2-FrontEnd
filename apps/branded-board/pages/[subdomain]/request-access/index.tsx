@@ -166,7 +166,7 @@ export async function getServerSideProps(ctx: {
 
     return {
       redirect: {
-        destination: `/${_companyAuth.company.slug}/dashboard`,
+        destination: `/dashboard/${_companyAuth.company.slug}`,
         permanent: false,
       },
     };

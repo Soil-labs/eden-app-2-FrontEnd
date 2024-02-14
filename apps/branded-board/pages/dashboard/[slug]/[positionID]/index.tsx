@@ -2155,7 +2155,7 @@ export async function getServerSideProps(ctx: {
   ) {
     return {
       redirect: {
-        destination: `/${_companyAuth.company.slug}/dashboard/subscription`,
+        destination: `/dashboard/${_companyAuth.company.slug}/subscription`,
         permanent: false,
       },
     };
