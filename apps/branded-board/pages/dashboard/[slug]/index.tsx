@@ -1,6 +1,6 @@
 import { gql, useMutation, useQuery } from "@apollo/client";
 import { CompanyContext } from "@eden/package-context";
-import { Position } from "@eden/package-graphql/generated";
+import { Position, PositionStatus } from "@eden/package-graphql/generated";
 import { BrandedSaasUserLayout, Button, Modal } from "@eden/package-ui";
 import useAuthGate from "@eden/package-ui/src/hooks/useAuthGate/useAuthGate";
 import { getCookieFromContext } from "@eden/package-ui/utils";
@@ -315,13 +315,19 @@ const HomePage: NextPageWithLayout = () => {
               </Button>
             </div>
 
-            {company?.positions?.map((position) => (
-              <PositionCard
-                key={position?._id}
-                position={position as Position}
-                companySlug={company.slug || ""}
-              />
-            ))}
+            {company?.positions
+              ?.filter(
+                (_pos) =>
+                  _pos?.status === PositionStatus.Active ||
+                  _pos?.status === PositionStatus.Unpublished
+              )
+              .map((position) => (
+                <PositionCard
+                  key={position?._id}
+                  position={position as Position}
+                  companySlug={company.slug || ""}
+                />
+              ))}
           </div>
         </div>
       )}
