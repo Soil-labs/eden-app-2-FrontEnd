@@ -1,6 +1,6 @@
 // import { UserContext } from "@eden/package-context";
 import { gql, useMutation } from "@apollo/client";
-import { CompanyContext } from "@eden/package-context";
+import { CompanyContext, UserContext } from "@eden/package-context";
 import { EmployeeTypeInput } from "@eden/package-graphql/generated";
 import { Avatar, BrandedSaasUserLayout, Button } from "@eden/package-ui";
 import useAuthGate from "@eden/package-ui/src/hooks/useAuthGate/useAuthGate";
@@ -46,12 +46,14 @@ const UPDATE_COMPANY = gql`
 const sendInviteEmail = async (
   email: string,
   companySlug: string,
-  companyName: string
+  companyName: string,
+  userInviting: string
 ) => {
   axios.post(
     `${process.env.NEXT_PUBLIC_AUTH_URL}/mail-service/send-mail-invite-employee` as string,
     {
       mailTo: email,
+      userInviting: userInviting,
       companyName: companyName,
       inviteUrl: `https://developer-dao.joineden.ai/dashboard/${companySlug}/invite`,
     },
@@ -66,6 +68,8 @@ const sendInviteEmail = async (
 
 const PendingRequestsPage: NextPageWithLayout = () => {
   useAuthGate();
+
+  const { currentUser } = useContext(UserContext);
 
   const { company, getCompanyFunc } = useContext(CompanyContext);
 
@@ -143,7 +147,8 @@ const PendingRequestsPage: NextPageWithLayout = () => {
     sendInviteEmail(
       inviteEmail as string,
       company?.slug as string,
-      company?.name as string
+      company?.name as string,
+      currentUser?.discordName as string
     );
     if (inviteEmail)
       updateCompany({
