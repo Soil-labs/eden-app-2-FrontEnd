@@ -397,7 +397,7 @@ const PositionCard = ({ position, setLoadingSpinner }: PositionCardProps) => {
 
   return (
     <Link
-      className="transition-ease-in-out group relative col-span-1 w-full cursor-pointer rounded-md bg-[#F7F8F7] p-1 shadow-sm transition-all hover:scale-[101%] hover:shadow-md"
+      className="transition-ease-in-out group relative col-span-1 w-full cursor-pointer rounded-md bg-[#F7F8F7] p-1 shadow-sm transition-all hover:shadow-md"
       onClick={() => {
         handlePickJobs();
       }}

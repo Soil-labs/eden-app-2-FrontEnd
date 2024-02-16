@@ -116,7 +116,9 @@ export default async function handler(req: NextRequest) {
                   ) : null}
                   {params?.location || params?.location ? (
                     <div tw="ml-8 h-[2.6rem] text-[2rem] leading-[2rem] rounded-xl bg-[#F5C7DE] text-[#00462C] px-4 py-2 flex items-center">
-                      <span tw="pb-1">{params?.location}</span>
+                      <span tw="pb-1">
+                        {decodeURIComponent(params?.location)}
+                      </span>
                     </div>
                   ) : null}
                 </div>
