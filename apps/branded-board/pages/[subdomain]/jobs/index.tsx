@@ -121,9 +121,7 @@ const JobsPage: NextPageWithLayout = ({
               </span>
             </h1>
             <p className="mb-8 font-light text-[#BDBDC0]">
-              {
-                "Developer DAO is a decentralized autonomous organization nurturing collaboration, learning, and value creation in the web3 developer community. It's a hub for beginners and professionals to build and mentor."
-              }
+              {company?.description}
             </p>
 
             <div className="flex items-center justify-center md:justify-start">
