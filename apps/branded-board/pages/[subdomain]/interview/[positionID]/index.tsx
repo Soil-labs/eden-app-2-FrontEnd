@@ -5,7 +5,7 @@ import { UserContext } from "@eden/package-context";
 import { UPDATE_MEMBER } from "@eden/package-graphql";
 import { Mutation, UpdateMemberInput } from "@eden/package-graphql/generated";
 import {
-  AppUserLayout,
+  BrandedAppUserLayout,
   Button,
   EdenAiProcessingModal,
   Modal,
@@ -15,11 +15,17 @@ import {
   Wizard,
   WizardStep,
 } from "@eden/package-ui";
-import { classNames, getCookieFromContext } from "@eden/package-ui/utils";
+import useAuthGate from "@eden/package-ui/src/hooks/useAuthGate/useAuthGate";
+import { getCookieFromContext } from "@eden/package-ui/utils";
+import { IncomingMessage, ServerResponse } from "http";
+import mixpanel from "mixpanel-browser";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { forwardRef, useContext, useEffect, useState } from "react";
 import DatePicker from "react-datepicker";
+import { AiOutlineFile } from "react-icons/ai";
+import { IoChatbubbleEllipsesOutline } from "react-icons/io5";
+import { TiStarHalfOutline } from "react-icons/ti";
 import { toast } from "react-toastify";
 
 import ApplicationStepContainer from "@/components/interview/ApplicationContainer";
@@ -39,7 +45,7 @@ const SUBMIT_CANDIDATE_POSITION = gql`
   }
 `;
 
-const HomePage: NextPageWithLayout = () => {
+const InterviewPage: NextPageWithLayout = () => {
   const { currentUser } = useContext(UserContext);
   const router = useRouter();
 
@@ -276,275 +282,334 @@ const HomePage: NextPageWithLayout = () => {
         />
       </Head>
       <SEO />
-      <div className="scrollbar-hide relative mx-auto h-[calc(100vh-4rem)] w-full max-w-7xl overflow-y-scroll p-8 pt-4">
-        {/* <Card className="mx-auto mt-3 h-[88vh] w-full max-w-7xl overflow-y-scroll rounded-none px-4 pt-4"> */}
-        {currentUser && (
-          <div className="relative h-full w-full">
-            {step === 0 && (
-              <div className="pt-8">
-                <h1 className="text-edenGreen-600 text-center">
-                  {findPositionData?.findPosition?.company?.type === "COMMUNITY"
-                    ? `Let's get you onboarded to the ${findPositionData?.findPosition?.name}, ${currentUser.discordName}!`
-                    : `Hey ${currentUser.discordName}!`}
-                </h1>
-                <p className="text-edenGray-900 text-center">
-                  {findPositionData?.findPosition?.company?.type === "COMMUNITY"
-                    ? `You're about to do an interview with Eden to join ${findPositionData?.findPosition?.company?.name}.`
-                    : `Let's check if you're a good fit for the ${findPositionData?.findPosition?.name} role at ${findPositionData?.findPosition?.company?.name}!`}
-                </p>
-              </div>
-            )}
-            <div
-              className={classNames(
-                "w-full",
-                step === 0 ? "h-[calc(100%-6rem)]" : "h-full"
-              )}
-            >
-              <Wizard
-                showStepsHeader={step !== 0}
-                forceStep={step}
-                canPrev={false}
-                onStepChange={(_stepNum: number) => {
-                  if (_stepNum !== step) {
-                    setStep(_stepNum);
-                  }
-                }}
-                animate
-              >
-                <WizardStep
-                  navigationDisabled={!panda}
-                  nextDisabled={!cvEnded}
-                  label={"Resume UPLOAD"}
+      <div className="mx-auto h-[calc(100vh-5rem)] w-full max-w-7xl px-2">
+        <div className="scrollbar-hide relative h-full w-full overflow-y-scroll rounded-lg bg-white p-6">
+          {/* <Card className="mx-auto mt-3 h-[88vh] w-full max-w-7xl overflow-y-scroll rounded-none px-4 pt-4"> */}
+          {currentUser && (
+            <div className="relative h-full w-full">
+              <div className={"h-full w-full"}>
+                <Wizard
+                  branded
+                  showStepsHeader
+                  forceStep={step}
+                  canPrev={false}
+                  onStepChange={(_stepNum: number) => {
+                    if (_stepNum !== step) {
+                      setStep(_stepNum);
+                    }
+                  }}
+                  animate
                 >
-                  <UploadCVContainer
-                    setTitleRole={setTitleRole}
-                    setTopSkills={setTopSkills}
-                    setContent={setContent}
-                    handleCvEnd={handleCvEnd}
-                    position={findPositionData?.findPosition}
-                    editMode={!!panda}
-                  />
-                </WizardStep>
-                <WizardStep
-                  navigationDisabled={!panda}
-                  label={"EDEN INSIGHTS"}
-                  nextDisabled={!insightsChecked}
-                  nextButton={
-                    <Button
-                      disabled={!insightsChecked}
-                      variant="secondary"
-                      className="mx-auto"
-                      onClick={handleStartInterviewStep}
-                    >
-                      Start Interview
-                    </Button>
-                  }
-                >
-                  <ApplicationStepContainer
-                    topSkills={topSkills}
-                    titleRole={titleRole}
-                    position={findPositionData?.findPosition}
-                    content={content}
-                  />
-                  <div className="absolute -bottom-10 left-0 flex w-full justify-center rounded-md px-4 py-2 text-xs text-gray-500 ">
-                    <input
-                      type="checkbox"
-                      onChange={(e) => {
-                        setInsightsChecked(e.target.checked);
-                      }}
-                      className="mr-3"
-                    />
-                    <p>
-                      I acknowledge that my Resume and responses can be stored
-                      and shared with hiring managers by Eden
-                      <span className="mx-1 text-red-600">*</span>
-                    </p>
-                  </div>
-                  <Modal
-                    open={showStartInterviewModal}
-                    onClose={onCloseHandler}
+                  <WizardStep
+                    navigationDisabled={!panda}
+                    nextDisabled={!cvEnded}
+                    label={
+                      step === 0 ? (
+                        <span>
+                          <AiOutlineFile
+                            size={"0.8rem"}
+                            className="-mt-0.5 mr-1 inline-block"
+                          />
+                          CV
+                        </span>
+                      ) : (
+                        "CV"
+                      )
+                    }
+                    nextButton={
+                      <button
+                        disabled={!cvEnded}
+                        className="disabled:!border-edenGray-500 disabled:!bg-edenGray-100 disabled:!text-edenGray-500 -mx-4 -mb-4 box-border w-[calc(100%+2rem)] max-w-sm rounded-md border border-black bg-black p-2 font-normal text-white hover:bg-white hover:text-black disabled:cursor-not-allowed md:mx-auto"
+                        onClick={handleStartInterviewStep}
+                        style={{
+                          fontFamily: "Roboto, sans-serif",
+                        }}
+                      >
+                        Get Started!
+                      </button>
+                    }
                   >
-                    {scheduleState === "first" && (
-                      <div className="  px-4 py-8">
-                        <h2 className="text-edenGreen-600 text-center">
-                          {
-                            "You're about to head into your interview with Eden."
-                          }
+                    <UploadCVContainer
+                      setTitleRole={setTitleRole}
+                      setTopSkills={setTopSkills}
+                      setContent={setContent}
+                      handleCvEnd={handleCvEnd}
+                      position={findPositionData?.findPosition}
+                      editMode={!!panda}
+                    />
+                  </WizardStep>
+                  <WizardStep
+                    navigationDisabled={!panda}
+                    label={
+                      step === 1 ? (
+                        <span>
+                          <TiStarHalfOutline
+                            size={"0.9rem"}
+                            className="-mt-1 mr-1 inline-block"
+                          />
+                          Insights
+                        </span>
+                      ) : (
+                        "Insights"
+                      )
+                    }
+                    nextDisabled={!insightsChecked}
+                    nextButton={
+                      <button
+                        disabled={!insightsChecked}
+                        className="disabled:!border-edenGray-500 disabled:!bg-edenGray-100 disabled:!text-edenGray-500 -mx-4 -mb-4 box-border w-[calc(100%+2rem)] max-w-sm rounded-md border border-black bg-black p-2 font-normal text-white hover:bg-white hover:text-black disabled:cursor-not-allowed md:mx-auto"
+                        onClick={handleStartInterviewStep}
+                        style={{ fontFamily: "Roboto, sans-serif" }}
+                      >
+                        Start Interview
+                      </button>
+                    }
+                  >
+                    <ApplicationStepContainer
+                      topSkills={topSkills}
+                      titleRole={titleRole}
+                      position={findPositionData?.findPosition}
+                      content={content}
+                    />
+                    <div className="absolute -bottom-10 left-0 flex w-full justify-center rounded-md bg-white px-4 py-2 text-xs text-gray-500">
+                      <input
+                        type="checkbox"
+                        id="consent"
+                        onChange={(e) => {
+                          setInsightsChecked(e.target.checked);
+                        }}
+                        className="mr-3"
+                      />
+                      <label htmlFor="consent">
+                        I acknowledge that my Resume and responses can be stored
+                        and shared with hiring managers by Eden
+                        <span className="mx-1 text-red-600">*</span>
+                      </label>
+                    </div>
+                    <Modal
+                      open={showStartInterviewModal}
+                      onClose={onCloseHandler}
+                    >
+                      {scheduleState === "first" && (
+                        <div className="mx-auto max-w-sm px-4 py-12">
+                          <h2 className="text-md text-center font-normal">
+                            {"You're about to start the interview!"}
+                          </h2>
+                          <p className="text-edenGray-700 mb-8 text-center text-sm">
+                            {
+                              "This chat based interview will take around 10 minutes. Just Be your smashing self :)"
+                            }
+                          </p>
+                          <div className="flex flex-col">
+                            <button
+                              className="disabled:!border-edenGray-500 disabled:!bg-edenGray-100 disabled:!text-edenGray-500 mb-4 box-border w-full max-w-sm rounded-md border border-black bg-black p-2 font-normal text-white hover:bg-white hover:text-black disabled:cursor-not-allowed md:mx-auto"
+                              onClick={() => {
+                                setShowStartInterviewModal(false);
+                                mixpanel.track(
+                                  "Interview > Start AI Interview"
+                                );
+                                setStep(step + 1);
+                              }}
+                              style={{ fontFamily: "Roboto, sans-serif" }}
+                            >
+                              {"Let's begin!"}
+                            </button>
+                            <p
+                              className="text-edenGray-700 hover:!text-edenGray-500 cursor-pointer text-center underline"
+                              onClick={() => setScheduleState("second")}
+                            >
+                              Schedule for later
+                            </p>
+                          </div>
+                        </div>
+                      )}
+                      {scheduleState === "second" && (
+                        <div className="mt-7 flex flex-col items-center justify-center py-48  ">
+                          <div className="mb-4 flex flex-col items-center">
+                            <h1 className=" text-edenGreen-600 text-3xl font-bold">
+                              Pick a date.
+                            </h1>
+                          </div>
+
+                          <div className="mb-12">
+                            <DatePicker
+                              className=" rounded-md border border-black pl-3"
+                              selected={startDate}
+                              onChange={(date: any) => setStartDate(date)}
+                              timeInputLabel="Time:"
+                              dateFormat="MM/dd/yyyy h:mm aa"
+                              showTimeSelect
+                              timeIntervals={15}
+                              popperPlacement="top-start"
+                              customInput={<ExampleCustomInput />}
+                              showIcon
+                            />
+                          </div>
+                          {!startDate ? (
+                            <Button className="" variant="secondary" disabled>
+                              add to calendar{" "}
+                            </Button>
+                          ) : (
+                            <Button
+                              className=""
+                              variant="secondary"
+                              onClick={constructLink}
+                            >
+                              add to calendar{" "}
+                            </Button>
+                          )}
+                        </div>
+                      )}
+                      {scheduleState === "third" && (
+                        <div className="flex h-60 flex-col items-center justify-center ">
+                          <h1 className="text-edenGreen-500 text-4xl">
+                            {"See You Then! :)"}
+                          </h1>
+                        </div>
+                      )}
+                    </Modal>
+                  </WizardStep>
+                  {/* <WizardStep navigationDisabled nextDisabled={!interviewEnded} label={"chat"}> */}
+                  <WizardStep
+                    navigationDisabled={!panda}
+                    label={
+                      step === 2 ? (
+                        <span>
+                          <IoChatbubbleEllipsesOutline
+                            size={"0.8rem"}
+                            className="-mt-1 mr-1 inline-block"
+                          />
+                          Insights
+                        </span>
+                      ) : (
+                        "Interview"
+                      )
+                    }
+                    nextButton={
+                      <button
+                        disabled={!cvEnded}
+                        className="disabled:!border-edenGray-500 disabled:!bg-edenGray-100 disabled:!text-edenGray-500 -mx-4 -mb-4 box-border w-[calc(100%+2rem)] max-w-sm rounded-md border border-black bg-black p-2 font-normal text-white hover:bg-white hover:text-black disabled:cursor-not-allowed md:mx-auto"
+                        onClick={() => {
+                          handleFinishInterviewStep();
+                        }}
+                        style={{
+                          fontFamily: "Roboto, sans-serif",
+                        }}
+                      >
+                        Finish Interview
+                      </button>
+                    }
+                  >
+                    <div className="mx-auto h-full max-w-lg">
+                      <InterviewEdenAIStepContainer
+                        handleEnd={handleInterviewEnd}
+                      />
+                    </div>
+
+                    <Modal open={showInterviewModal} closeOnEsc={false}>
+                      <div className="px-4 py-8">
+                        <h2 className="mb-12 text-center">
+                          Are you sure you want to end the interview?
                         </h2>
-                        <p className="text-center">
-                          {"This will take around 10-15 minutes."}
-                        </p>
-                        <p className="mb-12 text-center text-sm">
-                          {"Just be your smashing self. You look great btw ;)"}
-                        </p>
                         <div className="flex justify-evenly">
                           <Button
-                            variant="tertiary"
-                            onClick={() => setScheduleState("second")}
+                            onClick={() => {
+                              setShowInterviewModal(false);
+                            }}
+                            variant="primary"
                           >
-                            Schedule The Interview
+                            {"I'm not done yet"}
                           </Button>
                           <Button
                             variant="secondary"
                             onClick={() => {
-                              setShowStartInterviewModal(false);
-                              mixpanel.track("Interview > Start AI Interview");
+                              setShowInterviewModal(false);
+                              mixpanel.track("Interview > End AI Interview");
                               setStep(step + 1);
                             }}
                           >
-                            {"Let's do this now!"}
+                            Finish Interview
                           </Button>
                         </div>
                       </div>
-                    )}
-                    {scheduleState === "second" && (
-                      <div className="mt-7 flex flex-col items-center justify-center py-48  ">
-                        <div className="mb-4 flex flex-col items-center">
-                          <h1 className=" text-edenGreen-600 text-3xl font-bold">
-                            Pick a date.
-                          </h1>
-                        </div>
+                    </Modal>
+                  </WizardStep>
 
-                        <div className="mb-12">
-                          <DatePicker
-                            className=" rounded-md border border-black pl-3"
-                            selected={startDate}
-                            onChange={(date: any) => setStartDate(date)}
-                            timeInputLabel="Time:"
-                            dateFormat="MM/dd/yyyy h:mm aa"
-                            showTimeSelect
-                            timeIntervals={15}
-                            popperPlacement="top-start"
-                            customInput={<ExampleCustomInput />}
-                            showIcon
+                  <WizardStep
+                    navigationDisabled={!panda}
+                    label={
+                      step === 3 ? (
+                        <span>
+                          <BsFillCheckSquareFill
+                            size={"0.8rem"}
+                            className="-mt-0.5 mr-1 inline-block"
                           />
-                        </div>
-                        {!startDate ? (
-                          <Button className="" variant="secondary" disabled>
-                            add to calendar{" "}
-                          </Button>
-                        ) : (
-                          <Button
-                            className=""
-                            variant="secondary"
-                            onClick={constructLink}
-                          >
-                            add to calendar{" "}
-                          </Button>
-                        )}
-                      </div>
-                    )}
-                    {scheduleState === "third" && (
-                      <div className="flex h-60 flex-col items-center justify-center ">
-                        <h1 className="text-edenGreen-500 text-4xl">
-                          {"See You Then! :)"}
-                        </h1>
-                      </div>
-                    )}
-                  </Modal>
-                </WizardStep>
-                {/* <WizardStep navigationDisabled nextDisabled={!interviewEnded} label={"chat"}> */}
-                <WizardStep
-                  navigationDisabled={!panda}
-                  label={"INTERVIEW"}
-                  nextButton={
-                    <Button
-                      variant="primary"
-                      className="mx-auto"
-                      onClick={() => {
-                        handleFinishInterviewStep();
-                      }}
-                    >
-                      Finish Interview
-                    </Button>
-                  }
-                >
-                  <div className="mx-auto h-full max-w-lg">
-                    <InterviewEdenAIStepContainer
-                      handleEnd={handleInterviewEnd}
-                    />
-                  </div>
-
-                  <Modal open={showInterviewModal} closeOnEsc={false}>
-                    <div className="px-4 py-8">
-                      <h2 className="mb-12 text-center">
-                        Are you sure you want to end the interview?
-                      </h2>
-                      <div className="flex justify-evenly">
-                        <Button
-                          onClick={() => {
-                            setShowInterviewModal(false);
-                          }}
-                          variant="primary"
-                        >
-                          {"I'm not done yet"}
-                        </Button>
-                        <Button
-                          variant="secondary"
-                          onClick={() => {
-                            setShowInterviewModal(false);
-                            mixpanel.track("Interview > End AI Interview");
-                            setStep(step + 1);
-                          }}
-                        >
-                          Finish Interview
-                        </Button>
-                      </div>
-                    </div>
-                  </Modal>
-                </WizardStep>
-
-                <WizardStep
-                  navigationDisabled={!panda}
-                  label={"FINAL DETAILS"}
-                  nextButton={
-                    <Button
-                      variant="secondary"
-                      className="mx-auto"
-                      onClick={() => {
-                        handleGeneralDetailsSubmit();
-                      }}
-                      disabled={
-                        !(
-                          generalDetails?.budget?.perHour &&
-                          generalDetails?.hoursPerWeek &&
-                          generalDetails?.location &&
-                          generalDetails?.timeZone &&
-                          (generalDetails?.experienceLevel?.years ||
-                            generalDetails?.experienceLevel?.years === 0) &&
-                          (generalDetails?.experienceLevel?.total ||
-                            generalDetails?.experienceLevel?.years === 0)
-                        )
-                      }
-                    >
-                      Submit Application
-                    </Button>
-                  }
-                >
-                  <h3 className="text-edenGreen-600 mb-12 mt-4 w-full text-center">
-                    {
-                      "All done, this is the final step. Fill in some quick information and we’re off!"
+                          Insights
+                        </span>
+                      ) : (
+                        "Details"
+                      )
                     }
-                  </h3>
-                  <ProfileQuestionsContainer
-                    onChange={(data) => {
-                      setGeneralDetails(data);
-                    }}
-                  />
-                  {submittingGeneralDetails && (
-                    <EdenAiProcessingModal
-                      title="Saving data"
-                      open={submittingGeneralDetails}
+                    nextButton={
+                      <button
+                        className="disabled:!border-edenGray-500 disabled:!bg-edenGray-100 disabled:!text-edenGray-500 -mx-4 -mb-4 box-border w-[calc(100%+2rem)] max-w-sm rounded-md border border-black bg-black p-2 font-normal text-white hover:bg-white hover:text-black disabled:cursor-not-allowed md:mx-auto"
+                        onClick={() => {
+                          handleGeneralDetailsSubmit();
+                        }}
+                        disabled={
+                          !(
+                            generalDetails?.budget?.perHour &&
+                            generalDetails?.hoursPerWeek &&
+                            generalDetails?.location &&
+                            generalDetails?.timeZone &&
+                            (generalDetails?.experienceLevel?.years ||
+                              generalDetails?.experienceLevel?.years === 0) &&
+                            (generalDetails?.experienceLevel?.total ||
+                              generalDetails?.experienceLevel?.years === 0)
+                          )
+                        }
+                        style={{
+                          fontFamily: "Roboto, sans-serif",
+                        }}
+                      >
+                        Submit Application
+                      </button>
+                    }
+                  >
+                    <ProfileQuestionsContainer
+                      onChange={(data) => {
+                        setGeneralDetails(data);
+                      }}
                     />
-                  )}
-                </WizardStep>
-                <WizardStep navigationDisabled={!panda} label={"ALL DONE"}>
-                  <ConfirmEmailContainer
-                    email={currentUser.conduct?.email || ""}
-                    position={findPositionData?.findPosition!}
-                  />
-                </WizardStep>
-                {/* <WizardStep navigationDisabled={!panda} label={"ALL DONE"}>
+                    {submittingGeneralDetails && (
+                      <EdenAiProcessingModal
+                        title="Saving data"
+                        open={submittingGeneralDetails}
+                      />
+                    )}
+                  </WizardStep>
+                  <WizardStep
+                    navigationDisabled={!panda}
+                    label={
+                      step === 4 ? (
+                        <span>
+                          <TbHeart
+                            size={"0.9rem"}
+                            className="-mt-0.5 mr-1 inline-block"
+                          />
+                          Insights
+                        </span>
+                      ) : (
+                        "All done"
+                      )
+                    }
+                  >
+                    <ConfirmEmailContainer
+                      email={currentUser.conduct?.email || ""}
+                      position={findPositionData?.findPosition!}
+                    />
+                  </WizardStep>
+                  {/* <WizardStep navigationDisabled={!panda} label={"ALL DONE"}>
                   <FinalContainer />
                   <ConnectTelegramContainer
                     candidateTelegramID={
@@ -553,38 +618,40 @@ const HomePage: NextPageWithLayout = () => {
                   />
                 </WizardStep> */}
 
-                {/* <WizardStep label={"end"}>
+                  {/* <WizardStep label={"end"}>
               <section className="flex h-full flex-col items-center justify-center">
                 <h2 className="mb-8 text-2xl font-medium">Thanks</h2>
               </section>
             </WizardStep> */}
-              </Wizard>
-              {panda && (
-                <Button
-                  className="absolute bottom-0 left-0 !border-white !bg-white text-gray-300 hover:!text-gray-200"
-                  variant="secondary"
-                  onClick={() => {
-                    setStep(step + 1);
-                  }}
-                >
-                  Next
-                </Button>
-              )}
+                </Wizard>
+                {panda && (
+                  <Button
+                    className="absolute bottom-0 left-0 !border-white !bg-white text-gray-300 hover:!text-gray-200"
+                    variant="secondary"
+                    onClick={() => {
+                      setStep(step + 1);
+                    }}
+                  >
+                    Next
+                  </Button>
+                )}
+              </div>
             </div>
-          </div>
-        )}
+          )}
+        </div>
       </div>
     </>
   );
 };
 
-HomePage.getLayout = (page) => <AppUserLayout>{page}</AppUserLayout>;
+InterviewPage.getLayout = (page) => (
+  <BrandedAppUserLayout>{page}</BrandedAppUserLayout>
+);
 
-export default HomePage;
+export default InterviewPage;
 
-import useAuthGate from "@eden/package-ui/src/hooks/useAuthGate/useAuthGate";
-import { IncomingMessage, ServerResponse } from "http";
-import mixpanel from "mixpanel-browser";
+import { BsFillCheckSquareFill } from "react-icons/bs";
+import { TbHeart } from "react-icons/tb";
 
 import ConfirmEmailContainer from "@/components/interview/ConfirmEmailContainer";
 
