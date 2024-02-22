@@ -10,8 +10,7 @@ import {
   BsFillFileEarmarkMinusFill,
   BsFillFileEarmarkPlusFill,
 } from "react-icons/bs";
-import { FaStar } from "react-icons/fa";
-import { IoWallet } from "react-icons/io5";
+import { TiStarHalfOutline } from "react-icons/ti";
 
 interface ApplicationStepContainerProps {
   titleRole: string;
@@ -35,26 +34,6 @@ const ApplicationStepContainer = ({
   position,
   content,
 }: ApplicationStepContainerProps) => {
-  // const router = useRouter();
-  // const { currentUser } = useContext(UserContext);
-
-  // const monthNames = [
-  //   "January",
-  //   "February",
-  //   "March",
-  //   "April",
-  //   "May",
-  //   "June",
-  //   "July",
-  //   "August",
-  //   "September",
-  //   "October",
-  //   "November",
-  //   "December",
-  // ];
-
-  // const today = new Date();
-
   const getMatchText = () => {
     if (content.matchPercentage! >= 80) {
       return "Very High";
@@ -82,347 +61,160 @@ const ApplicationStepContainer = ({
     strongSuit: false,
   });
 
-  const formattedSalary = (salary: number) => {
-    if (salary >= 1000) return `${salary / 1000}k`;
-
-    return salary;
-  };
-
   return (
-    <>
-      <div>
-        <div className="grid w-full grid-cols-12 gap-2">
-          <div className="col-span-9 pt-8">
-            <h1 className="text-edenGreen-600">
-              Before you dive into the interview
-            </h1>
-            <p className="text-edenGray-900 mb-10 text-sm">
-              A couple of quick notes to set you up for success
-            </p>
-            <section
-              className="bg-edenPink-100 relative mb-2 cursor-pointer rounded-sm p-4"
-              onClick={() =>
-                setOpenSections({
-                  ...openSections,
-                  areasToImprove: !openSections.areasToImprove,
-                })
-              }
-            >
-              <div className="absolute right-4 top-4 cursor-pointer p-1">
-                {openSections.areasToImprove ? (
-                  <BiChevronUp color="#626262" size={"1.2rem"} />
-                ) : (
-                  <BiChevronDown color="#626262" size={"1.2rem"} />
-                )}
-              </div>
-              <h3 className="text-edenGreen-600 text-lg font-semibold">
-                <BsFillFileEarmarkMinusFill
-                  color="#00462C"
-                  size="1.3rem"
-                  className="-mt-1 mr-2 inline"
-                />
-                Missing from your resume
-              </h3>
-              <p className="text-edenGray-500 mb-2 text-sm">
-                Make sure to address this in your interview
-              </p>
-              <p
-                className={classNames(
-                  "text-edenGray-900 overflow-hidden whitespace-pre-wrap transition-all ease-in-out",
-                  openSections.areasToImprove ? "max-h-[80vh]" : "max-h-0"
-                )}
-              >
-                {content.improvementPoints}
-              </p>
-            </section>
-            <section
-              className="border-edenGreen-100 relative mb-2 cursor-pointer border-b p-4"
-              onClick={() =>
-                setOpenSections({
-                  ...openSections,
-                  growth: !openSections.growth,
-                })
-              }
-            >
-              <div className="absolute right-4 top-4 cursor-pointer p-1">
-                {openSections.growth ? (
-                  <BiChevronUp color="#626262" size={"1.2rem"} />
-                ) : (
-                  <BiChevronDown color="#626262" size={"1.2rem"} />
-                )}
-              </div>
-              <h3 className="text-edenGreen-600 text-lg font-semibold">
-                <BsFillFileEarmarkBarGraphFill
-                  color="#00462C"
-                  size="1.3rem"
-                  className="-mt-1 mr-2 inline"
-                />
-                Your opportunity to grow
-              </h3>
-              <p className="text-edenGray-500 mb-2 text-sm">
-                Find out about the areas you can grow in
-              </p>
-              <p
-                className={classNames(
-                  "text-edenGray-900 overflow-hidden whitespace-pre-wrap transition-all ease-in-out",
-                  openSections.growth ? "max-h-[80vh]" : "max-h-0"
-                )}
-              >
-                {content.growthAreas}
-              </p>
-            </section>
-            <section
-              className="border-edenGreen-100 relative mb-2 cursor-pointer border-b p-4"
-              onClick={() =>
-                setOpenSections({
-                  ...openSections,
-                  strongSuit: !openSections.strongSuit,
-                })
-              }
-            >
-              <div className="absolute right-4 top-4 cursor-pointer p-1">
-                {openSections.strongSuit ? (
-                  <BiChevronUp color="#626262" size={"1.2rem"} />
-                ) : (
-                  <BiChevronDown color="#626262" size={"1.2rem"} />
-                )}
-              </div>
-              <h3 className="text-edenGreen-600 text-lg font-semibold">
-                <BsFillFileEarmarkPlusFill
-                  color="#00462C"
-                  size="1.3rem"
-                  className="-mt-1 mr-2 inline"
-                />
-                What already stands out about you
-              </h3>
-              <p className="text-edenGray-500 mb-2 text-sm">
-                Find out about the areas you are strong at
-              </p>
-              <p
-                className={classNames(
-                  "text-edenGray-900 overflow-hidden whitespace-pre-wrap transition-all ease-in-out",
-                  openSections.strongSuit ? "max-h-[80vh]" : "max-h-0"
-                )}
-              >
-                {content.strongFit}
-              </p>
-            </section>
-          </div>
-          <div className="border-edenGreen-100 col-span-3 rounded-sm border">
-            <section className="border-edenGreen-100 mb-2 rounded-md border-b p-4 text-center">
-              <h2 className="text-edenGreen-600 mb-4 text-center">
-                Probability of Passing
-              </h2>
-              <div className="border-edenGreen-400 text-edenGreen-600 font-Moret inline-block border px-3 py-1 text-center text-lg">
-                {matchText.toUpperCase()}
-              </div>
-            </section>
+    <div className="mx-auto max-w-2xl pb-12 pt-8">
+      <section className="mb-6">
+        <div className="bg-edenGray-100 text-edenGray-900 mb-2 flex h-12 w-12 items-center justify-center rounded-2xl pb-px pl-px">
+          <TiStarHalfOutline size={"1.2rem"} />
+        </div>
+        <p className="">CV Insights</p>
+        <p className="text-edenGray-700 text-xs">
+          Before starting the interview, a few quick feedback on your resume
+          from Eden!
+        </p>
+      </section>
 
-            {(position?.generalDetails?.yearlySalary?.min ||
-              position?.generalDetails?.yearlySalary?.min === 0) && (
-              <section className="mb-2 p-4">
-                <h3 className="text-edenGreen-600 mb-2">
-                  <IoWallet size="1.3rem" className="mr-2 inline" />
-                  Yearly Salary
-                </h3>
-                <p className="text-lg font-medium">
-                  {`${
-                    position?.generalDetails?.yearlySalary?.min ||
-                    position?.generalDetails?.yearlySalary?.min === 0
-                      ? `$${formattedSalary(
-                          position?.generalDetails?.yearlySalary?.min
-                        )}`
-                      : ""
-                  }${
-                    (position?.generalDetails?.yearlySalary?.min ||
-                      position?.generalDetails?.yearlySalary?.min === 0) &&
-                    (position?.generalDetails?.yearlySalary?.max ||
-                      position?.generalDetails?.yearlySalary?.max === 0)
-                      ? `  -  `
-                      : ""
-                  }${
-                    position?.generalDetails?.yearlySalary?.max ||
-                    position?.generalDetails?.yearlySalary?.max === 0
-                      ? `$${formattedSalary(
-                          position?.generalDetails?.yearlySalary?.max
-                        )}`
-                      : ""
-                  }`}
-                </p>
-              </section>
-            )}
-            {/* <section className="mb-2 p-4">
-              <h3 className="text-edenGreen-600 mb-2">
-                <BiCalendarExclamation
-                  color="#00462C"
-                  size="1.3rem"
-                  className="-mt-1 mr-2 inline"
-                />
-                Timeline
-              </h3>
-              <div>
-                <div className="">
-                  <div>
-                    <p className="text-xs text-gray-500">{`${
-                      monthNames[today.getMonth()]
-                    } ${today.getDate()}`}</p>
-                    <p className="text-sm">Recruiting + Eden AI Chat</p>
-                  </div>
-                  <BiChevronDown
-                    size={"1.6rem"}
-                    color="#00462C"
-                    className="mx-auto"
-                  />
-                  <div>
-                    <p className="text-xs text-gray-500">{`${
-                      monthNames[
-                        new Date(
-                          new Date().setDate(today.getDate() + 3)
-                        ).getMonth()
-                      ]
-                    } ${new Date(
-                      new Date().setDate(today.getDate() + 3)
-                    ).getDate()}`}</p>
-                    <p className="text-sm">HR Interviews</p>
-                  </div>
-                  <BiChevronDown
-                    size={"1.6rem"}
-                    color="#00462C"
-                    className="mx-auto"
-                  />
-                  <div>
-                    <p className="text-xs text-gray-500">{`${
-                      monthNames[
-                        new Date(
-                          new Date().setDate(today.getDate() + 14)
-                        ).getMonth()
-                      ]
-                    } ${new Date(
-                      new Date().setDate(today.getDate() + 14)
-                    ).getDate()}`}</p>
-                    <p className="text-sm">Onboarding</p>
-                  </div>
-                </div>
-              </div>
-            </section> */}
-            <section className="mb-2 w-full p-4">
-              <h3 className="text-edenGreen-600 mb-2">
-                <FaStar
-                  size="1.3rem"
-                  color="#00462C"
-                  className="-mt-1 mr-2 inline"
-                />
-                Your Top skills
-              </h3>
-              <div>
-                {topSkills !== null &&
-                  topSkills.map((skill: any, index: number) => (
-                    <Badge key={index} text={skill} cutText={20} />
-                  ))}
-              </div>
-            </section>
+      <section className="border-edenGray-100 mb-2 rounded-lg border p-4">
+        <h3 className="text-edenGray-900 mb-2 text-xs font-normal">
+          Probability of Passing
+        </h3>
+        <p className="font-clash-display text-lg">{matchText}</p>
+      </section>
+
+      <section className="border-edenGray-100 mb-2 rounded-lg border p-4">
+        <h3 className="text-edenGray-900 mb-2 text-xs font-normal">
+          Your Top Skills
+        </h3>
+        <div className="-mx-1 w-[100%-2rem]">
+          {topSkills !== null &&
+            topSkills.map((skill: any, index: number) => (
+              <Badge
+                className="border-edenGray-100 text-edenGray-700 !rounded-lg border !bg-white"
+                key={index}
+                text={skill}
+                cutText={30}
+              />
+            ))}
+        </div>
+      </section>
+
+      <section
+        className="border-edenGray-100 relative mb-2 cursor-pointer rounded-lg border bg-white p-4"
+        onClick={() =>
+          setOpenSections({
+            ...openSections,
+            areasToImprove: !openSections.areasToImprove,
+          })
+        }
+      >
+        <div className="absolute right-2 top-3 cursor-pointer p-1">
+          {openSections.areasToImprove ? (
+            <BiChevronUp color="#626262" size={"1.2rem"} />
+          ) : (
+            <BiChevronDown color="#626262" size={"1.2rem"} />
+          )}
+        </div>
+        <div className="flex w-[100%-3rem] items-center">
+          <div className="bg-edenGray-100 text-edenGray-900 -ml-1 mr-2 flex h-8 w-8 items-center justify-center rounded-lg">
+            <BsFillFileEarmarkMinusFill color="#000000" size="1.2rem" />
+          </div>
+          <div>
+            <h3 className="text-edenGray-900 text-xs font-normal">
+              Missing from your resume
+            </h3>
+            <p className="text-edenGray-700 text-xs">
+              Make sure to address this in your interview
+            </p>
           </div>
         </div>
-        {/* <div className="grid grid-cols-12 gap-2">
-          <div className="col-span-3 bg-edenGreen-100 mb-2 rounded-md p-4">
-            <h2 className="text-center text-edenGreen-600 mb-6">
-              Probability of passing
-            </h2>
-            <div className="bg-white text-center p-4 rounded-md">
-              {matchText}
-            </div>
+        <p
+          className={classNames(
+            "text-edenGray-700 overflow-hidden whitespace-pre-wrap pt-4 text-xs transition-all ease-in-out",
+            openSections.areasToImprove ? "max-h-[80vh]" : "max-h-0 !pt-0"
+          )}
+        >
+          {content.improvementPoints}
+        </p>
+      </section>
+
+      <section
+        className="border-edenGray-100 relative mb-2 cursor-pointer rounded-lg border bg-white p-4"
+        onClick={() =>
+          setOpenSections({
+            ...openSections,
+            growth: !openSections.growth,
+          })
+        }
+      >
+        <div className="absolute right-2 top-3 cursor-pointer p-1">
+          {openSections.growth ? (
+            <BiChevronUp color="#626262" size={"1.2rem"} />
+          ) : (
+            <BiChevronDown color="#626262" size={"1.2rem"} />
+          )}
+        </div>
+        <div className="flex w-[100%-3rem] items-center">
+          <div className="bg-edenGray-100 text-edenGray-900 -ml-1 mr-2 flex h-8 w-8 items-center justify-center rounded-lg">
+            <BsFillFileEarmarkBarGraphFill color="#000000" size="1.2rem" />
           </div>
-          <div className="col-span-9 grid grid-cols-12 gap-2">
-            <section className="w-full border border-edenGray-100 rounded-md bg-white p-4 col-span-12">
-              <h3 className="text-edenGreen-600 mb-2">Your Top skills</h3>
-              <div>
-                {topSkills !== null &&
-                  topSkills.map((skill: any, index: number) => (
-                    <Badge key={index} text={skill} cutText={20} />
-                  ))}
-              </div>
-            </section>
-            <section className="w-full border border-edenGray-100 rounded-md bg-white mb-2 p-4 col-span-4">
-              <h3 className="text-edenGreen-600 mb-2">Yearly Salary</h3>
-              <p className="text-lg font-medium">
-                ${position?.generalDetails?.yearlySalary}
-              </p>
-            </section>
-            <section className="w-full border border-edenGray-100 rounded-md bg-white mb-2 p-4 col-span-8">
-              <h3 className="text-edenGreen-600 mb-2">Timeline</h3>
-              <div>
-                <div className="flex flex-nowrap items-center">
-                  <div>
-                    <p className="text-sm text-gray-500">{`${
-                      monthNames[today.getMonth()]
-                    } ${today.getDate()}`}</p>
-                    <p>Recruiting + Eden AI Chat</p>
-                  </div>
-                  <BiChevronRight
-                    size={"1.6rem"}
-                    color="#00462C"
-                    className="mx-5"
-                  />
-                  <div>
-                    <p className="text-sm text-gray-500">{`${
-                      monthNames[
-                        new Date(
-                          new Date().setDate(today.getDate() + 3)
-                        ).getMonth()
-                      ]
-                    } ${new Date(
-                      new Date().setDate(today.getDate() + 3)
-                    ).getDate()}`}</p>
-                    <p>HR Interviews</p>
-                  </div>
-                  <BiChevronRight
-                    size={"1.6rem"}
-                    color="#00462C"
-                    className="mx-5"
-                  />
-                  <div>
-                    <p className="text-sm text-gray-500">{`${
-                      monthNames[
-                        new Date(
-                          new Date().setDate(today.getDate() + 14)
-                        ).getMonth()
-                      ]
-                    } ${new Date(
-                      new Date().setDate(today.getDate() + 14)
-                    ).getDate()}`}</p>
-                    <p>Onboarding</p>
-                  </div>
-                </div>
-              </div>
-            </section>
-          </div>
-        </div> */}
-        {/* <section className="h-64 w-full overflow-x-scroll whitespace-nowrap">
-          <div className="border border-edenGray-100 rounded-md bg-white p-4 w-72 h-full inline-block align-top overflow-y-scroll mr-2">
-            <h3 className="text-edenGreen-600 text-lg font-semibold">
-              Strong suit
+          <div>
+            <h3 className="text-edenGray-900 text-xs font-normal">
+              Your opportunity to grow
             </h3>
-            <p className="whitespace-pre-wrap">{content.strongFit}</p>
+            <p className="text-edenGray-700 text-xs">
+              Find out about the areas you can grow in
+            </p>
           </div>
-          <div className="border border-edenGray-100 rounded-md bg-white p-4 w-72 h-full inline-block align-top overflow-y-scroll mr-2">
-            <h3 className="text-edenGreen-600 text-lg font-semibold">
-              Areas to improve
+        </div>
+        <p
+          className={classNames(
+            "text-edenGray-700 overflow-hidden whitespace-pre-wrap pt-4 text-xs transition-all ease-in-out",
+            openSections.growth ? "max-h-[80vh]" : "max-h-0 !pt-0"
+          )}
+        >
+          {content.growthAreas}
+        </p>
+      </section>
+
+      <section
+        className="border-edenGray-100 relative mb-2 cursor-pointer rounded-lg border bg-white p-4"
+        onClick={() =>
+          setOpenSections({
+            ...openSections,
+            strongSuit: !openSections.strongSuit,
+          })
+        }
+      >
+        <div className="absolute right-2 top-3 cursor-pointer p-1">
+          {openSections.strongSuit ? (
+            <BiChevronUp color="#626262" size={"1.2rem"} />
+          ) : (
+            <BiChevronDown color="#626262" size={"1.2rem"} />
+          )}
+        </div>
+        <div className="flex w-[100%-3rem] items-center">
+          <div className="bg-edenGray-100 text-edenGray-900 -ml-1 mr-2 flex h-8 w-8 items-center justify-center rounded-lg">
+            <BsFillFileEarmarkPlusFill color="#000000" size="1.2rem" />
+          </div>
+          <div>
+            <h3 className="text-edenGray-900 text-xs font-normal">
+              What already stands out about you
             </h3>
-            <p className="whitespace-pre-wrap">{content.improvementPoints}</p>
+            <p className="text-edenGray-700 text-xs">
+              Find out about the areas you are strong at
+            </p>
           </div>
-          <div className="border border-edenGray-100 rounded-md bg-white p-4 w-72 h-full inline-block align-top overflow-y-scroll mr-2">
-            <h3 className="text-edenGreen-600 text-lg font-semibold">Growth</h3>
-            <p className="whitespace-pre-wrap">{content.growthAreas}</p>
-          </div>
-          <div className="border border-edenGray-100 rounded-md bg-white p-4 w-72 h-full inline-block align-top overflow-y-scroll">
-            <h3 className="text-edenGreen-600 text-lg font-semibold">
-              Personal Experience
-            </h3>
-            <p className="whitespace-pre-wrap">{content.experienceAreas}</p>
-          </div>
-        </section> */}
-      </div>
-    </>
+        </div>
+        <p
+          className={classNames(
+            "text-edenGray-700 overflow-hidden whitespace-pre-wrap pt-4 text-xs transition-all ease-in-out",
+            openSections.strongSuit ? "max-h-[80vh]" : "max-h-0 !pt-0"
+          )}
+        >
+          {content.strongFit}
+        </p>
+      </section>
+    </div>
   );
 };
 

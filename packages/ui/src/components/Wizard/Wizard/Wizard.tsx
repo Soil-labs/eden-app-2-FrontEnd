@@ -2,6 +2,7 @@ import { Button } from "@eden/package-ui";
 import { Transition } from "@headlessui/react";
 import { useEffect, useState } from "react";
 
+import { BrandedWizardStepsHeader } from "../BrandedWizardStepsHeader";
 import { IWizardStepProps } from "../WizardStep";
 import { WizardStepsHeader } from "../WizardStepsHeader";
 
@@ -13,6 +14,7 @@ export type Step = {
 export interface IWizardProps {
   children: Array<React.ReactElement<IWizardStepProps>>;
   showStepsHeader?: boolean;
+  branded?: boolean;
   // eslint-disable-next-line no-unused-vars
   onStepChange?: (val: any) => void;
   canPrev?: boolean;
@@ -23,6 +25,7 @@ export interface IWizardProps {
 export const Wizard = ({
   children,
   showStepsHeader = false,
+  branded = false,
   onStepChange,
   canPrev = true,
   forceStep,
@@ -83,19 +86,32 @@ export const Wizard = ({
 
   return (
     <div className="relative h-full">
-      {showStepsHeader && (
-        <WizardStepsHeader
-          currentStep={step}
-          steps={children.map(
-            (_step) =>
-              ({
-                label: _step.props.label,
-                navigationDisabled: _step.props.navigationDisabled || false,
-              } as Step)
-          )}
-          setStep={setStep}
-        />
-      )}
+      {showStepsHeader &&
+        (branded ? (
+          <BrandedWizardStepsHeader
+            currentStep={step}
+            steps={children.map(
+              (_step) =>
+                ({
+                  label: _step.props.label,
+                  navigationDisabled: _step.props.navigationDisabled || false,
+                } as Step)
+            )}
+            setStep={setStep}
+          />
+        ) : (
+          <WizardStepsHeader
+            currentStep={step}
+            steps={children.map(
+              (_step) =>
+                ({
+                  label: _step.props.label,
+                  navigationDisabled: _step.props.navigationDisabled || false,
+                } as Step)
+            )}
+            setStep={setStep}
+          />
+        ))}
       {showStepsHeader && <div className="pt-14"></div>}
       <div
         className={classNames(
@@ -107,7 +123,7 @@ export const Wizard = ({
           ? children.map((item, index) => (
               <Transition
                 key={index}
-                className="w-full h-full"
+                className="h-full w-full"
                 show={index === step}
                 enter="transition-all ease-in-out duration-500 delay-[200ms]"
                 enterFrom="opacity-0 translate-x-6"

@@ -9,8 +9,8 @@ import {
   useRef,
   useState,
 } from "react";
-import { AiOutlineFile } from "react-icons/ai";
 import { BsCheckCircle } from "react-icons/bs";
+import { FiUploadCloud } from "react-icons/fi";
 import { toast } from "react-toastify";
 
 import { EdenAiProcessingModal } from "../../elements";
@@ -340,7 +340,7 @@ export const CVUploadGPT = ({
         </label> */}
         <label
           htmlFor="file-upload"
-          className="border-edenGreen-300 hover:bg-edenGreen-100 relative h-40 w-full max-w-2xl rounded-md border border-dashed"
+          className="border-edenGray-300 hover:bg-edenGray-50 relative h-48 w-full max-w-2xl rounded-md border"
         >
           <div
             className="flex h-full w-full cursor-pointer flex-col items-center justify-center"
@@ -353,13 +353,13 @@ export const CVUploadGPT = ({
               e.preventDefault();
             }}
           >
-            <div className="bg-edenGreen-600 text-edenPink-200 mb-2 flex h-8 w-8 items-center justify-center rounded-full pb-px pl-px">
-              <AiOutlineFile size={"1.2rem"} />
+            <div className="bg-edenGray-100 text-edenGray-900 mb-2 flex h-12 w-12 items-center justify-center rounded-2xl pb-px pl-px">
+              <FiUploadCloud size={"1.2rem"} />
             </div>
-            <p>Upload Your Resume</p>
+            <p>Upload CV here!</p>
             <p className="text-edenGray-700 text-sm">
               {/* Select or Drag & drop a PDF, DOC or PNG */}
-              Select or Drag & drop a PDF
+              Drag or Tap to upload in PDF format
             </p>
           </div>
           {uploaded && (

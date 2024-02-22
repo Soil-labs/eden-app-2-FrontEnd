@@ -1,5 +1,7 @@
+import React from "react";
+
 export interface IWizardStepProps {
-  label: string;
+  label: string | React.ReactNode;
   children: React.ReactNode;
   nextDisabled?: boolean;
   hideNext?: boolean;
@@ -21,5 +23,9 @@ export const WizardStep = ({
   // eslint-disable-next-line no-unused-vars
   nextButton,
 }: IWizardStepProps) => {
-  return <section className="h-full overflow-y-scroll">{children}</section>;
+  return (
+    <section className="scrollbar-hide h-full overflow-y-scroll">
+      {children}
+    </section>
+  );
 };

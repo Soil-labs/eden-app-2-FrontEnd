@@ -132,7 +132,7 @@ const InterviewEdenAIStepContainer = ({
   const [conversationID, setConversationID] = useState<String>("");
   const [chatN, setChatN] = useState<ChatMessage>([]);
 
-  console.log("CHAT N", chatN);
+  // console.log("CHAT N", chatN);
 
   // SOS 🆘 -> the candidate is not been added to the position // return back before publish code
   useEffect(() => {
