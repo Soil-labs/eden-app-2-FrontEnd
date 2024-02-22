@@ -106,7 +106,7 @@ const SignupCommunity: NextPageWithLayout = () => {
             <p className="text-edenGray-700 mb-[10px] text-[10px] leading-[14px]">
               If you are a hiring manager login{" "}
               <Link
-                href={"/jobs"}
+                href={"/pricing?community=64da1c72e48f083ff46500fd"}
                 className="hover:text-edenGray-500 underline"
               >
                 here
