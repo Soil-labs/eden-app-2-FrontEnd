@@ -1617,6 +1617,8 @@ const PositionCRM: NextPageWithLayout = () => {
             </div>
           </section>
 
+          {panda && <Autosuggest positionID={[positionID].flat(1)[0]} />}
+
           <section className="relative mb-4">
             <div className="bg-edenPink-100 w-full overflow-hidden rounded-md px-4 py-4">
               <h2 className="text-edenGreen-600">
@@ -2099,6 +2101,8 @@ import Head from "next/head";
 import { BsFillGearFill, BsFillMicFill } from "react-icons/bs";
 import { GiHeartWings } from "react-icons/gi";
 import { TbTrashXFilled } from "react-icons/tb";
+
+import Autosuggest from "@/components/autosuggest/Autosuggest";
 
 export async function getServerSideProps(ctx: {
   req: IncomingMessage;
