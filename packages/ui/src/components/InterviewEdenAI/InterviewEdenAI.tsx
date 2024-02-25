@@ -7,6 +7,7 @@ import React, { useEffect, useState } from "react";
 // eslint-disable-next-line no-unused-vars
 import {
   ASK_EDEN_GPT4_ONLY,
+  ASK_EDEN_TO_SEARCH_TALENT,
   ASK_EDEN_USER_POSITION,
   ASK_EDEN_USER_POSITION_AFTER_INTERVIEW,
   ASK_EDEN_USER_POSITION_GPT_FUNC_V2,
@@ -45,6 +46,8 @@ export enum AI_INTERVIEW_SERVICES {
   INTERVIEW_EDEN_AI = "INTERVIEW_EDEN_AI",
   // eslint-disable-next-line no-unused-vars
   ASK_EDEN_USER_POSITION = "ASK_EDEN_USER_POSITION",
+  // eslint-disable-next-line no-unused-vars
+  ASK_EDEN_TO_SEARCH_TALENT = "ASK_EDEN_TO_SEARCH_TALENT",
   // eslint-disable-next-line no-unused-vars
   ASK_EDEN_USER_POSITION_AFTER_INTERVIEW = "ASK_EDEN_USER_POSITION_AFTER_INTERVIEW",
   // eslint-disable-next-line no-unused-vars
@@ -349,6 +352,44 @@ export const InterviewEdenAI = ({
       }
     },
   });
+
+  // ---------- dataAskEdenToSearchTalent ----------
+  const { data: dataAskEdenToSearchTalent } = useQuery(
+    ASK_EDEN_TO_SEARCH_TALENT,
+    {
+      variables: {
+        fields: {
+          conversation: chatN.map((obj) => {
+            if (obj.user === "01") {
+              return {
+                role: "assistant",
+                content: obj.message,
+                date: obj.date,
+              };
+            } else {
+              return { role: "user", content: obj.message, date: obj.date };
+            }
+            // }),
+          }),
+        },
+      },
+      skip:
+        chatN.length == 0 ||
+        aiReplyService != AI_INTERVIEW_SERVICES.ASK_EDEN_TO_SEARCH_TALENT ||
+        chatN[chatN.length - 1]?.user == "01",
+      onCompleted: (data) => {
+        setStartTime(0);
+        setElapsedTime(0);
+        if (
+          data.interviewEdenAI.unansweredQuestionsArr &&
+          data.interviewEdenAI.unansweredQuestionsArr.length === 0 &&
+          handleEnd
+        ) {
+          handleEnd();
+        }
+      },
+    }
+  );
 
   const { data: dataAskEdenUserPosition } = useQuery(ASK_EDEN_USER_POSITION, {
     variables: {

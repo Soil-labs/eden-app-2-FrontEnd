@@ -287,14 +287,14 @@ export async function getServerSideProps(ctx: {
 
   const url = ctx.req.url;
 
-  if (!session) {
-    return {
-      redirect: {
-        destination: `/?redirect=${url}`,
-        permanent: false,
-      },
-    };
-  }
+  // if (!session) {
+  //   return {
+  //     redirect: {
+  //       destination: `/?redirect=${url}`,
+  //       permanent: false,
+  //     },
+  //   };
+  // }
 
   return {
     props: {},
