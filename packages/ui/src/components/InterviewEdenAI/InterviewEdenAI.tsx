@@ -7,6 +7,7 @@ import React, { useEffect, useState } from "react";
 // eslint-disable-next-line no-unused-vars
 import {
   ASK_EDEN_GPT4_ONLY,
+  ASK_EDEN_TO_SEARCH_TALENT,
   ASK_EDEN_USER_POSITION,
   ASK_EDEN_USER_POSITION_AFTER_INTERVIEW,
   ASK_EDEN_USER_POSITION_GPT_FUNC_V2,
@@ -47,6 +48,8 @@ export enum AI_INTERVIEW_SERVICES {
   ASK_EDEN_USER_POSITION = "ASK_EDEN_USER_POSITION",
   // eslint-disable-next-line no-unused-vars
   ASK_EDEN_USER_POSITION_AFTER_INTERVIEW = "ASK_EDEN_USER_POSITION_AFTER_INTERVIEW",
+  // eslint-disable-next-line no-unused-vars
+  ASK_EDEN_TO_SEARCH_TALENT = "ASK_EDEN_TO_SEARCH_TALENT",
   // eslint-disable-next-line no-unused-vars
   ASK_EDEN_GPT4_ONLY = "ASK_EDEN_GPT4_ONLY",
   // eslint-disable-next-line no-unused-vars
@@ -385,6 +388,38 @@ export const InterviewEdenAI = ({
     },
   });
 
+  console.log("chatN = ", chatN, questions);
+  console.log("aiReplyService = ", aiReplyService);
+
+  const { data: dataAskEdenToSearchTalent } = useQuery(
+    ASK_EDEN_TO_SEARCH_TALENT,
+    {
+      variables: {
+        fields: {
+          conversation: chatN.map((obj) => {
+            if (obj.user === "01") {
+              return {
+                role: "assistant",
+                content: obj.message,
+                date: obj.date,
+              };
+            } else {
+              return { role: "user", content: obj.message, date: obj.date };
+            }
+          }),
+        },
+      },
+      skip:
+        chatN.length == 0 ||
+        aiReplyService != AI_INTERVIEW_SERVICES.ASK_EDEN_TO_SEARCH_TALENT ||
+        chatN[chatN.length - 1]?.user == "01",
+      onCompleted: () => {
+        setStartTime(0);
+        setElapsedTime(0);
+      },
+    }
+  );
+
   const { data: dataAskEdenUserPositionAfterInterview } = useQuery(
     ASK_EDEN_USER_POSITION_AFTER_INTERVIEW,
     {
@@ -662,6 +697,47 @@ export const InterviewEdenAI = ({
   }, [dataAskEdenGPT4only]);
 
   useEffect(() => {
+    if (dataAskEdenToSearchTalent && edenAIsentMessage == true) {
+      const chatT: ChatMessage = [...chatN];
+
+      const reply = dataAskEdenToSearchTalent?.askEdenToSearchTalent?.reply;
+
+      console.log("chatT = ", chatT);
+      console.log("reply = ", reply);
+
+      const conversationID = dataAskEdenToSearchTalent?.askEdenToSearchTalent
+        ?.conversationID as string;
+
+      if (setConversationID && conversationID != undefined) {
+        setConversationID(conversationID);
+      }
+
+      chatT.push({
+        user: "01",
+        message: reply,
+        date: dataAskEdenToSearchTalent?.askEdenToSearchTalent.date,
+      });
+
+      setChatN(chatT);
+
+      // from chatT that is an array of objects, translate it to a string
+      let chatNprepareGPTP = "";
+
+      for (let i = 0; i < chatT.length; i++) {
+        if (chatT[i].user == "01")
+          chatNprepareGPTP += "Eden AI: " + chatT[i].message + "\n";
+        else chatNprepareGPTP += "User: " + chatT[i].message + "\n";
+      }
+
+      console.log("chatNprepareGPTP = ", chatNprepareGPTP);
+
+      // setChatNprepareGPT(chatNprepareGPTP);
+      setEdenAIsentMessage(false);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [dataAskEdenToSearchTalent]);
+
+  useEffect(() => {
     if (dataAskEdenUSerPositionGPTFuncV2 && edenAIsentMessage == true) {
       const chatT: ChatMessage = [...chatN];
 
@@ -855,7 +931,7 @@ export const InterviewEdenAI = ({
       {/* <div className="mb-4 text-4xl font-bold text-gray-800">
           {formatTime(elapsedTime)}
         </div> */}
-      {elapsedTime > 45000 && (
+      {/* {elapsedTime > 45000 && (
         <div className="flex flex-col items-center p-4">
           <div className="rounded-md  p-2">
             <h3 className="text-center font-bold text-white">
@@ -863,7 +939,7 @@ export const InterviewEdenAI = ({
             </h3>
           </div>
         </div>
-      )}
+      )} */}
 
       <ChatSimple
         chatN={chatN}

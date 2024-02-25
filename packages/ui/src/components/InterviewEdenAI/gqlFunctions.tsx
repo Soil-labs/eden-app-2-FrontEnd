@@ -47,6 +47,14 @@ export const ASK_EDEN_USER_POSITION = gql`
   }
 `;
 
+export const ASK_EDEN_TO_SEARCH_TALENT = gql`
+  query AskEdenToSearchTalent($fields: askEdenToSearchTalentInput) {
+    askEdenToSearchTalent(fields: $fields) {
+      reply
+    }
+  }
+`;
+
 export const ASK_EDEN_USER_POSITION_AFTER_INTERVIEW = gql`
   query AskEdenUserPosition($fields: askEdenUserPositionInput) {
     askEdenUserPosition(fields: $fields) {

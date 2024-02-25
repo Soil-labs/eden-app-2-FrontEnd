@@ -77,21 +77,19 @@ export const ScorecardSearchAlgoTab: FC<Props> = ({
   } = useQuery(FIND_POSITION_CANDIDATE, {
     variables: {
       fields: {
-        positionID: positionID || candidate?.positionID,
+        positionID: candidate?.positionID || positionID,
         userID: candidate?.user?._id,
       },
     },
     skip: !positionID && !candidate?.positionID,
   });
 
-  console.log("scoreCardSearch = ", scoreCardSearch);
+  // console.log("scoreCardSearch = ", scoreCardSearch);
   // console.log("candidate?.user?._id= ", candidate?.user?._id)
   // console.log("positionID= ", positionID || candidate?.positionID)
   // console.log("findPositionCandidateData= ", findPositionCandidateData)
 
   const [expandID, setExpandID] = useState<null | string>(null);
-
-  console.log("expandID= ", expandID);
 
   return (
     <>
@@ -207,6 +205,8 @@ export const ScorecardSearchAlgoTab: FC<Props> = ({
                               const { color }: { color: string } =
                                 getGrade(percentage);
 
+                              console.log("output = ", output);
+
                               return (
                                 <div
                                   key={outputIndex}
@@ -214,8 +214,8 @@ export const ScorecardSearchAlgoTab: FC<Props> = ({
                                 >
                                   <p className="text-edenGray-700 text-xs">
                                     {output?.node?.name} -- hop:{" "}
-                                    {output?.scoreHop} -- ScoreNode:{" "}
-                                    {output?.scoreNode.toFixed(1)}
+                                    {/* {output?.scoreHop} -- ScoreNode:{" "} */}
+                                    {output?.scoreTotal.toFixed(1)}
                                   </p>
                                   <div className="border-edenGray-100 relative ml-4 flex h-6 w-8 items-center justify-center rounded-[0.25rem] border">
                                     <span className={color}>

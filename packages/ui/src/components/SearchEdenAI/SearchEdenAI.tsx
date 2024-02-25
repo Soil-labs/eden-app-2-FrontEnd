@@ -898,7 +898,7 @@ export const SearchEdenAI = ({
       {/* <div className="mb-4 text-4xl font-bold text-gray-800">
           {formatTime(elapsedTime)}
         </div> */}
-      {elapsedTime > 45000 && (
+      {/* {elapsedTime > 45000 && (
         <div className="flex flex-col items-center p-4">
           <div className="rounded-md  p-2">
             <h3 className="text-center font-bold text-white">
@@ -906,7 +906,7 @@ export const SearchEdenAI = ({
             </h3>
           </div>
         </div>
-      )}
+      )} */}
 
       <ChatSimple
         chatN={chatN}
