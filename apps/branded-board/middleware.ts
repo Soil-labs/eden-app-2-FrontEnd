@@ -44,6 +44,11 @@ export async function middleware(req: NextRequest) {
   const subdomain =
     process.env.NEXT_PUBLIC_FORCE_SLUG_LOCALHOST || getValidSubdomain(host);
 
+  // This is a provisional fix for Kemps wrong url
+  if (url.pathname === "/gitcoin-labs/jobs/65c22510e28e9e00073005be") {
+    url.pathname = `/jobs/65c22510e28e9e00073005be`;
+  }
+
   if (url.pathname === "/") {
     if (subdomain && !url.searchParams.get("redirect")) {
       url.pathname = `/jobs`;
