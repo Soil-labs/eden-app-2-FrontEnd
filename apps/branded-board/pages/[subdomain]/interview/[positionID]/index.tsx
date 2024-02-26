@@ -17,7 +17,6 @@ import {
 } from "@eden/package-ui";
 import useAuthGate from "@eden/package-ui/src/hooks/useAuthGate/useAuthGate";
 import { getCookieFromContext } from "@eden/package-ui/utils";
-import { IncomingMessage, ServerResponse } from "http";
 import mixpanel from "mixpanel-browser";
 import Head from "next/head";
 import { useRouter } from "next/router";
@@ -650,18 +649,16 @@ InterviewPage.getLayout = (page) => (
 
 export default InterviewPage;
 
+import { GetServerSidePropsContext } from "next";
 import { BsFillCheckSquareFill } from "react-icons/bs";
 import { TbHeart } from "react-icons/tb";
 
 import ConfirmEmailContainer from "@/components/interview/ConfirmEmailContainer";
 
-export async function getServerSideProps(ctx: {
-  req: IncomingMessage;
-  res: ServerResponse;
-}) {
+export async function getServerSideProps(ctx: GetServerSidePropsContext) {
   const session = getCookieFromContext(ctx);
 
-  const url = (ctx as any).req.url;
+  const url = ctx.resolvedUrl;
 
   if (!session) {
     return {
