@@ -912,6 +912,7 @@ const PositionCRM: NextPageWithLayout = () => {
         }
       }
       // setTalentListSelected(list);
+      console.log("BBBBBBBBBBBBB");
       router.push(
         {
           pathname: `/dashboard/${company?.slug}/${positionID}`,
@@ -928,6 +929,9 @@ const PositionCRM: NextPageWithLayout = () => {
       router.push(
         {
           pathname: `/dashboard/${company?.slug}/${positionID}`,
+          query: {
+            panda: panda ? "true" : "",
+          },
         },
         undefined,
         { shallow: true }
