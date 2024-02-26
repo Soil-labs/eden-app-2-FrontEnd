@@ -332,7 +332,7 @@ const chatEden: NextPageWithLayout = () => {
         <div className="col-span-5 flex flex-1 flex-col pl-8 pr-4">
           <div className="h-[60vh]">
             <InterviewEdenAI
-              aiReplyService={AI_INTERVIEW_SERVICES.INTERVIEW_EDEN_AI}
+              aiReplyService={AI_INTERVIEW_SERVICES.ASK_EDEN_TO_SEARCH_TALENT}
               handleChangeChat={(_chat: any) => {
                 setChatN(_chat);
               }}
