@@ -912,7 +912,6 @@ const PositionCRM: NextPageWithLayout = () => {
         }
       }
       // setTalentListSelected(list);
-      console.log("BBBBBBBBBBBBB");
       router.push(
         {
           pathname: `/dashboard/${company?.slug}/${positionID}`,
@@ -926,12 +925,16 @@ const PositionCRM: NextPageWithLayout = () => {
     } else {
       candidatesOnTalentListSelected.push(...candidatesUnqualifiedList);
       // setTalentListSelected({ _id: "000", name: "All candidates" });
+      const query: any = {};
+
+      if (panda) {
+        query.panda = "true";
+      }
+
       router.push(
         {
           pathname: `/dashboard/${company?.slug}/${positionID}`,
-          query: {
-            panda: panda ? "true" : "",
-          },
+          query: query,
         },
         undefined,
         { shallow: true }
