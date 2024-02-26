@@ -912,7 +912,6 @@ const PositionCRM: NextPageWithLayout = () => {
         }
       }
       // setTalentListSelected(list);
-      console.log("BBBBBBBBBBBBB");
       router.push(
         {
           pathname: `/dashboard/${company?.slug}/${positionID}`,
