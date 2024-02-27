@@ -2,7 +2,6 @@
 
 import { gql, useMutation } from "@apollo/client";
 import { classNames } from "@dynamic-labs/sdk-react-core";
-import { CandidateType } from "@eden/package-graphql/generated";
 import {
   Avatar,
   Button,
@@ -63,7 +62,7 @@ const Autosuggest = ({ positionID }: AutosuggestProps) => {
   const [open, setOpen] = useState(true);
 
   const [suggestedCandidates, setSuggestedCandidates] = useState<
-    CandidateType[]
+    CandidateTypeSkillMatch[]
   >([]);
 
   const [selectedUserId, setSelectedUserId] = useState<string | undefined>();
@@ -71,6 +70,8 @@ const Autosuggest = ({ positionID }: AutosuggestProps) => {
   const [autoSuggestTalentForPosition] = useMutation(AUTOSUGGEST_TALENT, {
     onCompleted: (data) => {
       const _suggestedCandidates = data.autoSuggestTalentForPosition;
+
+      console.log("suggestedCandidates", _suggestedCandidates);
 
       setSuggestedCandidates(_suggestedCandidates);
     },
@@ -156,17 +157,16 @@ const Autosuggest = ({ positionID }: AutosuggestProps) => {
             // handleCreateNewList={handleCreateNewList}
             // summaryQuestions={selectedUserSummaryQuestions}
             // mostRelevantMemberNode={mostRelevantMemberNode}
-            // candidate={candidatesOriginalList?.find(
-            //   (candidate) =>
-            //     candidate?.user?._id?.toString() ==
-            //     router.query.candidate2?.toString()
-            // )}
+            candidate={suggestedCandidates?.find(
+              (candidate) => candidate?.user?._id?.toString() === selectedUserId
+            )}
             onClose={() => {
               setSelectedUserId(undefined);
             }}
             // talentListsAvailables={talentListsAvailables}
             // handleAddCandidatesToList={handleAddCandidatesToList}
             showAskEden={false}
+            autosuggest
           />
         </div>
       )}

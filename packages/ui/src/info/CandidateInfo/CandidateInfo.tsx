@@ -22,6 +22,7 @@ import { useState } from "react";
 import { IoClose } from "react-icons/io5";
 
 import { ScorecardTab } from "./tabs/ScorecardTab";
+import { ScoreTabAutosuggest } from "./tabs/ScoreTabAutosuggest";
 
 type NodeDisplay = {
   nameRelevantNode: string;
@@ -56,6 +57,7 @@ export interface ICandidateInfoProps {
   handleChkSelection?: (candidate: any) => void;
   listMode?: ListModeEnum;
   showAskEden?: boolean;
+  autosuggest?: boolean;
 }
 
 function classNames(...classes: any[]) {
@@ -69,6 +71,7 @@ export const CandidateInfo = ({
   candidate,
   onClose,
   listMode = ListModeEnum.edit,
+  autosuggest = false,
   // rejectCandidateFn,
   // approveCandidateFn,
   // handleChkSelection,
@@ -142,7 +145,12 @@ export const CandidateInfo = ({
     },
     {
       tab: "Scorecard",
-      Content: () => <ScorecardTab candidate={candidate} />,
+      Content: () =>
+        !autosuggest ? (
+          <ScorecardTab candidate={candidate} />
+        ) : (
+          <ScoreTabAutosuggest candidate={candidate} />
+        ),
     },
     // {
     //   tab: "Fit",
