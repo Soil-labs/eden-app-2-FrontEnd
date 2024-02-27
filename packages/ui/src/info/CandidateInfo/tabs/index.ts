@@ -6,3 +6,4 @@ export * from "./MatchTab";
 export * from "./MeetingNotes";
 export * from "./ReportNotes";
 export * from "./ScoresTab";
+export * from "./ScoreTabAutosuggest";
