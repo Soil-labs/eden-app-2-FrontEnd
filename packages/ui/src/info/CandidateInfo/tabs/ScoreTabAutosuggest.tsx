@@ -212,7 +212,9 @@ export const ScoreTabAutosuggest: FC<Props> = ({ candidate }) => {
                                       <div className="border-edenGray-100 relative ml-4 flex h-6 w-8 items-center justify-center rounded-[0.25rem] border">
                                         <span className={color}>
                                           {_card?.scoreAlignment != null
-                                            ? _card.scoreAlignment * 10
+                                            ? Math.round(
+                                                _card.scoreAlignment * 100
+                                              ) / 10
                                             : ""}
                                         </span>
                                       </div>

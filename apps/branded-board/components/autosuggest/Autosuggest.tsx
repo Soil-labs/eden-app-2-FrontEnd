@@ -9,6 +9,7 @@ import {
   CandidateTypeSkillMatch,
   EdenIconExclamation,
   EdenTooltip,
+  Loading,
 } from "@eden/package-ui";
 import { useState } from "react";
 import { BiChevronDown, BiChevronUp } from "react-icons/bi";
@@ -67,15 +68,14 @@ const Autosuggest = ({ positionID }: AutosuggestProps) => {
 
   const [selectedUserId, setSelectedUserId] = useState<string | undefined>();
 
-  const [autoSuggestTalentForPosition] = useMutation(AUTOSUGGEST_TALENT, {
-    onCompleted: (data) => {
-      const _suggestedCandidates = data.autoSuggestTalentForPosition;
+  const [autoSuggestTalentForPosition, { loading: loadingSuggestions }] =
+    useMutation(AUTOSUGGEST_TALENT, {
+      onCompleted: (data) => {
+        const _suggestedCandidates = data.autoSuggestTalentForPosition;
 
-      console.log("suggestedCandidates", _suggestedCandidates);
-
-      setSuggestedCandidates(_suggestedCandidates);
-    },
-  });
+        setSuggestedCandidates(_suggestedCandidates);
+      },
+    });
 
   const handleClick = () => {
     if (positionID) {
@@ -101,12 +101,16 @@ const Autosuggest = ({ positionID }: AutosuggestProps) => {
           <h2 className="text-edenGreen-600">
             Let&apos;s find your perfect candidate on Eden network.
           </h2>
-          <button
-            className="rounded-md bg-black px-8 py-1 text-white"
-            onClick={handleClick}
-          >
-            Suggest candidates
-          </button>
+          {!loadingSuggestions ? (
+            <button
+              className="rounded-md bg-black px-8 py-1 text-white"
+              onClick={handleClick}
+            >
+              Suggest candidates
+            </button>
+          ) : (
+            <Loading />
+          )}
 
           <div
             className={classNames(
@@ -187,6 +191,14 @@ const CandidateCard = ({ candidate, onClick }: ICandidateCardProps) => {
       className="border-edenGray-100 group relative mr-4 inline-block w-80 cursor-pointer whitespace-normal rounded-md border bg-white last:mr-0"
       onClick={onClick}
     >
+      <div className="border-edenGray-100 absolute right-0.5 top-0.5 w-20 rounded-md border text-center">
+        score:{" "}
+        {Math.round(
+          candidate.scoreCardTotal?.score
+            ? candidate.scoreCardTotal?.score * 100
+            : 0
+        )}
+      </div>
       <div className="relative flex h-full px-4 pb-2 pt-2" onClick={onClick}>
         <div className="mr-4 flex items-center">
           <Avatar src={candidate.user?.discordAvatar || ""} size="sm" />
