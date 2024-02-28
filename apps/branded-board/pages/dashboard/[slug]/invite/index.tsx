@@ -2,12 +2,15 @@
 import { gql, useMutation } from "@apollo/client";
 import { CompanyContext, UserContext } from "@eden/package-context";
 import { EmployeeTypeInput } from "@eden/package-graphql/generated";
-import { Button } from "@eden/package-ui";
+import { BrandedAppUserLayout, Button } from "@eden/package-ui";
+import useAuthGate from "@eden/package-ui/src/hooks/useAuthGate/useAuthGate";
 import { getCookieFromContext } from "@eden/package-ui/utils";
 import { IncomingMessage, ServerResponse } from "http";
 import { useRouter } from "next/router";
 import { useContext, useState } from "react";
 import { toast } from "react-toastify";
+
+import { NextPageWithLayout } from "../../../_app";
 
 // import { useContext } from "react";
 
@@ -28,11 +31,13 @@ const ADD_EMPLOYEES_COMPANY = gql`
   }
 `;
 
-const PendingRequestsPage = () => {
+const InvitePage: NextPageWithLayout = () => {
   const router = useRouter();
   const { company } = useContext(CompanyContext);
   const { currentUser } = useContext(UserContext);
   const [redirecting, setRedirecting] = useState(false);
+
+  useAuthGate();
 
   const [addEmployeesCompany] = useMutation(ADD_EMPLOYEES_COMPANY, {
     onCompleted() {
@@ -143,4 +148,8 @@ export async function getServerSideProps(ctx: {
   };
 }
 
-export default PendingRequestsPage;
+InvitePage.getLayout = (page) => (
+  <BrandedAppUserLayout>{page}</BrandedAppUserLayout>
+);
+
+export default InvitePage;
