@@ -18,7 +18,7 @@ export const EdenAiProcessingModal = ({
     <Transition show={open} as={Fragment}>
       <Dialog
         as="div"
-        className={"fixed inset-0 z-30 overflow-y-auto"}
+        className={"fixed inset-0 z-50 overflow-y-auto"}
         onClose={() => {
           console.log("close");
         }}
@@ -68,15 +68,15 @@ export const EdenAiProcessingModal = ({
               >
                 <div className="mx-auto mb-4">
                   <div
-                    className="w-14 h-14"
+                    className="h-14 w-14"
                     style={{ animation: "spin 2s ease-in-out infinite" }}
                   >
-                    <EdenIconExclamationAndQuestion className="w-full h-full" />
+                    <EdenIconExclamationAndQuestion className="h-full w-full" />
                   </div>
                 </div>
                 <Dialog.Title
                   as="h1"
-                  className={`mb-2 text-center text-edenGreen-600`}
+                  className={`text-edenGreen-600 mb-2 text-center`}
                 >
                   {title}
                 </Dialog.Title>
