@@ -11,7 +11,6 @@ module.exports = {
   images: {
     domains: [
       "pbs.twimg.com",
-      "app.lottiefiles.com",
       "storage.cloud.google.com",
       "storage.googleapis.com",
     ],

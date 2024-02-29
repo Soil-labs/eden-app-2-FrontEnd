@@ -21,7 +21,6 @@ export const SaasUserLayout = ({
   return (
     <div className="min-h-screen w-full">
       <div className="">
-        {/* <AppHeader logoLink={logoLink} inApp /> */}
         {router.pathname.includes("/jobs") ||
         router.pathname.includes("/pricing") ||
         router.pathname.includes("/signup") ||

@@ -109,23 +109,6 @@ export const CandidateInfoTestSearchAlgo = ({
   });
 
   const tabs = [
-    // {
-    //   tab: "Notes",
-    //   Content: () => (
-    //     <>
-    //       <MatchTab
-    //         member={
-    //           {
-    //             ...candidate,
-    //             user: dataMember?.findMember,
-    //           } as CandidateTypeSkillMatch
-    //         }
-    //         summaryQuestions={summaryQuestions}
-    //       />
-    //       <MeetingNotes member={dataMember?.findMember} candidate={candidate} />
-    //     </>
-    //   ),
-    // },
     {
       tab: "Background",
       Content: () => (
@@ -165,26 +148,6 @@ export const CandidateInfoTestSearchAlgo = ({
     //   ),
     // },
 
-    // {
-    //   tab: "Skill Match",
-    //   Content: () => (
-    //     <GraphTab
-    //       member={
-    //         {
-    //           ...candidate,
-    //           user: dataMember?.findMember,
-    //         } as CandidateTypeSkillMatch
-    //       }
-    //       candidate={candidate}
-    //     />
-    //   ),
-    // },
-    // {
-    //   tab: "Key Info",
-    //   Content: () => (
-    //     <MeetingNotes member={dataMember?.findMember} candidate={candidate} />
-    //   ),
-    // },
     {
       tab: "Transcript",
       Content: () => (

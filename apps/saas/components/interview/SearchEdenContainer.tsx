@@ -235,7 +235,6 @@ const SearchEdenContainer = ({ handleEnd }: SearchEdenContainerProps) => {
           />
         )}
       </div>
-      {/* <CountdownTimer /> */}
       {/* <div className="absolute right-0 top-32 pr-6">
           <span>
             progress{" "}

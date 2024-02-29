@@ -1,15 +1,14 @@
-import { useState } from "react";
 import { Button } from "@eden/package-ui";
 import { DragDropContext } from "@hello-pangea/dnd";
-import { Draggable } from "@hello-pangea/dnd";
-import { Droppable } from "@hello-pangea/dnd";
 import dynamic from "next/dynamic";
+import { useState } from "react";
 
 export interface IDragDropProps {
   title?: string;
   elements?: { id: string; content: string }[];
   onNext?: () => void;
   onPrev?: () => void;
+  // eslint-disable-next-line no-unused-vars
   onReOrder?: (skillsOrder: string[]) => void;
 }
 
@@ -18,6 +17,7 @@ export const DragDrop = ({
   elements = [],
   onNext,
   onPrev,
+  // eslint-disable-next-line no-unused-vars
   onReOrder,
 }: IDragDropProps) => {
   const Column = dynamic(() => import("./Column"), { ssr: false });
@@ -30,7 +30,8 @@ export const DragDrop = ({
   };
 
   const shortener = (num: number) => {
-    let numbers = [];
+    const numbers = [];
+
     for (var i = 0; i < num; i++) {
       numbers.push(i);
     }
@@ -76,6 +77,7 @@ export const DragDrop = ({
   ) => {
     const newTaskIds = Array.from(sourceCol.taskIds);
     const [removed] = newTaskIds.splice(startIndex, 1);
+
     newTaskIds.splice(endIndex, 0, removed);
 
     const newColumn = {
@@ -118,6 +120,7 @@ export const DragDrop = ({
           [newColumn.id]: newColumn,
         },
       };
+
       setfirst(newState);
       return;
     }
@@ -131,6 +134,7 @@ export const DragDrop = ({
     };
 
     const endTaskIds = Array.from(destinationCol.taskIds);
+
     endTaskIds.splice(destination.index, 0, removed);
     const newEndCol = {
       ...destinationCol,
@@ -148,6 +152,7 @@ export const DragDrop = ({
 
     setfirst(newState);
   };
+
   return (
     <div className="flex w-full flex-col gap-4 p-4 text-center text-white">
       <div className="text-md font-thin text-black">{title}</div>
@@ -162,6 +167,7 @@ export const DragDrop = ({
             const tasks = column.taskIds.map(
               (taskId: any) => first.tasks[taskId]
             );
+
             return <Column key={column.id} column={column} tasks={tasks} />;
           })}
         </div>

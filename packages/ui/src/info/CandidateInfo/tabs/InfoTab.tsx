@@ -4,8 +4,6 @@ import {
   CandidateTypeSkillMatch,
   EdenIconExclamation,
   // LongText,
-  NodeList,
-  // SocialMediaComp,
   UserBackground,
 } from "@eden/package-ui";
 import { FC, useState } from "react";

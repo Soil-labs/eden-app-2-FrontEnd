@@ -201,7 +201,6 @@ export const InterviewEdenAIContainer = ({
             headerText={`${findPositionData?.findPosition?.name} @ ${company?.name}`}
           />
         }
-        {/* <CountdownTimer /> */}
       </div>
       {/* <div className="absolute right-0 top-32 pr-6">
         <span>
