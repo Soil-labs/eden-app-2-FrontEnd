@@ -27,7 +27,7 @@ const JobsPage: NextPageWithLayout = ({
   const [loadingSpinner, setLoadingSpinner] = useState(false);
   const [officePolicyFilter, setOfficePolicyFilter] = useState<string[]>([]);
 
-  console.log("positions", positions);
+  // console.log("positions", positions);
 
   const _positions: Position[] =
     (company?.type === "COMMUNITY"

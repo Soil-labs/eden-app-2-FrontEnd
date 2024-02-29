@@ -80,9 +80,9 @@ export const ScorecardTab: FC<Props> = ({ candidate }) => {
     skip: !positionID && !candidate?.positionID,
   });
 
-  console.log("candidate?.user?._id= ", candidate?.user?._id);
-  console.log("positionID= ", positionID || candidate?.positionID);
-  console.log("findPositionCandidateData= ", findPositionCandidateData);
+  // console.log("candidate?.user?._id= ", candidate?.user?._id);
+  // console.log("positionID= ", positionID || candidate?.positionID);
+  // console.log("findPositionCandidateData= ", findPositionCandidateData);
 
   const [expandID, setExpandID] = useState<null | string>(null);
 

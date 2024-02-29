@@ -18,8 +18,8 @@ export const EdenChatTabNew: React.FC<Props> = ({ conversationID, member }) => {
   const router = useRouter();
   const { positionID } = router.query;
 
-  console.log("positionID = ", positionID);
-  console.log("member._id = ", member?._id);
+  // console.log("positionID = ", positionID);
+  // console.log("member._id = ", member?._id);
 
   const { data: findConversationsData } = useQuery(FIND_CONVERSATIONS, {
     variables: {
