@@ -1,5 +1,4 @@
 export * from "./AskEdenPopUp";
-export * from "./AvailabilityComp";
 export * from "./BrandedLeftToggleNav";
 export * from "./CalendarComp";
 export * from "./CalendarComp";
