@@ -1,4 +1,4 @@
-import { AdminLayout, SEO } from "@eden/package-ui";
+import { BrandedAppUserLayout, SEO } from "@eden/package-ui";
 
 import type { NextPageWithLayout } from "../_app";
 
@@ -11,7 +11,9 @@ const AdminPage: NextPageWithLayout = () => {
   );
 };
 
-AdminPage.getLayout = (page) => <AdminLayout>{page}</AdminLayout>;
+AdminPage.getLayout = (page) => (
+  <BrandedAppUserLayout>{page}</BrandedAppUserLayout>
+);
 export default AdminPage;
 
 import { getCookieFromContext } from "@eden/package-ui/utils";

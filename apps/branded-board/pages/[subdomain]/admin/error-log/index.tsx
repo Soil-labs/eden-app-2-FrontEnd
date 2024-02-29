@@ -1,6 +1,6 @@
 import { gql, useMutation, useQuery } from "@apollo/client";
 import { ErrorLog, Maybe } from "@eden/package-graphql/generated";
-import { AdminLayout, Avatar, Card, SEO } from "@eden/package-ui";
+import { Avatar, BrandedAppUserLayout, Card, SEO } from "@eden/package-ui";
 import { BsTrash } from "react-icons/bs";
 
 import type { NextPageWithLayout } from "../../../_app";
@@ -204,7 +204,9 @@ const ErrorLogPage: NextPageWithLayout = () => {
   );
 };
 
-ErrorLogPage.getLayout = (page) => <AdminLayout>{page}</AdminLayout>;
+ErrorLogPage.getLayout = (page) => (
+  <BrandedAppUserLayout>{page}</BrandedAppUserLayout>
+);
 
 export default ErrorLogPage;
 
