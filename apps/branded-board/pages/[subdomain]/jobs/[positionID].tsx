@@ -109,10 +109,12 @@ const PositionPage: NextPageWithLayout = ({
   position,
   submitted,
   matchstimate,
+  params: { subdomain },
 }: {
   position: Position;
   submitted?: boolean;
   matchstimate?: number;
+  params: { subdomain: string };
 }) => {
   const router = useRouter();
   const { edit } = router.query;
@@ -183,7 +185,7 @@ const PositionPage: NextPageWithLayout = ({
             headers: {
               "Content-Type": "application/json",
             },
-            body: JSON.stringify({ path: "/developer-dao/jobs" }),
+            body: JSON.stringify({ path: `/${subdomain}/jobs` }),
           });
 
           setTrainAiModalOpen(true);
@@ -343,7 +345,7 @@ const PositionPage: NextPageWithLayout = ({
   const redirectUrl =
     process.env.NEXT_PUBLIC_ENV_BRANCH === "develop"
       ? `https://eden-saas-staging.vercel.app/jobs/${position._id}`
-      : `https://developer-dao.joineden.ai/jobs/${position._id}`;
+      : `https://${subdomain}.joineden.ai/jobs/${position._id}`;
 
   return (
     <>
@@ -752,7 +754,7 @@ const PositionPage: NextPageWithLayout = ({
                 className="group col-span-1 flex w-fit cursor-pointer items-center"
                 onClick={() => {
                   navigator.clipboard.writeText(
-                    `https://developer-dao.joineden.ai/jobs/${position._id}`
+                    `https://${subdomain}.joineden.ai/jobs/${position._id}`
                   );
                   toast.success("Job link copied");
                 }}
@@ -1386,6 +1388,7 @@ export async function getServerSideProps(ctx: GetServerSidePropsContext) {
         position: data.findPosition || null,
         submitted: submitted,
         matchstimate: matchstimate,
+        params: ctx.params,
       },
     };
   }
@@ -1403,7 +1406,7 @@ export async function getServerSideProps(ctx: GetServerSidePropsContext) {
   // if operator access, allow
   if (session?.accessLevel === 5) {
     return {
-      props: { position: data.findPosition || null },
+      props: { position: data.findPosition || null, params: ctx.params },
     };
   }
 
@@ -1461,7 +1464,7 @@ export async function getServerSideProps(ctx: GetServerSidePropsContext) {
 
   // default allow
   return {
-    props: { position: data.findPosition || null },
+    props: { position: data.findPosition || null, params: ctx.params },
   };
 }
 

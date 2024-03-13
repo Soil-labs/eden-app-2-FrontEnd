@@ -50,7 +50,7 @@ const InterviewPage: NextPageWithLayout = () => {
 
   useAuthGate();
 
-  const { positionID, panda } = router.query;
+  const { positionID, panda, subdomain } = router.query;
   // eslint-disable-next-line no-unused-vars
   const [interviewEnded, setInterviewEnded] = useState(false);
   // eslint-disable-next-line no-unused-vars
@@ -225,7 +225,7 @@ const InterviewPage: NextPageWithLayout = () => {
       const endDateFormat =
         newEndDate.toISOString().replace(/[-:.]/g, "").slice(0, 15) + "Z";
 
-      const interviewLink = `https://developer-dao.joineden.ai/interview/${positionID}`;
+      const interviewLink = `https://${subdomain}.joineden.ai/interview/${positionID}`;
 
       const link = `https://calendar.google.com/calendar/u/0/r/eventedit?text=Interview+with+Eden&dates=${startDateFormat}/${endDateFormat}&details=A+30+min+interview+with+Eden+AI.+Join+via+this+link:+<a href="${interviewLink}">Click Here!</a>&location=${interviewLink}&recur=RRULE:FREQ=WEEKLY;UNTIL=20231231T000000Z`;
 
