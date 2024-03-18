@@ -2,7 +2,11 @@ import { DynamicConnectButton } from "@dynamic-labs/sdk-react-core";
 import { DynamicSessionContext } from "@eden/package-context";
 import { AppUserLayout, EdenAiProcessingModal, SEO } from "@eden/package-ui";
 import { getCookieFromContext } from "@eden/package-ui/utils";
-import type { GetServerSideProps, InferGetServerSidePropsType } from "next";
+import type {
+  GetServerSideProps,
+  GetServerSidePropsContext,
+  InferGetServerSidePropsType,
+} from "next";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { ReactElement, useContext, useMemo, useState } from "react";
@@ -49,7 +53,9 @@ const LoginPage: NextPageWithLayout = ({
   );
 };
 
-export const getServerSideProps: GetServerSideProps = async (ctx) => {
+export const getServerSideProps: GetServerSideProps = async (
+  ctx: GetServerSidePropsContext
+) => {
   const session = getCookieFromContext(ctx);
   const { redirect } = ctx.query;
 
@@ -68,7 +74,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   if (session) {
     return {
       redirect: {
-        destination: redirectUrl || "/developer-dao/jobs",
+        destination: redirectUrl || `/jobs`,
         permanent: false,
       },
       props: {},
@@ -77,7 +83,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
 
   return {
     props: {
-      redirect: redirectUrl || "/developer-dao/jobs",
+      redirect: redirectUrl || `/jobs`,
     },
   };
 };

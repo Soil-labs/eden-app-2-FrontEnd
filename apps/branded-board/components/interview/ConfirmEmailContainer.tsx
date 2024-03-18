@@ -5,6 +5,7 @@ import { UPDATE_MEMBER } from "@eden/package-graphql";
 import { Position } from "@eden/package-graphql/generated";
 import { Button } from "@eden/package-ui";
 import axios from "axios";
+import { useRouter } from "next/router";
 import { useContext, useState } from "react";
 import { IoMail } from "react-icons/io5";
 import { TbHeart } from "react-icons/tb";
@@ -20,6 +21,8 @@ const ConfirmEmailContainer = ({
   position,
 }: IConfirmEmailContainerProps) => {
   const { currentUser } = useContext(UserContext);
+  const router = useRouter();
+  const { subdomain } = router.query;
 
   const [value, setValue] = useState<string>(email);
   const emailIsValid = value.includes("@") && value.includes(".");
@@ -36,7 +39,7 @@ const ConfirmEmailContainer = ({
             candidateName: currentUser?.discordName,
             jobTitle: position?.name,
             companyName: position?.company?.name,
-            applicationSubmittedUrl: `https://developer-dao.joineden.ai/interview/${position?._id}/submitted`,
+            applicationSubmittedUrl: `https://${subdomain}.joineden.ai/interview/${position?._id}/submitted`,
           },
           {
             headers: {

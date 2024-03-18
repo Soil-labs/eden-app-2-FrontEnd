@@ -6,7 +6,7 @@ import { Avatar, BrandedSaasUserLayout, Button } from "@eden/package-ui";
 import useAuthGate from "@eden/package-ui/src/hooks/useAuthGate/useAuthGate";
 import { getCookieFromContext } from "@eden/package-ui/utils";
 import axios from "axios";
-import { IncomingMessage, ServerResponse } from "http";
+import { GetServerSidePropsContext } from "next";
 import { useContext, useRef, useState } from "react";
 import { FaTrash } from "react-icons/fa";
 import { toast } from "react-toastify";
@@ -47,7 +47,8 @@ const sendInviteEmail = async (
   email: string,
   companySlug: string,
   companyName: string,
-  userInviting: string
+  userInviting: string,
+  communitySlug: string = "developer-dao"
 ) => {
   axios.post(
     `${process.env.NEXT_PUBLIC_AUTH_URL}/mail-service/send-mail-invite-employee` as string,
@@ -55,7 +56,7 @@ const sendInviteEmail = async (
       mailTo: email,
       userInviting: userInviting,
       companyName: companyName,
-      inviteUrl: `https://developer-dao.joineden.ai/dashboard/${companySlug}/invite`,
+      inviteUrl: `https://${communitySlug}.joineden.ai/dashboard/${companySlug}/invite`,
     },
     {
       headers: {
@@ -66,7 +67,25 @@ const sendInviteEmail = async (
   );
 };
 
-const PendingRequestsPage: NextPageWithLayout = () => {
+const getValidSubdomain = (host?: string | null) => {
+  let subdomain: string | null = null;
+
+  if (!host && typeof window !== "undefined") {
+    // On client side, get the host from window
+    host = window.location.host;
+  }
+  if (host && host.includes(".")) {
+    const candidate = host.split(".")[0];
+
+    if (candidate && !candidate.includes("localhost")) {
+      // Valid candidate
+      subdomain = candidate;
+    }
+  }
+  return subdomain;
+};
+
+const PendingRequestsPage: NextPageWithLayout = ({ subdomain }) => {
   useAuthGate();
 
   const { currentUser } = useContext(UserContext);
@@ -148,7 +167,8 @@ const PendingRequestsPage: NextPageWithLayout = () => {
       inviteEmail as string,
       company?.slug as string,
       company?.name as string,
-      currentUser?.discordName as string
+      currentUser?.discordName as string,
+      subdomain as string
     );
     if (inviteEmail)
       updateCompany({
@@ -267,11 +287,7 @@ PendingRequestsPage.getLayout = (page) => (
   <BrandedSaasUserLayout>{page}</BrandedSaasUserLayout>
 );
 
-export async function getServerSideProps(ctx: {
-  req: IncomingMessage;
-  res: ServerResponse;
-  query: { slug: string };
-}) {
+export async function getServerSideProps(ctx: GetServerSidePropsContext) {
   const session = getCookieFromContext(ctx);
   const url = ctx.req.url;
 
@@ -284,9 +300,13 @@ export async function getServerSideProps(ctx: {
     };
   }
 
+  const host = ctx.req.headers.host;
+  const subdomain =
+    process.env.NEXT_PUBLIC_FORCE_SLUG_LOCALHOST || getValidSubdomain(host);
+
   if (session.accessLevel === 5 && session._id !== "113589215262737174259") {
     return {
-      props: { key: url },
+      props: { key: url, subdomain: subdomain, params: ctx.params },
     };
   }
 
@@ -316,7 +336,7 @@ export async function getServerSideProps(ctx: {
   }
 
   return {
-    props: { key: url },
+    props: { key: url, subdomain: subdomain, params: ctx.params },
   };
 }
 

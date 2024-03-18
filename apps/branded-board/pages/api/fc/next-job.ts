@@ -3,10 +3,10 @@ import { Position } from "@eden/package-graphql/generated";
 import axios from "axios";
 import { NextApiRequest, NextApiResponse } from "next";
 
-const baseUrl =
+let baseUrl =
   process.env.NEXT_PUBLIC_ENV_BRANCH === "develop"
     ? `https://eden-saas-staging.vercel.app`
-    : `https://developer-dao.joineden.ai`;
+    : `https://[slug].joineden.ai`;
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
   if (req.method === "POST") {
@@ -71,6 +71,8 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
         _positions[positionIndex - 1] || _positions[_positions.length - 1];
 
       const imageUrl = getImageUrl(newPosition);
+
+      baseUrl = baseUrl.replace("[slug]", community);
 
       // Return an HTML response
       res.setHeader("Content-Type", "text/html");

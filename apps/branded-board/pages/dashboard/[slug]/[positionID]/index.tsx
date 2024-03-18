@@ -1047,7 +1047,7 @@ const PositionCRM: NextPageWithLayout = () => {
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({ path: "/developer-dao/jobs" }),
+          body: JSON.stringify({ path: `/${slug}/jobs` }),
         });
         getCompanyFunc();
       },
