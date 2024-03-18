@@ -5,12 +5,14 @@ import {
   AI_INTERVIEW_SERVICES,
   AppUserLayout,
   AskEdenPopUp,
+  Button,
 } from "@eden/package-ui";
 import { getCookieFromContext } from "@eden/package-ui/utils";
 import mixpanel from "mixpanel-browser";
 import { GetServerSidePropsContext } from "next";
 import Link from "next/link";
 import { useContext, useEffect } from "react";
+import { toast } from "react-toastify";
 
 import type { NextPageWithLayout } from "../../../../_app";
 
@@ -24,6 +26,16 @@ const ThanksPage: NextPageWithLayout = ({
   useEffect(() => {
     mixpanel.track("Interview > Email confirmed");
   }, []);
+
+  const handleCopyVouchLink = () => {
+    // const url = window.location.href;
+    const url = `${window.location.origin}/recommend?user=${currentUser?._id}`;
+
+    navigator.clipboard.writeText(url);
+    toast.success("Vouch link copied!");
+
+    mixpanel.track("Interview > Vouch link copied");
+  };
 
   return (
     <>
@@ -39,6 +51,15 @@ const ThanksPage: NextPageWithLayout = ({
             an eye on your e-mails for additional questions / an invite for the
             next step.
           </p>
+          <div className="bg-edenPink-300 mb-8 flex flex-col items-center justify-center rounded-md p-8">
+            <h2>Increase your chances to land this gig!</h2>
+            <p className="mb-4">
+              Share this link with your contancts so they can vouch for you
+            </p>
+            <Button variant="secondary" onClick={handleCopyVouchLink}>
+              Copy Vouch Link
+            </Button>
+          </div>
           <div className="flex justify-center">
             <Link href="/jobs" className="mx-auto w-full max-w-sm">
               <button className="h-12 w-full rounded-md border-[2px] border-black bg-white p-2 hover:!bg-black hover:text-white">
