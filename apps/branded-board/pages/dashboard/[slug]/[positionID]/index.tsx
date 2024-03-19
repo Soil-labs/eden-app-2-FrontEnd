@@ -1624,7 +1624,7 @@ const PositionCRM: NextPageWithLayout = () => {
             </div>
           </section>
 
-          {panda && <Autosuggest positionID={[positionID].flat(1)[0]} />}
+          <Autosuggest positionID={[positionID].flat(1)[0]} />
 
           <section className="relative mb-4">
             <div className="bg-edenPink-100 w-full overflow-hidden rounded-md px-4 py-4">
